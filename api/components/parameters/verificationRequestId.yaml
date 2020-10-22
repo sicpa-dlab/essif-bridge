@@ -1,0 +1,8 @@
+name: verificationRequestId
+in: path
+description: 'A verificaction request ID.'
+required: true
+example: '{verificationRequestId}'
+schema:
+  type: string
+  pattern: '^[abcdefghkmnpqrstwxyABCDEFGHKMNPQRSTUVWXY0123456789]{24}$'

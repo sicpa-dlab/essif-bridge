@@ -1,0 +1,27 @@
+ConnectionParam:
+  type: object
+  properties:
+    name:
+      type: string
+    imageUrl:
+      type: string
+
+Connection:
+  allOf:
+    - $ref: "#/ConnectionParam"
+    - type: object
+      additionalProperties: true
+      properties:
+        connectionId:
+          type: string
+        theirDid:
+          type: string
+        invitationUrl:
+          type: string
+        state:
+          type: string
+          enum:
+            - invited
+            - requested
+            - responded
+            - complete

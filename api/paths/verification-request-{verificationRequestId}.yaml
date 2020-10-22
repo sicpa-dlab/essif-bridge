@@ -1,0 +1,60 @@
+get:
+  tags:
+    - Verifications
+  summary: Get verification request
+  description: Get the specified verification request
+  parameters:
+    - $ref: "../components/parameters.yaml#/organizationId"
+    - $ref: "../components/parameters.yaml#/verificationRequestId"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/VerificationRequest"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"
+
+put:
+  tags:
+    - Verifications
+  summary: Update verification request
+  description: Update the specified verification request
+  parameters:
+    - $ref: "../components/parameters.yaml#/organizationId"
+    - $ref: "../components/parameters.yaml#/verificationRequestId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas.yaml#/VerificationRequestParam"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/VerificationRequest"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"
+
+delete:
+  tags:
+    - Verifications
+  summary: Delete verification request
+  description: Delete the specified verification request
+  parameters:
+    - $ref: "../components/parameters.yaml#/organizationId"
+    - $ref: "../components/parameters.yaml#/verificationRequestId"
+  responses:
+    "200":
+      description: Success
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"

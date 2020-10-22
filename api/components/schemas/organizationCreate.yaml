@@ -1,0 +1,30 @@
+type: object
+required:
+  - organization
+  - image
+properties:
+  organization:
+    type: object
+    required:
+      - label
+      - host
+      - walletName
+      - walletKey
+      - seed
+      - clientName
+    properties:
+      label:
+        type: string
+      host:
+        type: string
+      walletName:
+        type: string
+      walletKey:
+        type: string
+      seed:
+        type: string
+      clientName:
+        type: string
+  image:
+    type: string
+    format: binary

@@ -1,0 +1,43 @@
+get:
+  tags:
+    - Verifications
+  summary: List all verifications
+  description: List all available varifications for the current connection.
+  parameters:
+    - $ref: "../components/parameters.yaml#/connectionId"
+    - $ref: "../components/parameters.yaml#/verificationState"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/Verifications"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"
+
+post:
+  tags:
+    - Verifications
+  summary: Create a new Verification
+  description: Creates a new verification request
+  parameters:
+    - $ref: "../components/parameters.yaml#/connectionId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas.yaml#/VerificationParam"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/Verification"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"

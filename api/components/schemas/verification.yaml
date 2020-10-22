@@ -1,0 +1,27 @@
+VerificationParam:
+  type: object
+  properties:
+    name:
+      type: string
+
+Verification:
+  allOf:
+    - $ref: "#/VerificationParam"
+    - type: object
+      additionalProperties: true
+      properties:
+        verificationId:
+          type: string
+        verificationRequestId:
+          type: string
+        attributes:
+          type: string
+        predicates:
+          type: string
+        state:
+          type: string
+          enum:
+            - requested
+            - verified
+            - rejected
+            - error

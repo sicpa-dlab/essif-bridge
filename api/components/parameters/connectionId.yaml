@@ -1,0 +1,8 @@
+name: connectionId
+in: path
+description: 'A connection ID.'
+required: true
+example: '{connectionId}'
+schema:
+  type: string
+  pattern: '^[abcdefghkmnpqrstwxyABCDEFGHKMNPQRSTUVWXY0123456789]{24}$'

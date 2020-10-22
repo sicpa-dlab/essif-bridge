@@ -1,0 +1,13 @@
+organizationId:
+  $ref: "./parameters/organizationId.yaml"
+connectionId:
+  $ref: "./parameters/connectionId.yaml"
+connectionState:
+  $ref: "./parameters/connectionState.yaml"
+verificationId:
+  $ref: "./parameters/verificationId.yaml"
+verificationState:
+  $ref: "./parameters/verificationState.yaml"
+verificationRequestId:
+  $ref: "./parameters/verificationRequestId.yaml"
+    

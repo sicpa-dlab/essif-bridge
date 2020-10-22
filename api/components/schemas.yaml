@@ -1,0 +1,27 @@
+Organization:
+  $ref: "./schemas/organization.yaml"
+OrganizationCreate:
+  $ref: "./schemas/organizationCreate.yaml"
+Organizations:
+  $ref: "./schemas/organizations.yaml"
+Connection:
+  $ref: "./schemas/connection.yaml#/Connection"
+ConnectionParam:
+  $ref: "./schemas/connection.yaml#/ConnectionParam"
+Connections:
+  $ref: "./schemas/connections.yaml"
+Error:
+  $ref: "./schemas/error.yaml"
+Verification:
+  $ref: "./schemas/verification.yaml#/Verification"
+VerificationParam:
+  $ref: "./schemas/verification.yaml#/VerificationParam"
+Verifications:
+  $ref: "./schemas/verifications.yaml"
+VerificationRequest:
+  $ref: "./schemas/verificationRequest.yaml#/VerificationRequest"
+VerificationRequestParam:
+  $ref: "./schemas/verificationRequest.yaml#/VerificationRequestParam"
+VerificationRequests:
+  $ref: "./schemas/verificationRequests.yaml"
+ 

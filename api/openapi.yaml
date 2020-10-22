@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: eSSIF Agency Service
+  description: Agency credentials API to handle Organizations
+  version: v0.0.1
+servers:
+  - url: /
+tags:
+  - name: Organizations
+    description: The OpenAPI specification for Organizations
+  - name: Connections
+    description: The OpenAPI specification for Connections
+  - name: Verifications
+    description: The OpenAPI specification for Verifications
+
+paths:
+  /organizations:
+    $ref: "./paths/organizations.yaml"
+  /organizations/{organizationId}:
+    $ref: "./paths/organizations-{organizationId}.yaml"
+  /connections/{organizationId}:
+    $ref: "./paths/connections.yaml"
+  /connections/{organizationId}/{connectionId}:
+    $ref: "./paths/connections-{connectionId}.yaml"
+  /verifications/{connectionId}:
+    $ref: "./paths/verifications.yaml"
+  /verification/{connectionId}/{verificationId}:
+    $ref: "./paths/verification-{verificationId}.yaml"
+  /verificationRequests/{organizationId}:
+    $ref: "./paths/verification-requests.yaml"
+  /verificationRequest/{organizationId}/{verificationRequestId}:
+    $ref: "./paths/verification-request-{verificationRequestId}.yaml"
+
+
+components:
+  securitySchemes:
+    $ref: "./components/securitySchemes.yaml"
+  schemas:
+    $ref: "./components/schemas.yaml"
+  parameters:
+    $ref: "./components/parameters.yaml"
+  responses:
+    $ref: "./components/responses.yaml"
+
+security:
+  - bearerAuth: []

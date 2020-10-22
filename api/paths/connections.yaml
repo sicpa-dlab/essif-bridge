@@ -1,0 +1,43 @@
+get:
+  tags:
+    - Connections
+  summary: List all connections
+  description: List all available connections for the current authorization context.
+  parameters:
+    - $ref: "../components/parameters.yaml#/connectionState"
+    - $ref: "../components/parameters.yaml#/organizationId"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/Connections"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"
+
+post:
+  tags:
+    - Connections
+  summary: Create a new Connection
+  description: Creates a new connections invitation
+  parameters:
+    - $ref: "../components/parameters.yaml#/organizationId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas.yaml#/ConnectionParam"
+  responses:
+    "200":
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/Connection"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"

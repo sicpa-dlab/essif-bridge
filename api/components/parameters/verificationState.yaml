@@ -1,0 +1,11 @@
+in: query
+name: state
+schema:
+  type: string
+  enum:
+    - invited
+    - requested
+    - responded
+    - complete
+required: false
+description: Filter result by verification state.

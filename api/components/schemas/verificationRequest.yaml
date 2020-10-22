@@ -1,0 +1,16 @@
+VerificationRequestParam:
+  type: object
+  properties:
+    name:
+      type: string
+
+VerificationRequest:
+  allOf:
+    - $ref: "#/VerificationRequestParam"
+    - type: object
+      additionalProperties: true
+      properties:
+        verificationRequestId:
+          type: string
+        value:
+          type: string
