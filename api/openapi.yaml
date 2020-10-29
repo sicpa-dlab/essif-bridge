@@ -1,27 +1,42 @@
 openapi: 3.0.1
 info:
-  title: eSSIF Agency Service
-  description: Agency credentials API to handle Organizations
+  title: eSSIF Bridge Service
+  description: Sicpa Bridge API
   version: v0.0.1
 servers:
   - url: /
 tags:
-  - name: Organizations
-    description: The OpenAPI specification for Organizations
   - name: Connections
     description: The OpenAPI specification for Connections
-  - name: Verifications
-    description: The OpenAPI specification for Verifications
+  - name: Indy Credentials
+    description: The OpenAPI specification for Indy Issuance
+  - name: Indy Verifications
+    description: The OpenAPI specification for Indy Verifications
+  - name: JSON-LD Credentials
+    description: The OpenAPI specification for JSON-LD Issuance
+  - name: JSON-LD Verification
+    description: The OpenAPI specification for JSON-LD Verifications
+  
 
 paths:
-  /organizations:
-    $ref: "./paths/organizations.yaml"
-  /organizations/{organizationId}:
-    $ref: "./paths/organizations-{organizationId}.yaml"
   /connections/{organizationId}:
     $ref: "./paths/connections.yaml"
   /connections/{organizationId}/{connectionId}:
     $ref: "./paths/connections-{connectionId}.yaml"
+  # Indy Credentials
+  /credentials/{organizationId}:
+    $ref: "./paths/credentials.yaml"
+  /credentials/{organizationId}/{credentialId}:
+    $ref: "./paths/credentials-{credentialId}.yaml"
+  /schemas/{organizationId}:
+    $ref: "./paths/schemas.yaml"
+  /schemas/{organizationId}/{schemaId}:
+    $ref: "./paths/schemas-{schemaId}.yaml"
+  /credentialDefinition/{organizationId}:
+    $ref: "./paths/credential-definitions.yaml"
+  /credentialDefinition/{organizationId}/{credentialDefinitionId}:
+    $ref: "./paths/credential-definitions-{credentialDefinitionId}.yaml"
+  
   /verifications/{connectionId}:
     $ref: "./paths/verifications.yaml"
   /verification/{connectionId}/{verificationId}:
@@ -30,6 +45,13 @@ paths:
     $ref: "./paths/verification-requests.yaml"
   /verificationRequest/{organizationId}/{verificationRequestId}:
     $ref: "./paths/verification-request-{verificationRequestId}.yaml"
+  # JsonLd
+  /credentials/issueCredential:
+    $ref: "./paths/credentials-jsonld.yaml"
+  /verifier/credentials:
+    $ref: "./paths/verification-jsonld-credentials.yaml"
+  /verifier/presentations:
+    $ref: "./paths/verification-jsonld-presentations.yaml"
 
 
 components:

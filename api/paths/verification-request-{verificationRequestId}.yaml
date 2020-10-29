@@ -1,6 +1,6 @@
 get:
   tags:
-    - Verifications
+    - Indy Verifications
   summary: Get verification request
   description: Get the specified verification request
   parameters:
@@ -20,7 +20,7 @@ get:
 
 put:
   tags:
-    - Verifications
+    - Indy Verifications
   summary: Update verification request
   description: Update the specified verification request
   parameters:
@@ -45,7 +45,7 @@ put:
 
 delete:
   tags:
-    - Verifications
+    - Indy Verifications
   summary: Delete verification request
   description: Delete the specified verification request
   parameters:

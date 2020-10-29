@@ -4,6 +4,12 @@ connectionId:
   $ref: "./parameters/connectionId.yaml"
 connectionState:
   $ref: "./parameters/connectionState.yaml"
+credentialId:
+  $ref: "./parameters/credentialId.yaml"
+schemaId:
+  $ref: "./parameters/schemaId.yaml"
+credentialDefinitionId:
+  $ref: "./parameters/credentialDefinitionId.yaml"
 verificationId:
   $ref: "./parameters/verificationId.yaml"
 verificationState:

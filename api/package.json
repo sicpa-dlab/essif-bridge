@@ -8,7 +8,6 @@
     "dev": "npx swagger-ui-watcher $npm_package_config_root",
     "bundle": "npx swagger-cli bundle -o $npm_package_config_build -t yaml $npm_package_config_root",
     "validate": "npx swagger-cli validate $npm_package_config_root"
-
   },
   "config": {
     "root": "./openapi.yaml",

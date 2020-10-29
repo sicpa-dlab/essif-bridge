@@ -1,8 +1,0 @@
-type: array
-items:
-  $ref: "./organization.yaml"
-example:
-  - id: 1
-    name: First Agent
-  - id: 2
-    name: Second Agent

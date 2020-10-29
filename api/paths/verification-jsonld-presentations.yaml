@@ -1,0 +1,27 @@
+post:
+  tags:
+    - JSON-LD Verification
+  summary: Verify a given presentation.
+  description: Performs a series of verification checks on a provided Verifiable
+    Presentation and returns the overall status of the checks as well as the
+    status of each individual check.
+  operationId: verifyPresentation
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas.yaml#/VerificationJsonLdPresentationParam"
+    description: body
+  responses:
+    "200":
+      description: The verification was successful.
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/VerificationJsonLdCredentialResponse"
+    "201":
+      description: Created
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"

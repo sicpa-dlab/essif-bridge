@@ -1,9 +1,3 @@
-Organization:
-  $ref: "./schemas/organization.yaml"
-OrganizationCreate:
-  $ref: "./schemas/organizationCreate.yaml"
-Organizations:
-  $ref: "./schemas/organizations.yaml"
 Connection:
   $ref: "./schemas/connection.yaml#/Connection"
 ConnectionParam:
@@ -12,6 +6,20 @@ Connections:
   $ref: "./schemas/connections.yaml"
 Error:
   $ref: "./schemas/error.yaml"
+Credential:
+  $ref: "./schemas/credential.yaml#/Credential"
+CredentialParam:
+  $ref: "./schemas/credential.yaml#/CredentialParam"
+Schema:
+  $ref: "./schemas/schema.yaml#/Schema"
+SchemaParam:
+  $ref: "./schemas/schema.yaml#/SchemaParam"
+SchemaId:
+  $ref: "./schemas/schema.yaml#/SchemaId"
+CredentialDefinitionParam:
+  $ref: "./schemas/credentialDefinition.yaml#/CredentialDefinitionParam"
+CredentialDefinition:
+  $ref: "./schemas/credentialDefinition.yaml#/CredentialDefinition"
 Verification:
   $ref: "./schemas/verification.yaml#/Verification"
 VerificationParam:
@@ -24,4 +32,12 @@ VerificationRequestParam:
   $ref: "./schemas/verificationRequest.yaml#/VerificationRequestParam"
 VerificationRequests:
   $ref: "./schemas/verificationRequests.yaml"
- 
+# JSON-LD
+CredentialJsonLdRequestParam:
+  $ref: "./schemas/credentials-jsonld.yaml#/CredentialJsonLdRequestParam"
+VerificationJsonLdRequestParam:
+  $ref: "./schemas/verification-jsonld.yaml#/VerificationJsonLdRequestParam"
+VerificationJsonLdCredentialResponse:
+  $ref: "./schemas/verification-jsonld.yaml#/VerificationJsonLdCredentialResponse"
+VerificationJsonLdPresentationParam:
+  $ref: "./schemas/verification-jsonld.yaml#/VerificationJsonLdPresentationParam"

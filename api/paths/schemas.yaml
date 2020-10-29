@@ -1,0 +1,24 @@
+post:
+  tags:
+    - Indy Credentials
+  summary: Create a new schema
+  operationId: schemaPost
+  parameters:
+    - $ref: "../components/parameters.yaml#/organizationId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../components/schemas.yaml#/SchemaParam"
+    required: true
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas.yaml#/Schema"
+    "403":
+      $ref: "../components/responses.yaml#/AccessDenied"
+    default:
+      $ref: "../components/responses.yaml#/Default"

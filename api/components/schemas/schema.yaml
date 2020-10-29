@@ -1,0 +1,41 @@
+SchemaParam:
+  required:
+    - attributesName
+    - name
+    - version
+  type: object
+  properties:
+    name:
+      type: string
+      description: Schema name
+      example: prefs
+    version:
+      type: string
+      description: Schema version
+      example: "1.0"
+    attributesName:
+      type: array
+      description: List of schema attributes
+      items:
+        type: string
+        description: List of schema attributes
+
+Schema:
+    allOf:
+    - $ref: "#/SchemaId"
+    type: object
+    properties:
+      name:
+        type: string
+      version:
+        type: string
+      attributesName:
+        type: array
+        items:
+          type: string
+
+SchemaId:
+  type: object
+  properties:
+    id:
+      type: string

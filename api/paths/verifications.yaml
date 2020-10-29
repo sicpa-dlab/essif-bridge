@@ -1,6 +1,6 @@
 get:
   tags:
-    - Verifications
+    - Indy Verifications
   summary: List all verifications
   description: List all available varifications for the current connection.
   parameters:
@@ -20,7 +20,7 @@ get:
 
 post:
   tags:
-    - Verifications
+    - Indy Verifications
   summary: Create a new Verification
   description: Creates a new verification request
   parameters:
