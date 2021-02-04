@@ -1,0 +1,88 @@
+{
+  "family": "aca-py",
+  "containerDefinitions": [
+    {
+      "name": "acapy",
+      "image": "rdlabbridge/aries-cloudagent:latest",
+      "cpu": 512,
+      "memory": 1024,
+      "portMappings": [
+        {
+          "containerPort": 8030,
+          "hostPort": 8030,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [   
+        {
+          "name": "ACA_PY_ADMIN_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "ACA_PY_DIDCOMM_PORT",
+          "value": "8030"
+        },
+        {
+          "name": "ACAPY_ENDPOINT",
+          "value": "http://essif.adaptivespace.io:8080"
+        },
+        {
+          "name": "ACAPY_WALLET_SEED",
+          "value": "WwEItDltJlmMqyUGBKK9IA5x7oCS9JVC"
+        }
+      ],
+      "command": [
+        "start",
+        "--admin",
+        "0.0.0.0",
+        "8080",
+        "--admin-insecure-mode",
+        "--inbound-transport",
+        "http",
+        "0.0.0.0",
+        "8030",
+        "--outbound-transport",
+        "http",
+        "--endpoint",
+        "http://essif.adaptivespace.io:8080",
+        "--genesis-url",
+        "https://raw.githubusercontent.com/sovrin-foundation/sovrin/master/sovrin/pool_transactions_sandbox_genesis",
+        "--webhook-url",
+        "http://backend.local:8080/api/",
+        "--label",
+        "Bridge Agent",
+        "--seed",
+        "WwEItDltJlmMqyUGBKK9IA5x7oCS9JVC",
+        "--auto-ping-connection",
+        "--auto-accept-requests",
+        "--auto-respond-messages",
+        "--auto-respond-credential-proposal",
+        "--auto-respond-credential-offer",
+        "--auto-respond-credential-request",
+        "--auto-respond-presentation-proposal",
+        "--auto-respond-presentation-request",
+        "--auto-store-credential",
+        "--auto-verify-presentation"
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/aca-py",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "executionRoleArn": "arn:aws:iam::679278740009:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024"
+}
