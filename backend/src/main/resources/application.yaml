@@ -1,0 +1,14 @@
+server:
+  servlet:
+    context-path: /api
+
+#spring:
+#  mvc:
+#    converters:
+#      preferred-json-mapper: gson
+
+aca-py-client:
+  url: http://localhost:8070
+
+universal-resolver:
+  url: https://dev.uniresolver.io/1.0/identifiers/

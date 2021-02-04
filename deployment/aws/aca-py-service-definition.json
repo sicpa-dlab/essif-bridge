@@ -1,0 +1,38 @@
+{
+  "serviceName": "acapy",
+  "loadBalancers": [
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:eu-central-1:679278740009:targetgroup/ecs-essif-acapy-didcomm/89f385b2e7abde6d",
+      "containerName": "acapy",
+      "containerPort": 8030
+    },
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:eu-central-1:679278740009:targetgroup/ecs-essif-acapy-api/94b932c6b1b4b7d2",
+      "containerName": "acapy",
+      "containerPort": 8080
+    }
+  ],
+  "serviceRegistries": [
+    {
+      "registryArn": "arn:aws:servicediscovery:eu-central-1:679278740009:service/srv-742l6rc26rah7jru"
+    }
+  ],
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "platformVersion": "LATEST",
+  "taskDefinition": "arn:aws:ecs:eu-central-1:679278740009:task-definition/aca-py",
+  "deploymentConfiguration": {
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 100
+  },
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": ["subnet-02c70152a4b621a71", "subnet-0af7c5266f6ca3e62"],
+      "securityGroups": ["sg-0f344a231e130e86f"],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "healthCheckGracePeriodSeconds": 0,
+  "schedulingStrategy": "REPLICA",
+  "enableECSManagedTags": true
+}
