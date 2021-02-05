@@ -13,3 +13,5 @@ inline fun <reified T> SignResponse.signedCredential(): T? {
     val jsonString = gson.toJson(this.signedDoc)
     return jsonString.toModel<T>()
 }
+
+fun String.isValidUrl() = this.matches(Regex("^(https?|ftp)://[^\\s/$.?#].[^\\s]*$"))
