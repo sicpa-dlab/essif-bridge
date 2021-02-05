@@ -2,10 +2,14 @@ package com.sicpa.bridge.api.jsonld.domain.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
+import com.sicpa.bridge.api.validation.ValidJsonLdContext
 import io.swagger.v3.oas.annotations.media.Schema
+import javax.validation.Constraint
+import javax.validation.constraints.NotNull
 
 data class Credential(
 
+    @field:ValidJsonLdContext
     @field:Schema(
         name = "@context",
         nullable = false,
