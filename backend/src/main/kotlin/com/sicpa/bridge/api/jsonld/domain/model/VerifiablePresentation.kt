@@ -29,5 +29,5 @@ data class VerifiablePresentation(
     )
     val type: String,
     val verifiableCredential: VerifiableCredential,
-    val proof: LinkedDataProof
+    val proof: List<LinkedDataProof>
 )

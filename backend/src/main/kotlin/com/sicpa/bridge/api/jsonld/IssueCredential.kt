@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
-import javax.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,19 +24,38 @@ class IssueCredential(
 ) {
     @PostMapping(
         "/issue",
-        produces = ["application/json"]
+        produces = ["application/json"],
+        consumes = ["application/json"]
     )
 
     @ApiResponses(value = [
-        ApiResponse(responseCode = "201", description = "Credential successfully issued!"),
-        ApiResponse(responseCode = "400", description = "invalid input!", content = [Content(schema = Schema(type = "object"))] ),
+        ApiResponse(
+            responseCode = "201",
+            description = "Credential successfully issued!",
+            content = [
+                Content(
+                    schema = Schema(implementation = VerifiableCredential::class)
+                )
+            ]
+        ),
+        ApiResponse(responseCode = "400",
+            description = "invalid input!",
+            content = [Content(schema = Schema(type = "object"))]),
         ApiResponse(responseCode = "500", description = "error!", content = [Content(schema = Schema(type = "object"))])
     ])
-    @ResponseStatus( value = HttpStatus.CREATED)
+
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        content = [
+            Content(
+                schema = Schema(implementation = Credential::class)
+            ),
+        ]
+    )
+
+    @ResponseStatus(value = HttpStatus.CREATED)
     suspend fun issueCredential(
         @RequestBody
-        @Valid
-        credential: Credential,
-    ): VerifiableCredential = signCredentialUseCase.invoke(credential)
+        credential: Any,
+    ): Any = signCredentialUseCase.invoke(credential)
 
 }
