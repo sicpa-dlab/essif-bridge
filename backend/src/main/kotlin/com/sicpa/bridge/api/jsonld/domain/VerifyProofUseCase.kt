@@ -1,8 +1,13 @@
 package com.sicpa.bridge.api.jsonld.domain
 
+import com.google.gson.Gson
 import com.sicpa.bridge.api.ApiException
+import com.sicpa.bridge.api.getJsonLdProof
 import com.sicpa.bridge.api.jsonld.data.JsonldRepository
 import com.sicpa.bridge.api.jsonld.domain.model.VerifiablePresentation
+import com.sicpa.bridge.api.toModel
+import com.sicpa.bridge.api.toSingleProof
+import com.sicpa.bridge.core.BaseUseCase
 import com.sicpa.bridge.resolver.DidDocResolverRepository
 import org.springframework.stereotype.Service
 
@@ -10,17 +15,26 @@ import org.springframework.stereotype.Service
 class VerifyProofUseCase(
     val jsonldRepository: JsonldRepository,
     val didDocResolverRepository: DidDocResolverRepository
-) {
+) : BaseUseCase<Boolean, Any>() {
 
-    operator fun invoke(presentation: VerifiablePresentation): Boolean {
+    val gson: Gson by lazy { Gson() }
 
-        val verKey = didDocResolverRepository.getVerKey(presentation.proof.verificationMethod) ?: throw ApiException.NotFoundException("Could not find verkey")
+    override suspend fun run(params: Any): Boolean {
+
+        val presentation = gson.toJson(params).toModel<VerifiablePresentation>()
+
+        val proof = presentation?.proof?.getJsonLdProof()
+            ?: throw ApiException.NotFoundException("Could not find proof")
+
+        val verKey = didDocResolverRepository.getVerKey(proof.verificationMethod)
+            ?: throw ApiException.NotFoundException("Could not find verkey")
 
         val verifyRequest = jsonldRepository.verifyProof(
-            presentation = presentation,
+            presentation = params.toSingleProof(proof),
             verKey = verKey
         )
 
         return verifyRequest.valid
     }
+
 }

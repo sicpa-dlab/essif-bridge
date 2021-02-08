@@ -1,7 +1,5 @@
 package com.sicpa.bridge.api
 
-import com.google.gson.Gson
-import com.sicpa.acapyclient.model.SignResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
 
@@ -13,4 +11,5 @@ sealed class ApiException(msg: String, val code: HttpStatus, exception: Throwabl
     exception
 ) {
     class NotFoundException(msg: String, code: HttpStatus = HttpStatus.NOT_FOUND) : ApiException(msg, code)
+    class WrongCredential(msg: String, code: HttpStatus = HttpStatus.BAD_REQUEST) : ApiException(msg, code)
 }

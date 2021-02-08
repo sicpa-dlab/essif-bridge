@@ -6,8 +6,6 @@ import com.sicpa.acapyclient.model.SignResponse
 import com.sicpa.acapyclient.model.VerifyRequest
 import com.sicpa.acapyclient.model.VerifyResponse
 import com.sicpa.bridge.api.jsonld.domain.model.IssueCredentialRequest
-import com.sicpa.bridge.api.jsonld.domain.model.VerifiableCredential
-import com.sicpa.bridge.api.jsonld.domain.model.VerifiablePresentation
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -23,7 +21,7 @@ class JsonldRepository {
         return  JsonldApi().jsonldSignPost(signRequest)
     }
 
-    fun verifyCredential(credential: VerifiableCredential, verKey: String) : VerifyResponse {
+    fun verifyCredential(credential: Any, verKey: String) : VerifyResponse {
 
         val req = VerifyRequest().apply {
             doc = credential
@@ -33,7 +31,7 @@ class JsonldRepository {
         return JsonldApi().jsonldVerifyPost(req)
     }
 
-    fun verifyProof(presentation: VerifiablePresentation, verKey: String) : VerifyResponse {
+    fun verifyProof(presentation: Any, verKey: String) : VerifyResponse {
 
         val req = VerifyRequest().apply {
             doc = presentation

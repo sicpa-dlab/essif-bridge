@@ -3,8 +3,9 @@ package com.sicpa.bridge.api.jsonld
 import com.sicpa.bridge.api.jsonld.domain.VerifyProofUseCase
 import com.sicpa.bridge.api.jsonld.domain.model.VerifiablePresentation
 import com.sicpa.bridge.api.jsonld.domain.model.VerificationResult
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
-import javax.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,10 +22,18 @@ class VerifyProof(
         "/verify",
         produces = ["application/json"]
     )
-    fun verityCredential(
+
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        content = [
+            Content(
+                schema = Schema(implementation = VerifiablePresentation::class)
+            ),
+        ]
+    )
+
+    suspend fun verityCredential(
         @RequestBody
-        @Valid
-        verifiablePresentation: VerifiablePresentation
+        verifiablePresentation: Any
     ): VerificationResult {
 
         val valid = verifyProofUseCase.invoke(verifiablePresentation)
