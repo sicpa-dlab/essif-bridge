@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
 import io.swagger.v3.oas.annotations.media.Schema
 
-data class VerifiableCredential(
+class VerifiableCredentialMultipleProof(
     @field:Schema(
         name = "@context",
         nullable = false,
@@ -52,5 +52,5 @@ data class VerifiableCredential(
         example = "{ \"id\": \"did:example:123\", \"degree\": { \"type\": \"BachelorDegree\", \"name\": \"Bachelor of Science and Arts\" } }"
     )
     val credentialSubject: Any,
-    val proof: LinkedDataProof,
+    val proof: List<LinkedDataProof>,
 ) : BaseCredential(context = context, id = id, type = type, issuer = issuer, issuanceDate = issuanceDate)

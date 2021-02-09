@@ -21,7 +21,7 @@ class DidDocResolverRepository(
         val didDocument = uniResolver.resolve(verificationMethod)?.didDocument ?: return null
         val resolvedDidDoc = didDocument.toString().toModel<ResolvedDidDoc>() ?: return null
 
-        var pubKey: PublicKeyBase58? = resolvedDidDoc.verificationMethod.firstOrNull()
+        var pubKey: PublicKeyBase58? = resolvedDidDoc.verificationMethod?.firstOrNull()
 
         if(pubKey == null) {
             pubKey = resolvedDidDoc.publicKey?.find { publicKey ->
