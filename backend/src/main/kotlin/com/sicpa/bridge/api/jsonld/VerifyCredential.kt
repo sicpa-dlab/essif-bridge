@@ -80,6 +80,8 @@ class VerifyCredential(
             warnings = emptyList(),
             errors = errors)
 
-        return ResponseEntity(verificationResult, HttpStatus.CREATED)
+        val httpStatus = if (valid) HttpStatus.OK else HttpStatus.BAD_REQUEST
+
+        return ResponseEntity(verificationResult, httpStatus)
     }
 }
