@@ -6,6 +6,8 @@ import com.sicpa.bridge.api.jsonld.domain.model.VerificationResult
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -34,7 +36,7 @@ class VerifyProof(
     suspend fun verityCredential(
         @RequestBody
         verifiablePresentation: Any
-    ): VerificationResult {
+    ): ResponseEntity<VerificationResult> {
 
         val valid = verifyProofUseCase.invoke(verifiablePresentation)
         var errors: List<String> = emptyList()
@@ -42,10 +44,14 @@ class VerifyProof(
             errors = listOf(VerifyCredential.checkType)
         }
 
-        return VerificationResult(
+        val verificationResult = VerificationResult(
             checks = listOf(VerifyCredential.checkType),
             warnings = emptyList(),
             errors = errors
         )
+
+        val httpStatus = if (valid) HttpStatus.OK else HttpStatus.BAD_REQUEST
+
+        return ResponseEntity(verificationResult, httpStatus)
     }
 }

@@ -2,10 +2,8 @@ package com.sicpa.bridge.api.jsonld.domain
 
 import com.google.gson.Gson
 import com.sicpa.bridge.api.ApiException
-import com.sicpa.bridge.api.getJsonLdProof
+import com.sicpa.bridge.api.getLinkedDataProof
 import com.sicpa.bridge.api.jsonld.data.JsonldRepository
-import com.sicpa.bridge.api.jsonld.domain.model.VerifiablePresentation
-import com.sicpa.bridge.api.toModel
 import com.sicpa.bridge.api.toSingleProof
 import com.sicpa.bridge.core.BaseUseCase
 import com.sicpa.bridge.resolver.DidDocResolverRepository
@@ -21,9 +19,8 @@ class VerifyProofUseCase(
 
     override suspend fun run(params: Any): Boolean {
 
-        val presentation = gson.toJson(params).toModel<VerifiablePresentation>()
-
-        val proof = presentation?.proof?.getJsonLdProof()
+        @Suppress("UNCHECKED_CAST")
+        val proof = (params as Map<String, Any>).getLinkedDataProof()
             ?: throw ApiException.NotFoundException("Could not find proof")
 
         val verKey = didDocResolverRepository.getVerKey(proof.verificationMethod)

@@ -10,6 +10,6 @@ sealed class ApiException(msg: String, val code: HttpStatus, exception: Throwabl
     msg,
     exception
 ) {
-    class NotFoundException(msg: String, code: HttpStatus = HttpStatus.NOT_FOUND) : ApiException(msg, code)
+    class NotFoundException(msg: String, code: HttpStatus = HttpStatus.BAD_REQUEST) : ApiException(msg, code)
     class WrongCredential(msg: String, code: HttpStatus = HttpStatus.BAD_REQUEST) : ApiException(msg, code)
 }
