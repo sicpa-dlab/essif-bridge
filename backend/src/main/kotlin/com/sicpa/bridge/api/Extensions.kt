@@ -6,6 +6,9 @@ import com.sicpa.bridge.api.jsonld.domain.model.LinkedDataProof
 import com.sicpa.bridge.api.jsonld.domain.model.MultipleProof
 import com.sicpa.bridge.api.jsonld.domain.model.SingleProof
 
+
+
+
 inline fun <reified T> String.toModel(): T? {
     val gson = Gson()
     return gson.fromJson(this, T::class.java) as T
@@ -31,9 +34,14 @@ fun Any.toSingleProof(linkedDataProof: LinkedDataProof): Any {
     return credentialSingleProof
 }
 
-fun List<LinkedDataProof>.getJsonLdProof(): LinkedDataProof? {
+fun List<LinkedDataProof>.getProof(eidas: Boolean = false): LinkedDataProof? {
+
     return this.firstOrNull { proof ->
-        proof.proofPurpose == "assertionMethod"
+        if (eidas) {
+            proof.type == "CAdESRSASignature2020"
+        } else {
+            proof.proofPurpose == "assertionMethod" && proof.cades == null
+        }
     }
 }
 
@@ -43,7 +51,10 @@ fun Map<String, Any>.getLinkedDataProof() : LinkedDataProof? {
 
     return when (proof) {
         is Map<*,*> -> gson.fromMap<SingleProof>(this)?.proof
-        is List<*> -> gson.fromMap<MultipleProof>(this)?.proof?.getJsonLdProof()
+        is List<*> -> gson.fromMap<MultipleProof>(this)?.proof?.getProof()
         else   -> null
     }
 }
+
+// cast without exception
+inline fun <reified T> cast(any: Any?) : T? = any as? T?

@@ -33,5 +33,7 @@ data class LinkedDataProof(
         description = "Detached JSON Web Signature",
         example = "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..YtqjEYnFENT7fNW-COD0HAACxeuQxPKAmp4nIl8jYAu__6IH2FpSxv81w-l5PvE1og50tS9tH8WyXMlXyo45CA"
     )
-    val jws: String
+    val jws: String,
+
+    val cades: String? = null
 )

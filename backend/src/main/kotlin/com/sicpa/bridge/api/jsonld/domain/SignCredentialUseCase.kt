@@ -6,12 +6,14 @@ import com.sicpa.bridge.api.jsonld.data.WalletApiRepository
 import com.sicpa.bridge.api.jsonld.domain.model.IssueCredentialRequest
 import com.sicpa.bridge.api.jsonld.domain.model.LinkedDataProofOptions
 import com.sicpa.bridge.core.BaseUseCase
+import com.sicpa.bridge.eidas.EidasBridgeRepository
 import org.springframework.stereotype.Service
 
 @Service
 class SignCredentialUseCase(
     val jsonldRepository: JsonldRepository,
     val walletApiRepository: WalletApiRepository,
+    val eidasBridgeRepository: EidasBridgeRepository
 ) : BaseUseCase<Any, Any>() {
 
     override suspend fun run(params: Any): Any {
@@ -30,9 +32,15 @@ class SignCredentialUseCase(
 
         val signed = response.signedDoc ?: throw throw ApiException.WrongCredential("Could not sign")
 
-        // return proof as array
         val credential = (signed as Map<*, *>).toMutableMap()
-        credential["proof"] = listOf(credential["proof"])
+        val credentialProof = mutableListOf(credential["proof"])
+
+        eidasBridgeRepository.createProf(credential).let { eidasProof ->
+            credentialProof.add(eidasProof)
+        }
+
+        credential["proof"] = credentialProof
+
         return credential
 
     }
