@@ -165,9 +165,10 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.0.0</version>
+				<version>5.0.1</version>
 				<executions>
 					<execution>
+						<id>acapy</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
@@ -180,6 +181,26 @@
 							<modelPackage>${project.groupId}.acapyclient.model</modelPackage>
 							<apiPackage>${project.groupId}.acapyclient.api</apiPackage>
 							<invokerPackage>${project.groupId}.acapyclient.invoker</invokerPackage>
+
+							<configOptions>
+								<sourceFolder>${generated-sources-java-path}</sourceFolder>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>eidas</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/eidas-api.yaml</inputSpec>
+							<generatorName>java</generatorName>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateApiDocumentation>false</generateApiDocumentation>
+
+							<modelPackage>${project.groupId}.eidasclient.model</modelPackage>
+							<apiPackage>${project.groupId}.eidasclient.api</apiPackage>
+							<invokerPackage>${project.groupId}.eidasclient.invoker</invokerPackage>
 
 							<configOptions>
 								<sourceFolder>${generated-sources-java-path}</sourceFolder>
