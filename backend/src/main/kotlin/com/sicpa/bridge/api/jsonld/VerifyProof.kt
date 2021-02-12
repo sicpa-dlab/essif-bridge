@@ -39,14 +39,14 @@ class VerifyProof(
     ): ResponseEntity<VerificationResult> {
 
         val valid = verifyProofUseCase.invoke(verifiablePresentation)
-        var errors: List<String> = emptyList()
+        var errors = arrayListOf<String>()
         if(!valid) {
-            errors = listOf(VerifyCredential.checkType)
+            errors = arrayListOf(VerifyCredential.checkType)
         }
 
         val verificationResult = VerificationResult(
-            checks = listOf(VerifyCredential.checkType),
-            warnings = emptyList(),
+            checks =  arrayListOf(VerifyCredential.checkType),
+            warnings = arrayListOf<String>(),
             errors = errors
         )
 

@@ -8,17 +8,17 @@ data class VerificationResult(
         description = "The checks performed",
         example = "[\"proof\"]"
     )
-    val checks: List<String>,
+    val checks:  MutableList<String>,
     @field:Schema(
         nullable = false,
         description = "Warnings",
         example = "[]"
     )
-    val warnings: List<String?>,
+    val warnings: MutableList<String>,
     @field:Schema(
         nullable = false,
         description = "Errors",
         example = "[]"
     )
-    val errors: List<String?>
+    val errors: MutableList<String>
 )

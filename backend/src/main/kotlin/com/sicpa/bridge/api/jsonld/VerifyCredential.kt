@@ -69,16 +69,9 @@ class VerifyCredential(
         verifiableCredential: Any
     ): ResponseEntity<VerificationResult> {
 
-        val valid = verifyCredentialUseCase.invoke(verifiableCredential)
-        var errors: List<String> = emptyList()
-        if(!valid) {
-            errors = listOf(checkType)
-        }
+        val verificationResult = verifyCredentialUseCase.invoke(verifiableCredential)
 
-        val verificationResult = VerificationResult(
-            checks = listOf(checkType),
-            warnings = emptyList(),
-            errors = errors)
+        val valid = verificationResult.checks.isNotEmpty() && verificationResult.errors.isEmpty()
 
         val httpStatus = if (valid) HttpStatus.OK else HttpStatus.BAD_REQUEST
 
