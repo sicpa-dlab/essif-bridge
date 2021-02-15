@@ -35,7 +35,7 @@ class SignCredentialUseCase(
         val credential = (signed as Map<*, *>).toMutableMap()
         val credentialProof = mutableListOf(credential["proof"])
 
-        eidasBridgeRepository.createProf(credential).let { eidasProof ->
+        eidasBridgeRepository.createProf(credential, acaPyDid.publicDid).let { eidasProof ->
             credentialProof.add(eidasProof)
         }
 

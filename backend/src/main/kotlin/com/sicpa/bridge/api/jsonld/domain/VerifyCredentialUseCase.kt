@@ -33,18 +33,22 @@ class VerifyCredentialUseCase(
             credential = params.toSingleProof(proof),
             verKey = verKey
         )
-
-        val eSealCheck = eidasBridgeRepository.verifyCredential(params)
-
         val results = arrayListOf<Pair<Boolean, String>>()
         results.add(Pair(verifyRequest.valid, "proof"))
-        results.add(Pair(eSealCheck, "eidas"))
 
         val verificationResult = VerificationResult(
             checks = arrayListOf<String>(),
             warnings = arrayListOf<String>(),
             errors = arrayListOf<String>()
         )
+
+        try {
+            val eSealCheck = eidasBridgeRepository.verifyCredential(params)
+            results.add(Pair(eSealCheck, "eidas"))
+        } catch(ex: Exception) {
+            verificationResult.warnings.add("could not verify eidas seal")
+        }
+
 
         results.map { result ->
             when(result.first) {
