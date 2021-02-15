@@ -2,8 +2,8 @@ package com.sicpa.bridge.api.jsonld.data
 
 import com.sicpa.acapyclient.api.WalletApi
 import com.sicpa.acapyclient.model.DIDResult
-import com.sicpa.bridge.api.jsonld.domain.model.AcaPyDid
 import com.sicpa.bridge.api.ApiException
+import com.sicpa.bridge.api.jsonld.domain.model.AcaPyDid
 import org.springframework.stereotype.Repository
 
 @Repository

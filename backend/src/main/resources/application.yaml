@@ -16,3 +16,7 @@ aca-py-client:
 
 universal-resolver:
   url: https://dev.uniresolver.io/1.0/identifiers/
+
+eidas-bridge:
+  url: https://api.vidchain.net
+  certificatePassword: 1234
