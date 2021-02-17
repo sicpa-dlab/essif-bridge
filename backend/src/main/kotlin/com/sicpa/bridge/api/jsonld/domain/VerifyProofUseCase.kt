@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.sicpa.bridge.api.ApiException
 import com.sicpa.bridge.api.getLinkedDataProof
 import com.sicpa.bridge.api.jsonld.data.JsonldRepository
-import com.sicpa.bridge.api.toSingleProof
 import com.sicpa.bridge.core.BaseUseCase
 import com.sicpa.bridge.resolver.DidDocResolverRepository
 import org.springframework.stereotype.Service
@@ -27,7 +26,7 @@ class VerifyProofUseCase(
             ?: throw ApiException.NotFoundException("Could not find verkey")
 
         val verifyRequest = jsonldRepository.verifyProof(
-            presentation = params.toSingleProof(proof),
+            presentation = params,
             verKey = verKey
         )
 
