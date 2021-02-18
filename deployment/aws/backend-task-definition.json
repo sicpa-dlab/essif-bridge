@@ -1,0 +1,42 @@
+{
+  "family": "essif-backend",
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "image": "679278740009.dkr.ecr.eu-central-1.amazonaws.com/essif/backend",
+      "cpu": 512,
+      "memory": 1024,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [   
+        {
+          "name": "ACAPYCLIENT_URL",
+          "value": "http://acapy.local:8080"
+        },
+        {
+          "name": "UNIVERSALRESOLVER_URL",
+          "value": "https://dev.uniresolver.io/1.0/identifiers/"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/essif-backend",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "executionRoleArn": "arn:aws:iam::679278740009:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024"
+}

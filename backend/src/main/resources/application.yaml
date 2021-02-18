@@ -1,0 +1,22 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+
+#spring:
+#  mvc:
+#    converters:
+#      preferred-json-mapper: gson
+
+aca-py-client:
+  url: http://localhost:8070
+
+universal-resolver:
+  url: https://dev.uniresolver.io/1.0/identifiers/
+
+eidas-bridge:
+  url: https://api.vidchain.net
+  certificatePassword: 1234
