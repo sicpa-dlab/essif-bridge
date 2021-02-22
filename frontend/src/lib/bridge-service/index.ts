@@ -16,7 +16,7 @@ export class BridgeClient {
   verifyPresentation = async (body: any): Promise<Result<Boolean, Error>> => {
     try {
       const resp = await this.httpClient.post("/presentations/verify", body);
-      return ok(resp.status == 200);
+      return ok(resp.status === 200);
     } catch (error) {
       return err(error);
     }

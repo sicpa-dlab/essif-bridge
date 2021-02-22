@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SockJsClient from "react-stomp";
-import './events.css'
+import './events.scss'
 
 interface AcaPyEventsProps {
 }
