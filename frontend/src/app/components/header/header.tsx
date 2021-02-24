@@ -10,9 +10,6 @@ export interface Props {
 }
 
 export default class Header extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
 
   render() {
     return (
