@@ -1,0 +1,12 @@
+.progress-indicator {
+  margin-left: 54px ;
+  height: 51px;
+  overflow: visible;
+  &-step {
+    width: 248px;
+  }
+}
+
+.bx--progress {
+    display: block ;
+}
