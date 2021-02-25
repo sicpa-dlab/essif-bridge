@@ -1,6 +1,7 @@
 import React from 'react'
 import { ProgressIndicator, ProgressStep } from 'carbon-components-react';
 
+import './steps.scss'
 import { ProgressIndicatorStep } from "../../shared/models"
 
 interface Props {
@@ -8,10 +9,6 @@ interface Props {
 }
 
 export default class Steps extends React.Component<Props> {
-
-  constructor(props: Props) {
-    super(props);
-  }
 
   /**
    * Arrow function to map all steps and render the progress step.
@@ -26,14 +23,14 @@ export default class Steps extends React.Component<Props> {
    */
   renderProgressStep = (label: string) => {
     return (
-      <ProgressStep label={label}></ProgressStep>
+      <ProgressStep className="progress-indicator-step" label={label}></ProgressStep>
     );
   };
 
   render() {
     return (
       <div className="progress-indicator">
-        <ProgressIndicator spaceEqually={false} >
+        <ProgressIndicator spaceEqually={true} >
           {this.renderProgressSteps()}
         </ProgressIndicator>
       </div>

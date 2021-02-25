@@ -1,14 +1,20 @@
+/** Function for converting a px based font-size to rem. */
+@function calculateRem($size) {
+  $remSize: $size / 16px; /** Default font size on html element is 100%, equivalent to 16px; */
+  @return #{$remSize}rem;
+}
+
 /** Font family variables. */
 $font-family-default: "Inter", sans-serif;
 $font-family-condensed: "Inter-SemiBold", "Inter", sans-serif;
 
 /** Font size variables. */
-$font-size-xxl: 54px;
-$font-size-xl: 32px;
-$font-size-lg: 24px;
-$font-size-md: 20px;
-$font-size-sm: 16px;
-$font-size-xs: 14px;
+$font-size-xxl: calculateRem(54px);
+$font-size-xl: calculateRem(32px);
+$font-size-lg: calculateRem(24px);
+$font-size-md: calculateRem(20px);
+$font-size-sm: calculateRem(16px);
+$font-size-xs: calculateRem(14px);
 
 /** Line height variables. */
 $line-height-lg: 1.4;
