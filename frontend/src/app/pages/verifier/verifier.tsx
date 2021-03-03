@@ -20,7 +20,7 @@ export default class Verifier extends React.Component {
     return (
       <>
         <Header title={this.title} page={this.page} icon={ehicVerifier} organisation={this.organisation}></Header>
-        <Steps steps={this.steps}></Steps>
+        <Steps steps={this.steps} currentIndex={1}></Steps>
       </>
     );
   }

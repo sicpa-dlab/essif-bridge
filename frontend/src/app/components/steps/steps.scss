@@ -1,9 +1,11 @@
+@import '../../shared/styles/typography.scss';
+
 .progress-indicator {
-  margin-left: 54px ;
-  height: 51px;
-  overflow: visible;
+  margin-left: $size-54px;
+  height: calculateRem(40px);
+  //overflow: visible;
   &-step {
-    width: 248px;
+    width: calculateRem(248px);
   }
 }
 
