@@ -7,6 +7,7 @@ import com.sicpa.bridge.api.jsonld.domain.model.IssueCredentialRequest
 import com.sicpa.bridge.api.jsonld.domain.model.LinkedDataProofOptions
 import com.sicpa.bridge.core.BaseUseCase
 import com.sicpa.bridge.eidas.EidasBridgeRepository
+import mu.KLogging
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,6 +16,8 @@ class SignCredentialUseCase(
     val walletApiRepository: WalletApiRepository,
     val eidasBridgeRepository: EidasBridgeRepository
 ) : BaseUseCase<Any, Any>() {
+
+    companion object : KLogging()
 
     override suspend fun run(params: Any): Any {
 
@@ -35,8 +38,12 @@ class SignCredentialUseCase(
         val credential = (signed as Map<*, *>).toMutableMap()
         val credentialProof = mutableListOf(credential["proof"])
 
-        eidasBridgeRepository.createProf(credential, acaPyDid.publicDid).let { eidasProof ->
-            credentialProof.add(eidasProof)
+        try {
+            eidasBridgeRepository.createProf(credential, acaPyDid.publicDid).let { eidasProof ->
+                credentialProof.add(eidasProof)
+            }
+        } catch (ex: Exception) {
+            logger.error("Could not apply eSeal: {}", ex.localizedMessage)
         }
 
         credential["proof"] = credentialProof
