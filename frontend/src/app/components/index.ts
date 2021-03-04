@@ -1,4 +1,8 @@
-export { default as App } from './App'
-export { default as Eventsdemo } from "./eventsdemo"
-export { default as ChapiExample } from "./chapi-example/ChapiExample"
-export { default as Header } from "./header"
+export * from './App';
+export * from "./eventsdemo"
+export * from "./chapi-example/ChapiExample"
+export * from "./header";
+export * from "./logIn";
+export * from "./chooseWallet";
+export * from "./receiveCredential";
+export * from "./customTile"
