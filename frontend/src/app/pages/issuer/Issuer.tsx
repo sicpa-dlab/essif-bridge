@@ -3,7 +3,7 @@ import React from "react";
 import ehicIssuer from "../../../assets/images/ehic-issuer-02.svg";
 import Header from "../../components/header";
 import Steps from '../../components/steps';
-import "./issuer.scss";
+import "./Issuer.scss";
 import { ProgressIndicatorStep } from '../../shared/models';
 import VerifyCredential from '../../components/verifyCredential';
 import LogIn from '../../components/logIn';
