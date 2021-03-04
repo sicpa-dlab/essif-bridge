@@ -74,6 +74,8 @@ export class WalletChapi {
       data: presentationData,
     } = presentation as VerifiablePresentationWithCredential
 
+    if (presentationData?.verifiableCredential == null) return []
+
     const credential = presentationData.verifiableCredential[0]
 
     console.log("extracted Credential:", JSON.stringify(credential, null, 2))
