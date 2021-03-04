@@ -23,7 +23,7 @@ export default class AcaPyEvents extends Component<AcaPyEventsProps, AcaPyEvents
     return (
       <>
         <SockJsClient
-          url={process.env.REACT_APP_NOT_WEBSOCKET_URL}
+          url={process.env.REACT_APP_WEBSOCKET_URL}
           topics={["/topic/proof"]}
           onMessage={(msg: any) => {
             console.log(msg);
