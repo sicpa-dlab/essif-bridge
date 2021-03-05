@@ -3,6 +3,11 @@ import React from 'react';
 import { Launch16 } from '@carbon/icons-react';
 import { Button, TextInput, TooltipIcon } from 'carbon-components-react';
 
+import { SicpaBridgeClient } from '../../shared/services/sicpa-bridge'
+import { sampleCredential } from '../chapi-example/sample-credential'
+import * as chapiQueries from '../chapi-example/WalletQueries'
+import { WalletChapi } from '../../shared/services/wallet'
+
 import eidasLogo02 from '../../../assets/images/eidas-logo-02.png';
 import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg';
 import credential from './credential.json';
@@ -10,8 +15,8 @@ import './receiveCredential.scss';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
 
 const ExpandablePanel: React.FC<StepperProps> = ({ handleClick }) => {
-  const header = "Verified Information to be received";
-  const content = "European Health Insurance Card.";
+  const header = "Verified Information to be received"
+  const content = "European Health Insurance Card."
 
   return (
     <>
@@ -93,8 +98,36 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
   title: string;
   description: string;
 
+  private walletChapi: WalletChapi
+
+  async componentDidMount() {
+    await this.walletChapi.configure()
+  }
+
+  issueChapiCredential = async () => {
+    // onnecting to wallet
+    const presentation = await this.walletChapi.connectToWallet(chapiQueries.didAuthQuery())
+    if (presentation == null) {
+      // could not connect to wallet
+      return
+    }
+
+    // issuing credential
+    const issuance = await this.walletChapi.issueCredential(presentation, sampleCredential)
+
+    if (issuance) {
+      this.props.handleClick()
+    } else {
+      // could not ussue credential }
+    }
+  }
+
   constructor(props: StepperProps) {
     super(props);
+
+    const bridgeClient = new SicpaBridgeClient();
+    this.walletChapi = new WalletChapi(bridgeClient)
+
     this.headerTitle = `Great! We are now ready to issue your European Health Insurance Card.`;
     this.title = "Receive Credential";
     this.description = `Your EHIC credential allows you to verify your health insurance eligibility wherever and whenever your need. 
@@ -107,7 +140,7 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
         <h3>{this.headerTitle}</h3>
         <h2 className="receive-credential-title">{this.title}</h2>
         <p>{this.description}</p>
-        <ExpandablePanel handleClick={this.props.handleClick} />
+        <ExpandablePanel handleClick={async () => { await this.issueChapiCredential() }} />
       </div>
     )
   }
