@@ -1,1 +1,1 @@
-export { default } from "./verifyCredential";
+export { default as VerifyCredential } from "./verifyCredential";
