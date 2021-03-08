@@ -21,7 +21,7 @@
         },
         {
           "name": "UNIVERSALRESOLVER_URL",
-          "value": "https://dev.uniresolver.io/1.0/identifiers/"
+          "value": "http://3.23.52.79:8080/1.0/identifiers/"
         }
       ],
       "logConfiguration": {
