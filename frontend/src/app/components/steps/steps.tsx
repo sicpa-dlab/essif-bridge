@@ -44,7 +44,7 @@ export default class Steps extends React.Component<Props, State> {
   render() {
     return (
       <div className="progress-indicator">
-        <ProgressIndicator spaceEqually={true} currentIndex={this.props.currentIndex} onChange={() => this.props.currentIndex} >
+        <ProgressIndicator spaceEqually={true} currentIndex={this.props.currentIndex} >
           {this.renderProgressSteps()}
         </ProgressIndicator>
       </div >

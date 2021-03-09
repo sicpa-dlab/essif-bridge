@@ -6,7 +6,7 @@
   line-height: $line-height-lg;
   border-color: $essif-white-smoke;
   border-style: solid; 
-  border-width: 1px;
+  border-width: calculateRem(1px);
 
   &-header {
     font-family: $font-family-condensed;
@@ -23,24 +23,25 @@
       width: $size-64px;
     }
   }
-
-  &:hover {
-    color: #171717;
-    background-color: white;
-    border-color: $essif-blue;
-    border-style: solid; 
-    border-width: calculateRem(1px);
-  }
 }
 
-.connect-wallet {
-    margin: calculateRem(75px) $size-54px 0;
-    text-align: justify;
-  
-    &-title {
-      margin : calculateRem(29px) 0 calculateRem(25px);
-    }
-    &-tile {
-      margin-top : calculateRem(34px);
-    }
+.inline-loading {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  height: 2.5rem;
+  margin-bottom: 0.5rem ;
+  padding-left: 1rem;
+
+  &-active {
+    background-color: $essif-white-smoke;
   }
+    
+  &-finished {
+    background-color: $essif-success;
+  }
+    
+  &-error {
+    background-color: $essif-error;
+  }
+}

@@ -49,14 +49,14 @@ export default class ChapiExample extends Component<IssuerChapiProps, IssuerChap
     return (
       <>
         <div>
-          <div style={{margin: "2em"}}>
+          <div style={{ margin: "2em" }}>
             <button onClick={async () => { await this.issueChapiCredential(); }}>Issue Credential</button>
           </div>
-          <div style={{margin: "2em"}}>
+          <div style={{ margin: "2em" }}>
             <button onClick={async () => { await this.verifyChapiCredential(); }}>VerifyCredential</button>
-            
+
           </div>
-          <div style={{margin: "2em"}}>
+          <div style={{ margin: "2em" }}>
             <h3>{this.state.chapiResult}</h3>
           </div>
         </div>

@@ -3,7 +3,7 @@ import React from 'react';
 import chapi from '../../../assets/images/edison-wallet-chapi-04.svg';
 import didcom from '../../../assets/images/edison-wallet-didcom-03.svg';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
-import CustomTile from '../customTile';
+import { CustomTile } from '..';
 import './chooseWallet.scss';
 
 export default class ChooseWallet extends React.Component<StepperProps> {
