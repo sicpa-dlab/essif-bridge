@@ -19,6 +19,11 @@ RUN npm run build
 # production environment
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
+
+# verifier
+COPY --from=build /app/build /usr/share/nginx/verifier
+COPY ./deploy/verifier_assets /usr/share/nginx/verifier
+
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
