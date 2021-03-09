@@ -1,14 +1,9 @@
 import React from "react";
 
 import ehicIssuer from "../../../assets/images/ehic-issuer-02.svg";
-import Header from "../../components/header";
-import Steps from '../../components/steps';
 import "./Issuer.scss";
 import { ProgressIndicatorStep } from '../../shared/models';
-import VerifyCredential from '../../components/verifyCredential';
-import LogIn from '../../components/logIn';
-import ChooseWallet from '../../components/chooseWallet';
-import { ReceiveCrendential } from '../../components';
+import { ReceiveCrendential, Header, Steps, VerifyCredential, LogIn, ChooseWallet } from '../../components';
 
 export default class Issuer extends React.Component<{}, { currentIndex: number }> {
   organisation = "Utopia Business Services Authority";
@@ -43,7 +38,6 @@ export default class Issuer extends React.Component<{}, { currentIndex: number }
   }
 
   nextStep() {
-    debugger
     if (this.state.currentIndex < 4) {
       this.setState({ currentIndex: this.state.currentIndex + 1 })
     }

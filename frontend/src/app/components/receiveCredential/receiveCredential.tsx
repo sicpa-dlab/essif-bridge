@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Launch16 } from '@carbon/icons-react';
-import { Button, TextInput, TooltipIcon } from 'carbon-components-react';
+import { Launch16, Restart16 } from '@carbon/icons-react';
+import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components-react';
 
 import { SicpaBridgeClient } from '../../shared/services/sicpa-bridge'
 import { sampleCredential } from '../chapi-example/sample-credential'
@@ -14,9 +14,33 @@ import credential from './credential.json';
 import './receiveCredential.scss';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
 
-const ExpandablePanel: React.FC<StepperProps> = ({ handleClick }) => {
+interface Props extends StepperProps {
+  loading: boolean;
+  error: boolean;
+}
+
+const ExpandablePanel: React.FC<Props> = (props: Props) => {
   const header = "Verified Information to be received"
   const content = "European Health Insurance Card."
+
+  const ReceiveButton: React.FC = () => {
+    return (
+      props.loading
+        ?
+        <InlineLoading style={{ marginBottom: 0 }} className={`inline-loading inline-loading-active`} description="Issue Credential" status="active" />
+        :
+        !props.error
+          ?
+          <Button style={{ width: '-webkit-fill-available' }} size="field" renderIcon={Launch16} onClick={props.handleClick}>Receive Credential</Button>
+          :
+          <div className="bx--col">
+            <InlineLoading className={`inline-loading inline-loading-error`} description="Could not ussue credential" status="error" />
+            <Button kind="tertiary" style={{ width: '-webkit-fill-available' }} size="field" de renderIcon={Restart16} onClick={props.handleClick}>
+              Issue Credential <span>Retry</span>
+            </Button>
+          </div>
+    )
+  }
 
   return (
     <>
@@ -84,7 +108,7 @@ const ExpandablePanel: React.FC<StepperProps> = ({ handleClick }) => {
               placeholder="Data entry" />
           </div>
           <div className="bx--col-lg-6" style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-end' }}>
-            <Button type="submit" style={{ width: '-webkit-fill-available' }} size="field" renderIcon={Launch16} onClick={handleClick}>Receive Credential</Button>
+            <ReceiveButton />
           </div>
         </div>
       </div>
@@ -97,8 +121,21 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
   headerTitle: string;
   title: string;
   description: string;
+  error: boolean;
+  state = { loading: false };
 
-  private walletChapi: WalletChapi
+  private walletChapi: WalletChapi;
+  constructor(props: StepperProps) {
+    super(props);
+    this.setState({ loading: false })
+    const bridgeClient = new SicpaBridgeClient();
+    this.walletChapi = new WalletChapi(bridgeClient)
+    this.error = false;
+    this.headerTitle = `Great! We are now ready to issue your European Health Insurance Card.`;
+    this.title = "Receive Credential";
+    this.description = `Your EHIC credential allows you to verify your health insurance eligibility wherever and whenever your need. 
+                        This credential will be safely and securely stored in your identity wallet.`
+  }
 
   async componentDidMount() {
     await this.walletChapi.configure()
@@ -106,6 +143,8 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
 
   issueChapiCredential = async () => {
     // onnecting to wallet
+    this.setState({ loading: true })
+
     const presentation = await this.walletChapi.connectToWallet(chapiQueries.didAuthQuery())
     if (presentation == null) {
       // could not connect to wallet
@@ -113,25 +152,15 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
     }
 
     // issuing credential
-    const issuance = await this.walletChapi.issueCredential(presentation, sampleCredential)
-
-    if (issuance) {
-      this.props.handleClick()
-    } else {
-      // could not ussue credential }
-    }
-  }
-
-  constructor(props: StepperProps) {
-    super(props);
-
-    const bridgeClient = new SicpaBridgeClient();
-    this.walletChapi = new WalletChapi(bridgeClient)
-
-    this.headerTitle = `Great! We are now ready to issue your European Health Insurance Card.`;
-    this.title = "Receive Credential";
-    this.description = `Your EHIC credential allows you to verify your health insurance eligibility wherever and whenever your need. 
-                        This credential will be safely and securely stored in your identity wallet.`
+    await this.walletChapi.issueCredential(presentation, sampleCredential)
+      .then(() => {
+        this.setState({ loading: false });
+        this.props.handleClick();
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+        this.error = true;
+      })
   }
 
   render() {
@@ -140,7 +169,7 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
         <h3>{this.headerTitle}</h3>
         <h2 className="receive-credential-title">{this.title}</h2>
         <p>{this.description}</p>
-        <ExpandablePanel handleClick={async () => { await this.issueChapiCredential() }} />
+        <ExpandablePanel error={this.error} loading={this.state.loading} handleClick={async () => { await this.issueChapiCredential() }} />
       </div>
     )
   }
