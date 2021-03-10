@@ -51,6 +51,9 @@ export class WalletChapi {
     presentation: any,
     credential: any
   ): Promise<boolean> => {
+
+    credential.issuanceDate = new Date().toISOString();
+
     const webCredentialWrapper = presentation as WebCredentialWrapper
     if (webCredentialWrapper == null) return false
 
