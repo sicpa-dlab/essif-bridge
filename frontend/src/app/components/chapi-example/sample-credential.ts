@@ -9,7 +9,7 @@ export const sampleCredential =  {
     "VerifiableCredential",
     "EuropeanHealthInsuranceCard"
   ],
-  "issuer": "did:example:28394728934792387",
+  "issuer": "did:sov:staging:BJX4adKceDv9D4qmztEN3F",
   "name": "European Health Insurance Card",
   "description": "Example of a European Health Insurance Card",
   "expirationDate": "2029-12-03T12:19:52Z",
