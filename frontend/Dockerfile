@@ -24,6 +24,10 @@ COPY --from=build /app/build /usr/share/nginx/html
 COPY --from=build /app/build /usr/share/nginx/verifier
 COPY ./deploy/verifier_assets /usr/share/nginx/verifier
 
+# issuer
+COPY --from=build /app/build /usr/share/nginx/issuer
+COPY ./deploy/issuer_assets /usr/share/nginx/issuer
+
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
