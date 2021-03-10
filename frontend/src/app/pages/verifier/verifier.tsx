@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ehicVerifier from "../../../assets/images/ehic-verifier-02.svg";
 import { Header, PresentCredential, Steps } from '../../components';
 import { VerifyEHIC } from '../../components/verifyEHIC';
 import { ProgressIndicatorStep } from "../../shared/models";
@@ -8,6 +7,9 @@ import { SicpaBridgeClient } from '../../shared/services/sicpa-bridge';
 import { WalletChapi } from '../../shared/services/wallet';
 import * as chapiQueries from '../../components/chapi-example/WalletQueries'
 import { InlineLoadingProps } from 'carbon-components-react';
+import logo from '../../../assets/images/essif-logo-lead-france.svg';
+import subLogo from '../../../assets/images/essif-logo-verifier2-white.svg';
+import "./verifier.scss";
 
 interface VerifyState {
   currentIndex: number;
@@ -66,11 +68,11 @@ export default class Verifier extends React.Component<{}, VerifyState> {
 
   render() {
     return (
-      <>
-        <Header title={this.title} page={this.page} icon={ehicVerifier} organisation={this.organisation}></Header>
-        <Steps steps={this.steps} currentIndex={this.state.currentIndex}></Steps>
-        <div className="issuer-content">{this.getStepContent()}</div>
-      </>
+      <div>
+        <Header title={this.title} page={this.page} logo={logo} subLogo={subLogo} description="Paris Regional Medical Centre"></Header>
+        <div className="verify-step"><Steps steps={this.steps} currentIndex={this.state.currentIndex}></Steps></div>
+        <div className="verify-content">{this.getStepContent()}</div>
+      </div>
     );
   }
 }

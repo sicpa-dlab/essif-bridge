@@ -16,14 +16,12 @@ const PresentCredential: React.FC<StepperProps> = ({ handleClick }) => {
   const logo: string = chapi;
 
   return (
-    <div className="connect-wallet bx--col-lg-5 bx--col-md-6  bx--col-sm-3">
+    <div className="present-credential bx--col-lg-5 bx--col-md-6  bx--col-sm-3">
       <h3>{headerTitle}</h3>
-      <h2 className="connect-wallet-title">{title}</h2>
+      <h2 className="present-credential-title">{title}</h2>
       <p>{description}</p>
-      <div className="connect-wallet-tile" >
+      <div className="present-credential-tile" >
         <CustomTile header={header} content={content} logo={logo} handleClick={handleClick} />
-      </div>
-      <div>
         <CustomTile header='Mobile Wallet' content='My wallet is an app on my smartphone.' logo={didcom} isExpendable disabled />
       </div>
     </div>

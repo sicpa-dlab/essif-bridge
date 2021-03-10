@@ -10,18 +10,13 @@ export default class ChooseWallet extends React.Component<StepperProps> {
   headerTitle: string;
   title: string;
   description: string;
-  header: string; content: string; logo: string;
 
   constructor(props: StepperProps) {
     super(props);
-    this.header = "Browser Wallet";
-    this.content = "My wallet is a plugin in my browser.";
-    this.logo = chapi;
-    this.headerTitle = `Welcome back Mr. Mortimer! If you're looking to receive your European Health Insurance Card, you're in the right place.`;
+    this.headerTitle = `Welcome back! Now you've logged in, your're only a few steps away from receiving your European Health Insurance Card (EHIC).`;
     this.title = "Choose your wallet";
-    this.description = `In order to safely store your EHIC, you need a digital identity wallet.
-    These wallets can be your modile device in a dedicated app, or integrated into your web browser through a plugin. 
-    If you have an existing identity wallet, please select the appropriate type.`
+    this.description = `To safely store your European Health Insurance Card, you need a digital wallet. This could be an app in your mobile device,
+    or in your browser. Please select the wallet you wish to use.`
   }
 
   render() {
@@ -31,10 +26,8 @@ export default class ChooseWallet extends React.Component<StepperProps> {
         <h2 className="connect-wallet-title">{this.title}</h2>
         <p>{this.description}</p>
         <div className="connect-wallet-tile" >
-          <CustomTile header={this.header} content={this.content} logo={this.logo} handleClick={this.props.handleClick} />
-        </div>
-        <div style={{ marginTop: '2px' }}>
-          <CustomTile header={'Mobile Wallet'} content={'My wallet is an app on my smartphone.'} logo={didcom} isExpendable disabled />
+          <CustomTile header="Browser Wallet" content="My wallet is a plugin in my browser." logo={chapi} handleClick={this.props.handleClick} />
+          <CustomTile header="Mobile Wallet" content="My wallet is an app on my smartphone." logo={didcom} isExpendable disabled />
         </div>
       </div>
     )
