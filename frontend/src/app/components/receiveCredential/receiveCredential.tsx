@@ -18,7 +18,7 @@ class GetInput extends React.Component {
     return (
       Object.entries(credentials).map(([key, value]) => {
         return key !== 'Issuer' ?
-          <div className="receive-credential-tile-form bx--row bx--col-lg-6" key={key}>
+          <div className="receive-credential-tile-form  bx--col-lg-6" key={key}>
             <TextInput readOnly
               id={key}
               value={value}
@@ -26,7 +26,7 @@ class GetInput extends React.Component {
               placeholder="Data entry"
             />
           </div>
-          : <div className="receive-credential-tile-form bx--row bx--col-lg-6" key={key}>
+          : <div className="receive-credential-tile-form  bx--col-lg-6" key={key}>
             <label className="bx--label" style={{ display: 'flex', justifyContent: 'space-between' }} htmlFor="issuer">
               <div className="bx--col-lg-6 bx--no-gutter">{key}</div>
               <div className="bx--col-lg-2">
@@ -65,12 +65,12 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
           ?
           <Button style={{ maxWidth: 'none', width: '100%' }} size="field" renderIcon={Launch16} onClick={props.handleClick}>Receive Credential</Button>
           :
-          <>
+          <div className="receive-credential-flex" >
             <InlineLoading className={`inline-loading inline-loading-error`} description="Could not ussue credential" status="error" />
             <Button kind="tertiary" style={{ maxWidth: 'none', width: '100%' }} size="field" de renderIcon={Restart16} onClick={props.handleClick}>
               Issue Credential <span>Retry</span>
             </Button>
-          </>
+          </div>
     )
   }
 
@@ -78,12 +78,12 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
     <>
       <div className="receive-credential-tile">
         {/* Header title  */}
-        <div className="bx--row" style={{ marginBottom: '32px' }}>
-          <div className="bx--col-lg-5">
+        <div className="bx--row" style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem' }}>
+          <div >
             <div className="custom-tile-header"> {header} </div>
             <div className="custom-tile-content"> {content} </div>
           </div>
-          <div className="bx--col-lg-1" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <TooltipIcon
               tooltipText="This crendential is compliant with EU electronic IDentification, Authentication and trust Services (eIDAS) regulations and specifications."
               direction='right' align='end'>
@@ -91,11 +91,15 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
             </TooltipIcon>
           </div>
         </div>
-        <div>
+        <div className="receive-credential-flex">
           <GetInput />
-          <div className="receive-credential-tile-form bx--row bx--col-lg-6">
-            <ReceiveButton />
-          </div>
+        </div>
+        <div className="receive-credential-tile-form bx--col-lg-6 ">
+          <ReceiveButton />
+        </div>
+        <div className="bx--row" style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '14px', fontWeight: 300 }}>
+          <span> 1 - After clicking receive crendential, check your wallet.</span>
+          <span> 2 - Follow the prompt to receive your EHIC.</span>
         </div>
       </div>
     </>

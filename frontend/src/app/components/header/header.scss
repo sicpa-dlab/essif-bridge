@@ -18,12 +18,12 @@ $size-48px: calculateRem(48px);
   }
 
   &-issuer {
+    background-size: cover;
     background-image: url('../../../assets/images/abstract-gradient-11-web.jpg');
   }
 
   &-verifier {
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-image: url('../../../assets/images/dark_0818_homepage_hero_1_F0147446.width-1000.jpg');
   }
 }
