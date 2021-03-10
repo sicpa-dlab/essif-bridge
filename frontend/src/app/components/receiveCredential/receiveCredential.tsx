@@ -3,16 +3,48 @@ import React from 'react';
 import { Launch16, Restart16 } from '@carbon/icons-react';
 import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components-react';
 
-import { SicpaBridgeClient } from '../../shared/services/sicpa-bridge'
-import { sampleCredential } from '../chapi-example/sample-credential'
-import * as chapiQueries from '../chapi-example/WalletQueries'
-import { WalletChapi } from '../../shared/services/wallet'
-
 import eidasLogo02 from '../../../assets/images/eidas-logo-02.png';
 import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg';
-import credential from './credential.json';
-import './receiveCredential.scss';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
+import { SicpaBridgeClient } from '../../shared/services/sicpa-bridge';
+import { WalletChapi } from '../../shared/services/wallet';
+import { sampleCredential } from '../chapi-example/sample-credential';
+import * as chapiQueries from '../chapi-example/WalletQueries';
+import credentials from './credential.json';
+import './receiveCredential.scss';
+
+class GetInput extends React.Component {
+  render() {
+    return (
+      Object.entries(credentials).map(([key, value]) => {
+        return key !== 'Issuer' ?
+          <div className="receive-credential-tile-form bx--row bx--col-lg-6" key={key}>
+            <TextInput readOnly
+              id={key}
+              value={value}
+              labelText={key}
+              placeholder="Data entry"
+            />
+          </div>
+          : <div className="receive-credential-tile-form bx--row bx--col-lg-6" key={key}>
+            <label className="bx--label" style={{ display: 'flex', justifyContent: 'space-between' }} htmlFor="issuer">
+              <div className="bx--col-lg-6 bx--no-gutter">{key}</div>
+              <div className="bx--col-lg-2">
+                <TooltipIcon
+                  tooltipText="The issuer is a qualified trust service provider."
+                  direction='right' align='center'>
+                  <img style={{ height: '12px', width: '39px' }} src={eidasLogo04} alt="lock"></img>
+                </TooltipIcon>
+              </div>
+            </label>
+            <div className="bx--text-input__field-wrapper">
+              <input readOnly id="issuer" type="text" className="bx--text-input" value={value} />
+            </div>
+          </div>
+      })
+    )
+  }
+}
 
 interface Props extends StepperProps {
   loading: boolean;
@@ -31,14 +63,14 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
         :
         !props.error
           ?
-          <Button style={{ width: '-webkit-fill-available' }} size="field" renderIcon={Launch16} onClick={props.handleClick}>Receive Credential</Button>
+          <Button style={{ maxWidth: 'none', width: '100%' }} size="field" renderIcon={Launch16} onClick={props.handleClick}>Receive Credential</Button>
           :
-          <div className="bx--col">
+          <>
             <InlineLoading className={`inline-loading inline-loading-error`} description="Could not ussue credential" status="error" />
-            <Button kind="tertiary" style={{ width: '-webkit-fill-available' }} size="field" de renderIcon={Restart16} onClick={props.handleClick}>
+            <Button kind="tertiary" style={{ maxWidth: 'none', width: '100%' }} size="field" de renderIcon={Restart16} onClick={props.handleClick}>
               Issue Credential <span>Retry</span>
             </Button>
-          </div>
+          </>
     )
   }
 
@@ -59,55 +91,9 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
             </TooltipIcon>
           </div>
         </div>
-
-        {/* Issuer */}
-        <div className="receive-credential-tile-form bx--row bx--col-lg-6">
-          <label className="bx--label" style={{ display: 'flex', justifyContent: 'space-between' }} htmlFor="issuer">
-            <div className="bx--col-lg-6 bx--no-gutter">Issuer</div>
-            <div className="bx--col-lg-2">
-              <TooltipIcon
-                tooltipText="The issuer is a qualified trust service provider."
-                direction='right' align='center'>
-                <img style={{ height: '12px', width: '39px' }} src={eidasLogo04} alt="lock"></img>
-              </TooltipIcon>
-            </div>
-          </label>
-          <div className="bx--text-input__field-wrapper">
-            <input readOnly id="issuer" type="text" className="bx--text-input" value={credential.issuer} />
-          </div>
-        </div>
-
-        {/* Family Name */}
-        <div className="receive-credential-tile-form bx--row bx--col-lg-6">
-          <TextInput
-            readOnly
-            id="familyName"
-            value={credential.familyName}
-            labelText="Family name"
-            placeholder="Data entry"
-          />
-        </div>
-
-        {/* Given Name */}
-        <div className="receive-credential-tile-form bx--row bx--col-lg-6">
-          <TextInput readOnly
-            id="givenName"
-            value={credential.givenName}
-            labelText="Given name"
-            placeholder="Data entry"
-          />
-        </div>
-
-        {/* Birth date and Receive credential button */}
-        <div className="bx--row receive-credential-tile-form ">
-          <div className="bx--col-lg-6">
-            <TextInput readOnly
-              id="birthDate"
-              value={credential.birthDate}
-              labelText="Birth date"
-              placeholder="Data entry" />
-          </div>
-          <div className="bx--col-lg-6" style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-end' }}>
+        <div>
+          <GetInput />
+          <div className="receive-credential-tile-form bx--row bx--col-lg-6">
             <ReceiveButton />
           </div>
         </div>
@@ -115,7 +101,6 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
     </>
   )
 }
-
 
 export default class ReceiveCredential extends React.Component<StepperProps> {
   headerTitle: string;
@@ -127,18 +112,16 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
   private walletChapi: WalletChapi;
   constructor(props: StepperProps) {
     super(props);
-    this.setState({ loading: false })
     const bridgeClient = new SicpaBridgeClient();
     this.walletChapi = new WalletChapi(bridgeClient)
     this.error = false;
-    this.headerTitle = `Great! We are now ready to issue your European Health Insurance Card.`;
+    this.headerTitle = `We have identified your walletand we are now ready to issue your digital European Health Insurance Card.`;
     this.title = "Receive Credential";
-    this.description = `Your EHIC credential allows you to verify your health insurance eligibility wherever and whenever your need. 
-                        This credential will be safely and securely stored in your identity wallet.`
+    this.description = `Your EHIC credential will be safely and securely stored in your wallet, ready to be used wherever and whenever your need it.`
   }
 
-  async componentDidMount() {
-    await this.walletChapi.configure()
+  componentDidMount() {
+    this.walletChapi.configure()
   }
 
   issueChapiCredential = async () => {
@@ -154,13 +137,12 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
     // issuing credential
     await this.walletChapi.issueCredential(presentation, sampleCredential)
       .then(() => {
-        this.setState({ loading: false });
         this.props.handleClick();
       })
       .catch(() => {
-        this.setState({ loading: false });
         this.error = true;
       })
+      .finally(() => this.setState({ loading: false }))
   }
 
   render() {

@@ -9,6 +9,7 @@ interface Props {
   logo?: string;
   isExpendable?: boolean;
   disabled?: boolean;
+  href?: string;
   handleClick?: () => void
 }
 
@@ -23,7 +24,7 @@ export default class CustomTile extends React.Component<Props> {
 export const Tile: React.FC<Props> = (props: Props) => {
   if (!props.isExpendable) {
     return (
-      <ClickableTile className="bx-tile custom-tile" light onClickCapture={props.handleClick}>
+      <ClickableTile className="bx-tile custom-tile" light onClickCapture={props.handleClick} href={props.href}>
         <div className="custom-tile-header"> {props.header} </div>
         <div className="custom-tile-content"> {props.content} </div>
         <div className="custom-tile-footer" >

@@ -1,23 +1,26 @@
+import React from 'react';
+
 import { ArrowRight16 } from '@carbon/icons-react';
 import { ClickableTile } from 'carbon-components-react';
-import React from 'react'
 
-import ehic from '../../../assets/images/ehic-verifier-favicon@2x.png';
-import { StepperProps } from '../../shared/models/stepperProps.interface';
-import './verifyCredential.scss'
+import chekmark from '../../../assets/images/checkmark.circle.green.svg';
+import ehicVerifier from '../../../assets/images/ehic-verifier-04.svg';
+import './verifyCredential.scss';
 
 interface OrganisationProps {
   logo: string;
-  name: string;
+  header: string;
+  content: string;
   url: string;
 }
 
-const Tile: React.FC<OrganisationProps> = ({ logo, name, url }: OrganisationProps) => {
+const Tile: React.FC<OrganisationProps> = ({ logo, header, content, url }: OrganisationProps) => {
   return (
-    <ClickableTile className="bx-tile custom-tile bx--col-lg-6" href={url} light>
-      <div className="custom-tile-header"> <img style={{ width: '24px', height: '24px' }} src={logo} alt={`${name} logo`} /></div>
-      <div className="custom-tile-content"> {name} </div>
+    <ClickableTile className="bx-tile custom-tile" href={url} light>
+      <div className="custom-tile-header"> {header}</div>
+      <div className="custom-tile-content"> {content} </div>
       <div className="custom-tile-footer" >
+        <img src={logo} alt="ehic verifier" />
         <div className="bx--tile__chevron">
           <ArrowRight16 />
         </div>
@@ -26,32 +29,27 @@ const Tile: React.FC<OrganisationProps> = ({ logo, name, url }: OrganisationProp
   )
 }
 
-interface Props {
-
-}
-
-export default class VerifyCredential extends React.Component<Props> {
+export default class VerifyCredential extends React.Component<{}> {
   headerTitle: string;
   title: string;
   description: string;
 
-  constructor(props: Props) {
+  constructor(props: {}) {
     super(props);
-    this.headerTitle = `Congratulations! You received your digital EHIC! Your credential is securley stored in your identity wallet on your web browser.`;
+    this.headerTitle = `Congratulations! Your digital European Health Insurance Card has ben stored in your digital wallet.`;
     this.title = "What next?";
-    this.description = `The following organisations and services are able to verify and accept your EHIC credential.`
+    this.description = `You can use your European Health Insurance Card at the following services:`
   }
 
   render() {
     return (
-      <div className="connect-wallet bx--col-lg-5 bx--col-md-6  bx--col-sm-3">
+      <div className="verify-crendential bx--col-lg-5 bx--col-md-5  bx--col-sm-3">
+        <img src={chekmark} alt="" style={{ width: '111px', height: '111px', marginBottom: '16px' }} />
         <h3>{this.headerTitle}</h3>
-        <h2 className="connect-wallet-title">{this.title}</h2>
+        <h2 className="verify-crendential-title">{this.title}</h2>
         <p>{this.description}</p>
-        <div className="connect-wallet-tile" style={{ display: 'flex', flexFlow: 'row wrap' }} >
-          <Tile logo={ehic} name='Neutopia Health Service' url='/verifier' />
-          <Tile logo={ehic} name='Neutopia Health Service' url='/verifier' />
-          <Tile logo={ehic} name='Neutopia Health Service' url='/verifier' />
+        <div className="verify-crendential-tile" >
+          <Tile header="Paris Regional Medical Centre" content="Verify your EHIC to receive treatment at the right coast." logo={ehicVerifier} url="/verifier" />
         </div>
       </div>
     )
