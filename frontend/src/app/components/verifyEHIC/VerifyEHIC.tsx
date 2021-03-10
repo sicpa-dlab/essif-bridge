@@ -16,10 +16,10 @@ const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
     return (
       props.result.includes('eidas')
         ? <>
-          <InlineLoading className={`inline-loading inline-loading-${props.credentialState}`} description="Credential Signature" status={props.credentialState} />
-          <InlineLoading className={`inline-loading inline-loading-finished`} description="eIDAS compliance" status="finished" />
+          <InlineLoading className={`inline-loading inline-loading-${props.credentialState}`} description="Credential Verified" status={props.credentialState} />
+          <InlineLoading className={`inline-loading inline-loading-finished`} description="Credential eIDAS compliance" status="finished" />
         </>
-        : <InlineLoading className={`inline-loading inline-loading-${props.credentialState}`} description="Credential Signature" status={props.credentialState} />
+        : <InlineLoading className={`inline-loading inline-loading-${props.credentialState}`} description="Credential Verified" status={props.credentialState} />
 
     )
   }
