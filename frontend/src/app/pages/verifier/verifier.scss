@@ -1,0 +1,11 @@
+@import '../../shared/styles/typography.scss';
+
+.verify {
+  &-step {
+    background-color: white;
+  }
+  &-content {
+    margin-bottom: calculateRem(50px) ; 
+    padding-bottom: calculateRem(32px);
+  }
+}

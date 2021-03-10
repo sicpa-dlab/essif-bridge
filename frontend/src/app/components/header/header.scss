@@ -9,32 +9,21 @@ $size-48px: calculateRem(48px);
   color: white;
 
   &-organisation {
-    padding: $size-34px $size-54px 0;
+    padding-left: $size-54px;
   }
 
-  &-border {
-    margin: calculateRem(15px) $size-54px 0;
-    width: calculateRem(22px);
-    height: calculateRem(2px);
-    background-color: white;
-  }
-
-  &-logo {
-    margin: calculateRem(18px) $size-54px 0;
-    width: $size-48px;
-    height: $size-48px;
-  }
-  
   &-title {
     margin: calculateRem(88px) $size-54px 0;
-    padding-bottom: $size-34px;
+    padding-bottom: 16px;
   }
 
   &-issuer {
-    background-color: $essif-dark-bleu;
+    background-image: url('../../../assets/images/abstract-gradient-11-web.jpg');
   }
 
   &-verifier {
-    background-color: $essif-turquoise;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url('../../../assets/images/dark_0818_homepage_hero_1_F0147446.width-1000.jpg');
   }
 }

@@ -1,6 +1,8 @@
 import React from "react";
 
-import ehicIssuer from "../../../assets/images/ehic-issuer-02.svg";
+
+import logo from '../../../assets/images/essif-logo-lead-spain.svg';
+import subLogo from '../../../assets/images/essif-logo-issuer-colour.svg';
 import "./Issuer.scss";
 import { ProgressIndicatorStep } from '../../shared/models';
 import { ReceiveCrendential, Header, Steps, VerifyCredential, LogIn, ChooseWallet } from '../../components';
@@ -18,7 +20,7 @@ export default class Issuer extends React.Component<{}, { currentIndex: number }
 
   constructor(props: {}) {
     super(props);
-    this.state = { currentIndex: 0 };
+    this.state = { currentIndex: 1 };
     this.nextStep = this.nextStep.bind(this);
   }
 
@@ -46,12 +48,10 @@ export default class Issuer extends React.Component<{}, { currentIndex: number }
   render() {
     return (
       <div>
-        <Header title={this.title} page={this.page} icon={ehicIssuer} organisation={this.organisation}></Header>
+        <Header title={this.title} page={this.page} logo={logo} subLogo={subLogo} description="Ministry of Social Security & Inclusion"></Header>
         <div className="issuer-step"><Steps steps={this.steps} currentIndex={this.state.currentIndex} /></div>
         <div className="issuer-content">{this.getStepContent()}</div>
-      </div >
+      </div>
     );
   }
-
-
 }
