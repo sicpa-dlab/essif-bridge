@@ -6,10 +6,18 @@ interface WalletCredential extends Credential {
 }
 interface WebCredentialWrapper extends Credential {
   verifiableCredential: any
+  holder: string
 }
 
 interface VerifiablePresentationWithCredential extends Credential {
   readonly data: WebCredentialWrapper
+}
+
+interface CredentialSubject {
+  id: string
+}
+interface VerifiableCredential {
+  credentialSubject: CredentialSubject
 }
 
 export class WalletChapi {
@@ -43,15 +51,21 @@ export class WalletChapi {
     presentation: any,
     credential: any
   ): Promise<boolean> => {
-    const signedCredential = await this.bridgeClient.issueCredential(credential)
+    const webCredentialWrapper = presentation as WebCredentialWrapper
+    if (webCredentialWrapper == null) return false
+
+    const unSignedCredential = credential as VerifiableCredential
+    if (unSignedCredential == null) return false
+    unSignedCredential.credentialSubject.id = webCredentialWrapper.holder
+
+    const signedCredential = await this.bridgeClient.issueCredential(
+      unSignedCredential
+    )
 
     if (signedCredential.isErr()) {
       console.log(signedCredential.error)
       return false
     }
-
-    const webCredentialWrapper = presentation as WebCredentialWrapper
-    if (webCredentialWrapper == null) return false
 
     webCredentialWrapper.verifiableCredential = signedCredential.value
 
