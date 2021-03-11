@@ -18,7 +18,7 @@ class GetInput extends React.Component {
     return (
       Object.entries(credentials).map(([key, value]) => {
         return key !== 'Issuer' ?
-          <div className="receive-credential-tile-form  bx--col-lg-6" key={key}>
+          <div className="receive-credential-tile-form  bx--col-lg-6 bx--col-md-8 bx--col-sm-12" key={key}>
             <TextInput readOnly
               id={key}
               value={value}
@@ -26,10 +26,10 @@ class GetInput extends React.Component {
               placeholder="Data entry"
             />
           </div>
-          : <div className="receive-credential-tile-form  bx--col-lg-6" key={key}>
+          : <div className="receive-credential-tile-form  bx--col-lg-6 bx--col-md-8 bx--col-sm-12" key={key}>
             <label className="bx--label" style={{ display: 'flex', justifyContent: 'space-between' }} htmlFor="issuer">
-              <div className="bx--col-lg-6 bx--no-gutter">{key}</div>
-              <div className="bx--col-lg-2">
+              <div className="bx--col-lg-6 bx--col-md-6 bx--col-sm-10 bx--no-gutter">{key}</div>
+              <div className="bx--col-lg-2 bx--col-md-2 bx--col-sm-2 bx--no-gutter" style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <TooltipIcon
                   tooltipText="The issuer is a qualified trust service provider."
                   direction='right' align='center'>
@@ -97,9 +97,9 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
         <div className="receive-credential-tile-form bx--col-lg-6 ">
           <ReceiveButton />
         </div>
-        <div className="bx--row" style={{ display: 'flex', justifyContent: 'space-evenly', fontSize: '14px', fontWeight: 300 }}>
-          <span> 1 - After clicking receive crendential, check your wallet.</span>
-          <span> 2 - Follow the prompt to receive your EHIC.</span>
+        <div className="bx--grid" style={{ fontSize: '14px', fontWeight: 300 }}>
+          <div className="bx--row"> 1 - After clicking receive crendential, check your wallet.</div >
+          <div className="bx--row"> 2 - Follow the prompt to receive your EHIC.</div >
         </div>
       </div>
     </>
@@ -119,9 +119,9 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
     const bridgeClient = new SicpaBridgeClient();
     this.walletChapi = new WalletChapi(bridgeClient)
     this.error = false;
-    this.headerTitle = `We have identified your walletand we are now ready to issue your digital European Health Insurance Card.`;
+    this.headerTitle = `We have identified your wallet and we are now ready to issue your digital European Health Insurance Card.`;
     this.title = "Receive Credential";
-    this.description = `Your EHIC credential will be safely and securely stored in your wallet, ready to be used wherever and whenever your need it.`
+    this.description = `Your digital EHIC credential will be safely and securely stored in your wallet, ready to be used wherever and whenever your need it.`
   }
 
   componentDidMount() {
@@ -151,7 +151,7 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
 
   render() {
     return (
-      <div className="receive-credential bx--col-lg-5 bx--col-md-6 bx--col-sm-3">
+      <div className="receive-credential bx--col-lg-7 bx--col-md-6 bx--col-sm-3">
         <h3>{this.headerTitle}</h3>
         <h2 className="receive-credential-title">{this.title}</h2>
         <p>{this.description}</p>

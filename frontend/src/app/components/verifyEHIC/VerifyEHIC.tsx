@@ -9,7 +9,7 @@ interface VerifyEHICProps {
 
 const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
 
-  const headerTitle: string = "We need to verify your European Health Insurance Card to make sure you receive treatment at the right costs.";
+  const headerTitle: string = "We need to verify your digital European Health Insurance Card to make sure you receive treatment at the right costs.";
   const title: string = "Your EHIC";
 
   const InlineLoadingd: React.FC = () => {
@@ -25,7 +25,7 @@ const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
   }
 
   return (
-    <div className="connect-wallet bx--col-lg-5 bx--col-md-6  bx--col-sm-3">
+    <div className="connect-wallet bx--col-lg-7 bx--col-md-6  bx--col-sm-3">
       <h3>{headerTitle}</h3>
       <h2 className="connect-wallet-title">{title}</h2>
       <div className="connect-wallet-tile" >
@@ -33,7 +33,7 @@ const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
           <div className="custom-tile-header"> Credential Verification </div>
           <div className="custom-tile-content"> The credential's cryptographic signature and compliance with the eIDAS specifications will be verified. </div>
           <div className="verify-ehic-footer" >
-            <div className="bx--col-lg-6">
+            <div className="bx--col-lg-7 bx--col-md-8 bx--col-sm-12">
               <InlineLoadingd />
             </div>
           </div>
