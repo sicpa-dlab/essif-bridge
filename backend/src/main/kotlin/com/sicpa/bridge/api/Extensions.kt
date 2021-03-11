@@ -40,7 +40,7 @@ fun List<LinkedDataProof>.getProof(eidas: Boolean = false): LinkedDataProof? {
         if (eidas) {
             proof.type == "CAdESRSASignature2020"
         } else {
-            proof.cades == null && (proof.proofPurpose == "assertionMethod" || proof.proofPurpose == "verificationMethod")
+            proof.proofPurpose == "assertionMethod" || proof.proofPurpose == "verificationMethod"
         }
     }
 }
