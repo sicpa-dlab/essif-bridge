@@ -22,7 +22,7 @@ class VerifyProofUseCase(
         val proof = (params as Map<String, Any>).getLinkedDataProof()
             ?: throw ApiException.NotFoundException("Could not find proof")
 
-        val verKey = didDocResolverRepository.getVerKey(proof.verificationMethod)
+        val verKey = didDocResolverRepository.getVerKey(proof)
             ?: throw ApiException.NotFoundException("Could not find verkey")
 
         val verifyRequest = jsonldRepository.verifyProof(
