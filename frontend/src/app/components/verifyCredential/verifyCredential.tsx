@@ -36,20 +36,20 @@ export default class VerifyCredential extends React.Component<{}> {
 
   constructor(props: {}) {
     super(props);
-    this.headerTitle = `Congratulations! Your digital European Health Insurance Card has ben stored in your digital wallet.`;
+    this.headerTitle = `Congratulations! Your digital European Health Insurance Card has been stored in your digital wallet.`;
     this.title = "What next?";
-    this.description = `You can use your European Health Insurance Card at the following services:`
+    this.description = `You can use your digital European Health Insurance Card at the following services:`
   }
 
   render() {
     return (
-      <div className="verify-crendential bx--col-lg-5 bx--col-md-5  bx--col-sm-3">
+      <div className="verify-crendential bx--col-lg-7 bx--col-md-5  bx--col-sm-3">
         <img src={chekmark} alt="" style={{ width: '111px', height: '111px', marginBottom: '16px' }} />
         <h3>{this.headerTitle}</h3>
         <h2 className="verify-crendential-title">{this.title}</h2>
         <p>{this.description}</p>
         <div className="verify-crendential-tile" >
-          <Tile header="Paris Regional Medical Centre" content="Verify your EHIC to receive treatment at the right coast." logo={ehicVerifier} url="/verifier" />
+          <Tile header="Paris Regional Medical Centre" content="Verify your digital EHIC to receive treatment at the right coast." logo={ehicVerifier} url="https://verifier.essif.adaptivespace.io/verifier" />
         </div>
       </div>
     )
