@@ -1,5 +1,6 @@
 package com.sicpa.bridge.resolver
 
+import com.sicpa.bridge.api.jsonld.domain.model.LinkedDataProof
 import com.sicpa.bridge.api.toModel
 import com.sicpa.bridge.resolver.models.PublicKeyBase58
 import com.sicpa.bridge.resolver.models.ResolvedDidDoc
@@ -17,18 +18,21 @@ class DidDocResolverRepository(
         }
     }
 
-    fun getVerKey(verificationMethod: String) : String? {
-        val didDocument = uniResolver.resolve(verificationMethod)?.didDocument ?: return null
+    fun getVerKey(proof: LinkedDataProof) : String? {
+
+        val didDocument = uniResolver.resolve(proof.verificationMethod)?.didDocument ?: return null
         val resolvedDidDoc = didDocument.toString().toModel<ResolvedDidDoc>() ?: return null
 
-        //var pubKey: PublicKeyBase58? = resolvedDidDoc.verificationMethod?.firstOrNull()
-
-        // older version of universal resolver
-        var pubKey: PublicKeyBase58? = resolvedDidDoc.publicKey?.firstOrNull()
+        var pubKey: PublicKeyBase58?
+        if(proof.proofPurpose == "assertionMethod") {
+            pubKey = resolvedDidDoc.assertionMethod?.firstOrNull()
+        } else {
+            pubKey = resolvedDidDoc.verificationMethod?.firstOrNull()
+        }
 
         if(pubKey == null) {
             pubKey = resolvedDidDoc.publicKey?.find { publicKey ->
-                publicKey.id == verificationMethod
+                publicKey.id.startsWith(proof.verificationMethod)
             }
         }
 

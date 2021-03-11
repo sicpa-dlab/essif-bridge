@@ -26,7 +26,7 @@ class VerifyCredentialUseCase(
         val proof = (params as Map<String, Any>).getLinkedDataProof()
             ?: throw ApiException.NotFoundException("Could not find proof")
 
-        val verKey = didDocResolverRepository.getVerKey(proof.verificationMethod)
+        val verKey = didDocResolverRepository.getVerKey(proof)
             ?: throw ApiException.NotFoundException("Could not find verkey")
 
         val verifyRequest = jsonldRepository.verifyCredential(
@@ -42,6 +42,7 @@ class VerifyCredentialUseCase(
             errors = arrayListOf<String>()
         )
 
+        // TODO do not check eSEal in case o of single proof
         try {
             val eSealCheck = eidasBridgeRepository.verifyCredential(params)
             results.add(Pair(eSealCheck, "eidas"))
