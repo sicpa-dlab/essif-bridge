@@ -10,3 +10,4 @@ export * from "./presentCredential";
 export * from "./steps";
 export * from "./verifyCredential";
 export * from "./verifyEHIC";
+export * from "./footer";
