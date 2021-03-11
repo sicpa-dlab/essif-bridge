@@ -2,6 +2,7 @@ package com.sicpa.bridge.api.jsonld.domain
 
 import com.google.gson.Gson
 import com.sicpa.bridge.api.ApiException
+import com.sicpa.bridge.api.eidasProof
 import com.sicpa.bridge.api.getLinkedDataProof
 import com.sicpa.bridge.api.jsonld.data.JsonldRepository
 import com.sicpa.bridge.api.jsonld.domain.model.VerificationResult
@@ -42,14 +43,15 @@ class VerifyCredentialUseCase(
             errors = arrayListOf<String>()
         )
 
-        // TODO do not check eSEal in case o of single proof
-        try {
-            val eSealCheck = eidasBridgeRepository.verifyCredential(params)
-            results.add(Pair(eSealCheck, "eidas"))
-        } catch(ex: Exception) {
-            verificationResult.warnings.add("could not verify eidas seal")
+        val eidasProof = (params as Map<String, Any>).eidasProof()
+        if(eidasProof != null) {
+            try {
+                val eSealCheck = eidasBridgeRepository.verifyCredential(params)
+                results.add(Pair(eSealCheck, "eidas"))
+            } catch(ex: Exception) {
+                verificationResult.warnings.add("could not verify eidas seal")
+            }
         }
-
 
         results.map { result ->
             when(result.first) {
