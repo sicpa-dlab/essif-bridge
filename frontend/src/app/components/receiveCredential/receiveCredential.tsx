@@ -97,7 +97,7 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
         <div className="receive-credential-tile-form bx--col-lg-6 ">
           <ReceiveButton />
         </div>
-        <div className="bx--grid" style={{ fontSize: '14px', fontWeight: 300 }}>
+        <div className="bx--col" style={{ fontSize: '14px', fontWeight: 300 }}>
           <div className="bx--row"> 1 - After clicking receive crendential, check your wallet.</div >
           <div className="bx--row"> 2 - Follow the prompt to receive your EHIC.</div >
         </div>

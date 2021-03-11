@@ -1,6 +1,7 @@
 /** Function for converting a px based font-size to rem. */
 @function calculateRem($size) {
-  $remSize: $size / 16px; /** Default font size on html element is 100%, equivalent to 16px; */
+  $remSize: $size / 16px;
+  /** Default font size on html element is 100%, equivalent to 16px; */
   @return #{$remSize}rem;
 }
 
@@ -10,8 +11,11 @@ $size-54px: calculateRem(54px);
 $size-24px: calculateRem(24px);
 
 /** Font family variables. */
-$font-family-default: "Inter", sans-serif;
-$font-family-condensed: "Inter-SemiBold", "Inter", sans-serif;
+$font-family-default: "Inter",
+sans-serif;
+$font-family-condensed: "Inter-SemiBold",
+"Inter",
+sans-serif;
 
 /** Font size variables. */
 $font-size-xxl: $size-54px;
@@ -35,9 +39,12 @@ h4 {
   margin: 0;
   font-family: $font-family-default;
 }
+
 body {
   background-color: #F4F4F4;
+  width: 100%;
 }
+
 h1 {
   font-size: $font-size-xxl;
   line-height: $line-height-md;
