@@ -40,7 +40,7 @@ fun List<LinkedDataProof>.getProof(eidas: Boolean = false): LinkedDataProof? {
         if (eidas) {
             proof.type == "CAdESRSASignature2020"
         } else {
-            proof.proofPurpose == "assertionMethod" && proof.cades == null
+            proof.cades == null && (proof.proofPurpose == "assertionMethod" || proof.proofPurpose == "verificationMethod")
         }
     }
 }
@@ -52,6 +52,17 @@ fun Map<String, Any>.getLinkedDataProof() : LinkedDataProof? {
     return when (proof) {
         is Map<*,*> -> gson.fromMap<SingleProof>(this)?.proof
         is List<*> -> gson.fromMap<MultipleProof>(this)?.proof?.getProof()
+        else   -> null
+    }
+}
+
+fun Map<String, Any>.eidasProof() : LinkedDataProof? {
+    val proof = this["proof"] ?: return null
+    val gson = Gson()
+
+    return when (proof) {
+        is Map<*,*> -> return null
+        is List<*> -> gson.fromMap<MultipleProof>(this)?.proof?.getProof(true)
         else   -> null
     }
 }
