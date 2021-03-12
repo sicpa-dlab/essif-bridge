@@ -1,0 +1,21 @@
+@import "../../shared/styles/typography.scss";
+
+.home {
+  margin: calculateRem(75px) $size-54px 0;
+  text-align: justify;
+
+  &-title {
+    padding-bottom: 4rem;
+
+  }
+
+  &-content {
+    margin-bottom: calculateRem(50px);
+    padding-bottom: 2rem;
+  }
+
+  &-mobile-tile {
+    cursor: auto;
+    opacity: 0.5;
+  }
+}
