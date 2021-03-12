@@ -26,4 +26,9 @@ $size-48px: calculateRem(48px);
     background-size: cover;
     background-image: url('../../../assets/images/dark_0818_homepage_hero_1_F0147446.width-1000.jpg');
   }
+
+  &-home {
+    background-size: cover;
+    background-image: url('../../../assets/images/adaptivespace_08_Undertone-03.jpg');
+  }
 }
