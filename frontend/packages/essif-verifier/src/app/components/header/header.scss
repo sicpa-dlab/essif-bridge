@@ -1,0 +1,34 @@
+@import '../../shared/styles/colors.scss';
+@import '../../shared/styles/typography';
+
+/** Px size to rem. */
+$size-34px: calculateRem(34px);
+$size-48px: calculateRem(48px);
+
+.header {
+  color: white;
+
+  &-organisation {
+    padding-left: $size-54px;
+  }
+
+  &-title {
+    margin: calculateRem(88px) $size-54px 0;
+    padding-bottom: 16px;
+  }
+
+  &-issuer {
+    background-size: cover;
+    background-image: url('../../../assets/images/abstract-gradient-11-web.jpg');
+  }
+
+  &-verifier {
+    background-size: cover;
+    background-image: url('../../../assets/images/dark_0818_homepage_hero_1_F0147446.width-1000.jpg');
+  }
+
+  &-home {
+    background-size: cover;
+    background-image: url('../../../assets/images/adaptivespace_08_Undertone-03.jpg');
+  }
+}
