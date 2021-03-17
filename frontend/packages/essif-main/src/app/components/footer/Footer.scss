@@ -1,0 +1,24 @@
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  background-color: #000000;
+
+  &-content {
+    letter-spacing: 0;
+    font-size: 14px;
+    color: white;
+    line-height: 1.5;
+    padding: 32px 54px 32px;
+
+    &-logo {
+      width: 45px;
+      height: 40px;
+      margin: 0 54px 32px
+    }
+  }
+}
+
+.bx--row {
+  margin-left: 0;
+}

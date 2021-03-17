@@ -1,0 +1,13 @@
+@import '../../shared/styles/typography.scss';
+
+.progress-indicator {
+  margin-left: $size-54px;
+  height: calculateRem(40px);
+  &-step {
+    width: calculateRem(248px);
+  }
+}
+
+.bx--progress {
+    display: block ;
+}
