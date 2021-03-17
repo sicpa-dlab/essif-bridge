@@ -1,0 +1,70 @@
+/** Function for converting a px based font-size to rem. */
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  /** Default font size on html element is 100%, equivalent to 16px; */
+  @return #{$remSize}rem;
+}
+
+/** Redundant sizes. */
+$size-64px: calculateRem(64px);
+$size-54px: calculateRem(54px);
+$size-24px: calculateRem(24px);
+
+/** Font family variables. */
+$font-family-default: "Inter",
+sans-serif;
+$font-family-condensed: "Inter-SemiBold",
+"Inter",
+sans-serif;
+
+/** Font size variables. */
+$font-size-xxl: $size-54px;
+$font-size-xl: calculateRem(32px);
+$font-size-lg: $size-24px;
+$font-size-md: calculateRem(20px);
+$font-size-sm: calculateRem(16px);
+$font-size-xs: calculateRem(14px);
+
+/** Line height variables. */
+$line-height-lg: 1.4;
+$line-height-md: 1.2;
+
+/** Set elements. */
+body,
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: $font-family-default;
+}
+
+body {
+  background-color: #F4F4F4;
+}
+
+h1 {
+  font-size: $font-size-xxl;
+  line-height: $line-height-md;
+}
+
+h2 {
+  font-size: $font-size-xl;
+  line-height: $line-height-lg;
+}
+
+h3 {
+  font-size: $font-size-lg;
+  line-height: $line-height-lg;
+}
+
+h4 {
+  font-size: $font-size-md;
+  line-height: $line-height-md;
+}
+
+p {
+  font-size: $font-size-sm;
+  line-height: $line-height-lg;
+}

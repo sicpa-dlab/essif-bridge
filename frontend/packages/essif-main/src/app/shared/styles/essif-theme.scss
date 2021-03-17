@@ -1,0 +1,47 @@
+@import "../../shared/styles/typography.scss";
+@import "../../shared/styles/colors.scss";
+
+.custom-tile {
+  font-size: $font-size-xs;
+  line-height: $line-height-lg;
+  border-color: $essif-white-smoke;
+  border-style: solid; 
+  border-width: calculateRem(1px);
+
+  &-header {
+    font-family: $font-family-condensed;
+    font-weight: 600;
+  }
+
+  &-footer {
+    margin-top: $size-64px;
+    height: $size-54px;
+
+    &-logo {
+      margin-top: 0.5rem;
+      height: $size-54px;
+      width: $size-64px;
+    }
+  }
+}
+
+.inline-loading {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  height: 2.5rem;
+  margin-bottom: 0.5rem ;
+  padding-left: 1rem;
+
+  &-active {
+    background-color: $essif-white-smoke;
+  }
+    
+  &-finished {
+    background-color: $essif-success;
+  }
+    
+  &-error {
+    background-color: $essif-error;
+  }
+}

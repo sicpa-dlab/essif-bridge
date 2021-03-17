@@ -1,0 +1,1 @@
+export { WalletChapi } from './WalletChapi';
