@@ -1,0 +1,17 @@
+# Frontend
+
+Frontend monorepo setup with [yarn workspaces](https://yarnpkg.com/features/workspaces).
+
+
+| workspace               |                                          |
+|-------------------------|------------------------------------------|
+| essi-main               | https://essif.adaptivespace.io/          |
+| essif-issuer            | https://verifier.essif.adaptivespace.io/ |
+| essif-verifier          | https://verifier.essif.adaptivespace.io/ |
+| bridge-shared-component | shared library for CHAPI and Aries       |
+
+Websites have been created using [create react app](https://create-react-app.dev/) and are deployed in a single container running [nginx](https://www.nginx.com/).
+
+Use `yarn workspace`to run a command in a specific workspace. Example to run a webapp:
+`yarn workspace essif-issuer start`
+
