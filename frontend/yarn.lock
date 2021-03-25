@@ -2010,7 +2010,7 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.35.tgz#42c953a4e2b18ab931f72477e7012172f4ffa313"
   integrity sha512-Lt+wj8NVPx0zUmUwumiVXapmaLUcAk3yPuHCFVXras9k5VT9TdhJqKqGVUQCD60OTMCl0qxJ57OiTL0Mic3Iag==
 
-"@types/node@^12.0.0", "@types/node@^12.12.38":
+"@types/node@^12.0.0", "@types/node@^12.11.5", "@types/node@^12.12.38":
   version "12.20.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.6.tgz#7b73cce37352936e628c5ba40326193443cfba25"
   integrity sha512-sRVq8d+ApGslmkE9e3i+D3gFGk7aZHAT+G4cIpIEdLJYPsWiSPwcAnJEjddLQQDqV3Ra2jOclX/Sv6YrvGYiWA==
@@ -12869,7 +12869,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.8.3:
+typescript@^3.6.4, typescript@^3.8.3:
   version "3.9.9"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.9.tgz#e69905c54bc0681d0518bd4d587cc6f2d0b1a674"
   integrity sha512-kdMjTiekY+z/ubJCATUPlRDl39vXYiMV9iyeMuEuXZh2we6zz80uovNN2WlAxmmdE/Z/YQe+EbOEXB5RHEED3w==
