@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/topic")
 class ConnectionsTopic {
 
+    @Autowired
+    private val simpMessagingTemplate: SimpMessagingTemplate? = null
+
     @PostMapping(
         "/connections",
         produces = ["application/json"]
@@ -22,6 +25,10 @@ class ConnectionsTopic {
         connectionInfo: Any
     ): ResponseEntity<Any?> {
 
+        val map =  connectionInfo as Map<*,*>
+        map["connection_id"]?.let { connection ->
+            simpMessagingTemplate?.convertAndSend("/topic/connections/${connection}", connectionInfo)
+        }
         return ResponseEntity<Any?>(EmptyJsonResponse(), HttpStatus.OK)
     }
 
