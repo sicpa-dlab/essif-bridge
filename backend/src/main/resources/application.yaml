@@ -2,9 +2,25 @@ server:
   servlet:
     context-path: /api
 
+
+
 spring:
   jackson:
     default-property-inclusion: non_null
+
+  datasource:
+    url: jdbc:h2:mem:testdb;INIT=create domain if not exists jsonb as text;MODE=PostgreSQL
+
+    driver-class-name: org.h2.Driver
+    username : sa
+    password: password
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
 
 #spring:
 #  mvc:
@@ -12,7 +28,7 @@ spring:
 #      preferred-json-mapper: gson
 
 aca-py-client:
-  url: http://localhost:8070
+  url: http://essif.adaptivespace.io:8080
 
 universal-resolver:
   url: https://dev.uniresolver.io/1.0/identifiers/
@@ -20,3 +36,4 @@ universal-resolver:
 eidas-bridge:
   url: https://api.vidchain.net
   certificatePassword: 1234
+

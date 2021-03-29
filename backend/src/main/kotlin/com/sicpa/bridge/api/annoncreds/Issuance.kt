@@ -17,6 +17,8 @@ import javax.validation.Valid
 
 @RestController
 @Tag(name = "Credentials Issuance", description = "The Credentials Issuance API")
+@CrossOrigin
+
 class Issuance(
     private val issuanceUseCase: IssuanceUseCase
 ) {

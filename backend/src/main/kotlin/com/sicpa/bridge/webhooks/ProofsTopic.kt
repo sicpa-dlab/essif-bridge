@@ -26,7 +26,10 @@ class ProofsTopic {
         @RequestBody
         proofInfo: Any
     ): ResponseEntity<Any?> {
-        simpMessagingTemplate?.convertAndSend("/topic/proof", proofInfo)
+        val map =  proofInfo as Map<*,*>
+        map["connection_id"]?.let { connection ->
+            simpMessagingTemplate?.convertAndSend("/topic/proof/${connection}", proofInfo)
+        }
         return ResponseEntity<Any?>(EmptyJsonResponse(), HttpStatus.OK)
     }
 }

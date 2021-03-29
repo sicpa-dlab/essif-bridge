@@ -14,6 +14,8 @@ import javax.validation.Valid
 @RestController
 @Tag(name = "Credential Definitions", description = "The Credential Definitions API")
 @RequestMapping("/credential-definitions")
+@CrossOrigin
+
 class CredentialsDef (
     private val credentialsDefUseCase: CredentialsDefUseCase
         ) {
