@@ -15,9 +15,10 @@ import javax.validation.constraints.Pattern
 
 
 @RestController
-@CrossOrigin
 @Tag(name = "Connections", description = "The Connections API")
 @RequestMapping("/connections")
+@CrossOrigin
+
 class Connections(
     private val connectionsUseCase: ConnectionsUseCase,
 ) {
