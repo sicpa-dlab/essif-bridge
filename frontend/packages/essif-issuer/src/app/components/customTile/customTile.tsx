@@ -1,11 +1,12 @@
 import { Launch16 } from '@carbon/icons-react'
-import { ClickableTile, ExpandableTile, TileAboveTheFoldContent } from 'carbon-components-react'
+import { ClickableTile, ExpandableTile, TileAboveTheFoldContent, TileBelowTheFoldContent } from 'carbon-components-react'
 import React from 'react'
 import './customTile.scss'
 
 interface Props {
   header: string;
   content: string;
+  contentCollapsed?: JSX.Element
   logo?: string;
   isExpendable?: boolean;
   disabled?: boolean;
@@ -16,7 +17,7 @@ interface Props {
 export default class CustomTile extends React.Component<Props> {
   render() {
     return (
-      <Tile handleClick={this.props.handleClick} header={this.props.header} content={this.props.content} logo={this.props.logo} isExpendable={this.props.isExpendable} disabled={this.props.disabled} />
+      <Tile handleClick={this.props.handleClick} header={this.props.header} content={this.props.content} contentCollapsed={this.props.contentCollapsed} logo={this.props.logo} isExpendable={this.props.isExpendable} disabled={this.props.disabled} />
     )
   }
 }
@@ -37,7 +38,7 @@ export const Tile: React.FC<Props> = (props: Props) => {
     )
   } else {
     return (
-      <ExpandableTile className="bx-tile custom-tile" disabled={props.disabled} light>
+      <ExpandableTile onAnimationEnd={(e) => { alert("animation") }} className="bx-tile custom-tile" disabled={props.disabled} light>
         <TileAboveTheFoldContent>
           <div className="custom-tile-header"> {props.header} </div>
           <div className="custom-tile-content"> {props.content} </div>
@@ -45,6 +46,7 @@ export const Tile: React.FC<Props> = (props: Props) => {
             <img src={props.logo} alt="logo" />
           </div>
         </TileAboveTheFoldContent>
+        <TileBelowTheFoldContent>{props.contentCollapsed}</TileBelowTheFoldContent>
       </ExpandableTile>
     )
   }

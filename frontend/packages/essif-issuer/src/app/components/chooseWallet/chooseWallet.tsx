@@ -3,10 +3,14 @@ import React from 'react';
 import chapi from '../../../assets/images/edison-wallet-chapi-04.svg';
 import didcom from '../../../assets/images/edison-wallet-didcom-03.svg';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
-import { CustomTile } from '..';
+import { CustomTile, ConnInvitation } from '..';
 import './chooseWallet.scss';
 
-export default class ChooseWallet extends React.Component<StepperProps> {
+interface StepperState {
+  invitationCreated: boolean
+}
+
+export default class ChooseWallet extends React.Component<StepperProps,StepperState> {
   headerTitle: string;
   title: string;
   description: string;
@@ -17,6 +21,11 @@ export default class ChooseWallet extends React.Component<StepperProps> {
     this.title = "Choose your wallet";
     this.description = `To safely store your digital European Health Insurance Card, you need a digital wallet. This could be an application in your mobile device,
     or in your browser. Please select the wallet you wish to use.`
+
+    this.state = {
+      invitationCreated: false
+    }
+
   }
 
   render() {
@@ -27,7 +36,7 @@ export default class ChooseWallet extends React.Component<StepperProps> {
         <p>{this.description}</p>
         <div className="connect-wallet-tile" >
           <CustomTile header="Browser Wallet" content="My wallet is a plugin in my browser." logo={chapi} handleClick={this.props.handleClick} />
-          <CustomTile header="Mobile Wallet" content="My wallet is an application on my smartphone." logo={didcom} isExpendable disabled />
+          <ConnInvitation header="Mobile Wallet" content="My wallet is an application on my smartphone." onConnectionInvitation={this.props.onConnectionInvitation} logo={didcom}/>
         </div>
       </div>
     )

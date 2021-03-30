@@ -6,11 +6,10 @@ import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components
 import eidasLogo02 from '../../../assets/images/eidas-logo-02.png';
 import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
-import { WalletChapi, SicpaBridgeClient } from 'bridge-shared-components'
 import { sampleCredential } from '../chapi-example/sample-credential';
-import * as chapiQueries from '../chapi-example/WalletQueries';
 import credentials from './credential.json';
 import './receiveCredential.scss';
+import { CredentialTransport, CredentialIssuer, ChapiCredentialIssuer, AnonCredentialIsssuer } from '../../shared/models';
 
 class GetInput extends React.Component {
   render() {
@@ -112,11 +111,11 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
   error: boolean;
   state = { loading: false };
 
-  private walletChapi: WalletChapi;
+  private credentialIssuer: CredentialIssuer
+
   constructor(props: StepperProps) {
     super(props);
-    const bridgeClient = new SicpaBridgeClient();
-    this.walletChapi = new WalletChapi(bridgeClient)
+    this.credentialIssuer = this.getIssuer(props.credentialTransport)
     this.error = false;
     this.headerTitle = `We have identified your wallet and we are now ready to issue your digital European Health Insurance Card.`;
     this.title = "Receive Credential";
@@ -124,28 +123,27 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
   }
 
   componentDidMount() {
-    this.walletChapi.configure()
+    this.credentialIssuer.configure?.()
   }
 
-  issueChapiCredential = async () => {
-    // onnecting to wallet
-    this.setState({ loading: true })
-
-    const presentation = await this.walletChapi.connectToWallet(chapiQueries.didAuthQuery())
-    if (presentation == null) {
-      // could not connect to wallet
-      return
+  private getIssuer(credentialTransport?: CredentialTransport) {
+    switch (credentialTransport) {
+      case CredentialTransport.chapi:
+        return new ChapiCredentialIssuer()
+      case CredentialTransport.anoncreds:
+        return new AnonCredentialIsssuer()
+      default:
+        return new ChapiCredentialIssuer()
     }
+  }
 
-    // issuing credential
-    await this.walletChapi.issueCredential(presentation, sampleCredential)
-      .then(() => {
-        this.props.handleClick();
-      })
-      .catch(() => {
-        this.error = true;
-      })
-      .finally(() => this.setState({ loading: false }))
+  issueCredential = async () => {
+    this.setState({ loading: true })
+    const issue = this.credentialIssuer.issue(sampleCredential)
+    const result = await issue
+    this.setState({ loading: false })
+    if (result.isErr()) console.log(result.error)
+    result.isOk() && result.value === true ? this.props.handleClick() : console.log("Could not issue credential")
   }
 
   render() {
@@ -154,7 +152,7 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
         <h3>{this.headerTitle}</h3>
         <h2 className="receive-credential-title">{this.title}</h2>
         <p>{this.description}</p>
-        <ExpandablePanel error={this.error} loading={this.state.loading} handleClick={async () => { await this.issueChapiCredential() }} />
+        <ExpandablePanel error={this.error} loading={this.state.loading} handleClick={async () => { await this.issueCredential() }} />
       </div>
     )
   }

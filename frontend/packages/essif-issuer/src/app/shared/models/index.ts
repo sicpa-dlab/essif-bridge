@@ -1,1 +1,5 @@
-export * from './progressIndicatorStep';
+export * from './progressIndicatorStep'
+export * from './credentialTransport'
+export * from './credentialIssuer'
+export * from './anonCredentialIssuer'
+export * from './chapiCredentialIssuer'
