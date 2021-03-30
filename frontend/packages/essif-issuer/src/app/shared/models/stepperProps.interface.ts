@@ -1,3 +1,6 @@
+import { CredentialTransport } from './index'
 export interface StepperProps {
-  handleClick: () => void
+  handleClick: () => void,
+  onConnectionInvitation?: (connectionId: string) => void,
+  credentialTransport?: CredentialTransport
 }
