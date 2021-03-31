@@ -6,7 +6,7 @@ import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components
 import eidasLogo02 from '../../../assets/images/eidas-logo-02.png';
 import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
-import { sampleCredential } from '../chapi-example/sample-credential';
+import { sampleCredential, sampleAnonCredential } from '../chapi-example/sample-credential';
 import credentials from './credential.json';
 import './receiveCredential.scss';
 import { CredentialTransport, CredentialIssuer, ChapiCredentialIssuer, AnonCredentialIsssuer } from '../../shared/models';
@@ -104,7 +104,11 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
   )
 }
 
-export default class ReceiveCredential extends React.Component<StepperProps> {
+interface ReceiveCredentialProps extends StepperProps {
+  connectionId?: string
+}
+
+export default class ReceiveCredential extends React.Component<ReceiveCredentialProps> {
   headerTitle: string;
   title: string;
   description: string;
@@ -113,7 +117,7 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
 
   private credentialIssuer: CredentialIssuer
 
-  constructor(props: StepperProps) {
+  constructor(props: ReceiveCredentialProps) {
     super(props);
     this.credentialIssuer = this.getIssuer(props.credentialTransport)
     this.error = false;
@@ -124,26 +128,34 @@ export default class ReceiveCredential extends React.Component<StepperProps> {
 
   componentDidMount() {
     this.credentialIssuer.configure?.()
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' })
   }
 
   private getIssuer(credentialTransport?: CredentialTransport) {
     switch (credentialTransport) {
-      case CredentialTransport.chapi:
+      case CredentialTransport.CHAPI:
         return new ChapiCredentialIssuer()
-      case CredentialTransport.anoncreds:
+      case CredentialTransport.DIDCOMM:
         return new AnonCredentialIsssuer()
       default:
         return new ChapiCredentialIssuer()
     }
   }
 
+  private getCredential = () => {
+    if(this.props.credentialTransport === CredentialTransport.DIDCOMM) {
+      return sampleAnonCredential(this.props.connectionId || "")
+    }
+
+    return sampleCredential
+  }
+
   issueCredential = async () => {
     this.setState({ loading: true })
-    const issue = this.credentialIssuer.issue(sampleCredential)
+    const issue = this.credentialIssuer.issue(this.getCredential())
     const result = await issue
-    this.setState({ loading: false })
-    if (result.isErr()) console.log(result.error)
-    result.isOk() && result.value === true ? this.props.handleClick() : console.log("Could not issue credential")
+    this.error = result.isErr()
+    result.isOk() && result.value === true ? this.props.handleClick() : this.setState({ loading: false })
   }
 
   render() {
