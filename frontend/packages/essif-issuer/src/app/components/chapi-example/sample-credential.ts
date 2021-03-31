@@ -28,3 +28,40 @@ export const sampleCredential =  {
     "birthDate": "1958-07-17"
   }
 }
+
+export const sampleAnonCredential = (connectionId: String) => {
+
+  return {
+    "connectionId": connectionId,
+    "schemaId": "BJX4adKceDv9D4qmztEN3F:2:European-Health-Insurance-Card-1:1.0",
+    "credentialDefinitionId": "BJX4adKceDv9D4qmztEN3F:3:CL:199841:default",
+    "comment": "string",
+    "attributes": [
+      {
+        "name": "institutionID",
+        "value": "09999 - INSS Madrid"
+      },
+      {
+        "name": "cardNo",
+        "value": "80756099990000034111"
+      },
+      {
+        "name": "personalID",
+        "value": "09999 111999"
+      },
+      {
+        "name": "familyName",
+        "value": "Muster"
+      },
+      {
+        "name": "givenName",
+        "value": "Maria"
+      },
+      {
+        "name": "birthDate",
+        "value": "1958-07-17"
+      }
+    ]
+  }
+
+}
