@@ -20,7 +20,6 @@ export default class Issuer extends React.Component<{}, IssuerState> {
   page = "issuer";
   title = "Get your EHIC";
   state: IssuerState
-  currentTopic = "none"
 
   steps: Array<ProgressIndicatorStep> = [
     { id: 0, label: "Log in" },
@@ -31,21 +30,20 @@ export default class Issuer extends React.Component<{}, IssuerState> {
   constructor(props: {}) {
     super(props);
     this.state = { currentIndex: 1 };
-    this.nextStep = this.nextStep.bind(this);
   }
 
   transport = (): CredentialTransport => {
-    return this.state.credentialTransport || CredentialTransport.chapi
+    return this.state.credentialTransport || CredentialTransport.CHAPI
   }
 
   getStepContent() {
     switch (this.state.currentIndex) {
       case 0:
-        return <LogIn handleClick={this.nextStep} />
+        return <LogIn handleClick={this.handleChildClick} />
       case 1:
-        return <ChooseWallet onConnectionInvitation={this.onConnectionInvitation} handleClick={this.nextStep} />
+        return <ChooseWallet onConnectionInvitation={this.onConnectionInvitation} handleClick={this.handleChildClick} />
       case 2:
-        return <ReceiveCrendential credentialTransport={ this.transport() } handleClick={this.nextStep} />
+        return <ReceiveCrendential connectionId={this.state.connectionId} credentialTransport={ this.transport() } handleClick={this.handleChildClick} />
       case 3:
         return <VerifyCredential />
       default:
@@ -53,28 +51,48 @@ export default class Issuer extends React.Component<{}, IssuerState> {
     }
   }
 
-  nextStep() {
+  private nextStep = () => {
     if (this.state.currentIndex < 4) {
       this.setState({ currentIndex: this.state.currentIndex + 1 })
     }
   }
 
+  handleChildClick = () => {
+    if(this.state.currentIndex > 1 && this.state.credentialTransport === CredentialTransport.DIDCOMM) return;
+    this.nextStep()
+  }
+
   onConnectionInvitation = (connectionId: string) => {
     this.setState({
-      connectionId : `topic/${connectionId}`,
-      credentialTransport: CredentialTransport.anoncreds
+      connectionId: connectionId,
+      credentialTransport: CredentialTransport.DIDCOMM
     })
+  }
 
-    // remove
-    this.handleMessage("hello")
+  currentTopic = (): string => {
+    var baseTopic = ''
+    switch (this.state.currentIndex) {
+      case 1:
+        baseTopic = `connections`
+        break
+      case 2:
+        baseTopic = `credential`
+        break
+    }
+
+    console.log(`Subscribing to: ${baseTopic}/${this.state.connectionId}`)
+    return `topic/${baseTopic}/${this.state.connectionId}`
   }
 
   handleMessage = (stompMessage: any) => {
-    console.log(stompMessage);
+    console.log(JSON.parse(stompMessage.body))
+    const connState = JSON.parse(stompMessage.body)?.state
+    const invitation = this.state.currentIndex === 1 && connState === "response"
+    const issued = this.state.currentIndex === 2 && connState === "credential_issued"
 
-    setTimeout(() => {
+    if(invitation || issued) {
       this.nextStep()
-    }, 5000);
+    }
   }
 
   render() {
@@ -84,7 +102,7 @@ export default class Issuer extends React.Component<{}, IssuerState> {
         <div className="issuer-step"><Steps steps={this.steps} currentIndex={this.state.currentIndex} /></div>
         <div className="issuer-content">{this.getStepContent()}</div>
         { this.state.connectionId &&
-          <StompClient endpoint={`${process.env.REACT_APP_WEBSOCKET_URL}`} topic={this.state.connectionId} onMessage={this.handleMessage}><div></div></StompClient>
+          <StompClient endpoint={`${process.env.REACT_APP_WEBSOCKET_URL}`} topic={this.currentTopic()} onMessage={this.handleMessage}><div></div></StompClient>
         }
       </div>
     );

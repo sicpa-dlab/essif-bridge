@@ -17,24 +17,28 @@ export class ChapiCredentialIssuer implements CredentialIssuer {
   }
 
   issue = (credential: any): ResultAsync<boolean, Error> => {
-   
-    return this.auth(chapiQueries.didAuthQuery()).andThen( (presentation) => {
-        if(presentation == null) {
-          return errAsync(new Error("Could not authenticate"))
-        }
-        return this.issueCredential(presentation, sampleCredential)
+    return this.auth(chapiQueries.didAuthQuery()).andThen((presentation) => {
+      if (presentation == null) {
+        return errAsync(new Error("Could not authenticate"))
       }
-    )
+      return this.issueCredential(presentation, sampleCredential)
+    })
   }
 
   auth = (query: any): ResultAsync<any, Error> => {
     const auth = this.walletChapi?.connectToWallet(query)
-    return ResultAsync.fromPromise(auth, () => new Error("Could not authenticate"))
+    return ResultAsync.fromPromise(
+      auth,
+      () => new Error("Could not authenticate")
+    )
   }
 
-  issueCredential = (presentation: any, cred: any): ResultAsync<boolean, Error> => {
+  issueCredential = (
+    presentation: any,
+    cred: any
+  ): ResultAsync<boolean, Error> => {
     return ResultAsync.fromPromise(
-      this.walletChapi?.issueCredential(presentation, cred), 
+      this.walletChapi?.issueCredential(presentation, cred),
       () => new Error("Could not issue Credential")
     )
   }
