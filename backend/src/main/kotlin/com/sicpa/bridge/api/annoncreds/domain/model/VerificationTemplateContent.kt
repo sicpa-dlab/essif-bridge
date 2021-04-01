@@ -6,12 +6,12 @@ import java.time.OffsetDateTime
 data class VerificationTemplateContent(
     @field:Schema(
         description = "The requested attributes. In order for the verification to be successful, all requested attribute should " +
-            "be validated"
+                "be validated"
     )
     val requestedAttributes: List<RequestedAttribute> = emptyList(),
     @field:Schema(
         description = "The requested predicates. In order for the verification to be successful, all requested predicates " +
-            "should be validated"
+                "should be validated"
     )
     val requestedPredicates: List<RequestedPredicate> = emptyList(),
     val revocationRequirement: RevocationRequirement?

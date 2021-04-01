@@ -9,7 +9,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "verification_template", schema = "public")
-@TypeDef(name = "json", typeClass = JsonStringType::class)
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType::class)
 class VerificationTemplateEntity(
     @Id
     @Column(columnDefinition = "serial")
@@ -19,8 +19,8 @@ class VerificationTemplateEntity(
     @Column(name = "name", nullable = false)
     var name: String,
 
-    @Type(type = "json")
-    @Column(name = "content", columnDefinition = "json", nullable = false)
+    @Type(type = "jsonb")
+    @Column(name = "content", columnDefinition = "jsonb", nullable = false)
     var content: VerificationTemplateContent,
 
 ) {
