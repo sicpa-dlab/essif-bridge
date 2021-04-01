@@ -8,5 +8,5 @@ data class VerificationTemplate(
     @field:Schema(example = "example", description = "The verificationTemplate name", nullable = false, required = true)
     val name: String,
     @field:Schema(nullable = false, required = true)
-    val content: VerificationTemplateContent
+    var content: VerificationTemplateContent
 )
