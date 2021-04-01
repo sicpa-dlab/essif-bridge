@@ -48,7 +48,7 @@ class VerifyProof(
 
         val verificationResult = VerificationResult(
             checks =  arrayListOf(VerifyCredential.checkType),
-            warnings = arrayListOf<String>(),
+            warnings = arrayListOf(),
             errors = errors
         )
 
