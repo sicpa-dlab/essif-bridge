@@ -16,6 +16,7 @@ COPY ./packages ./packages
 #RUN yarn config delete proxy
 
 RUN yarn
+RUN yarn workspace bridge-api-client build
 RUN yarn workspace bridge-shared-components build
 RUN yarn workspace essif-main build
 RUN yarn workspace essif-issuer build
