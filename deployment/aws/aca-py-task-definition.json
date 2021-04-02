@@ -54,7 +54,7 @@
         "--genesis-url",
         "https://raw.githubusercontent.com/sovrin-foundation/sovrin/master/sovrin/pool_transactions_sandbox_genesis",
         "--webhook-url",
-        "http://bridge-api.local:8080/api/",
+        "http://bridge-api.local:8080/api",
         "--label",
         "Ministry of Social Security & Inclusion",
         "--seed",
