@@ -33,9 +33,9 @@ export const sampleAnonCredential = (connectionId: String) => {
 
   return {
     "connectionId": connectionId,
-    "schemaId": "BJX4adKceDv9D4qmztEN3F:2:European-Health-Insurance-Card-1:1.0",
-    "credentialDefinitionId": "BJX4adKceDv9D4qmztEN3F:3:CL:199841:default",
-    "comment": "string",
+    "schemaId": "BJX4adKceDv9D4qmztEN3F:2:European-Health-Insurance-Card:1.0",
+    "credentialDefinitionId": "BJX4adKceDv9D4qmztEN3F:3:CL:199201:essif",
+    "comment": "essif",
     "attributes": [
       {
         "name": "institutionID",
