@@ -14,7 +14,11 @@
         }
       ],
       "essential": true,
-      "environment": [   
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "bridge"
+        },
         {
           "name": "ACAPYCLIENT_URL",
           "value": "http://acapy.local:8080"
@@ -22,6 +26,14 @@
         {
           "name": "UNIVERSALRESOLVER_URL",
           "value": "http://3.23.52.79:8080/1.0/identifiers/"
+        },
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://postgres.local:5432/bridge"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "bridge"
         }
       ],
       "logConfiguration": {
