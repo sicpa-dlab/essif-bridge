@@ -1,0 +1,39 @@
+.outside {
+    &.qrcontainer {
+        height: 17em;
+        border: 2px solid #e5e5e5;
+        padding: 10px;
+        aspect-ratio: 1;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fff;
+
+        .bx--loading-overlay {
+            position: relative;
+            background-color: transparent;
+        }
+    }
+
+    &.loading {
+        width: 17em;
+        margin-top: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.collapsed-body {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .bx--grid {
+        padding-left: 0;
+        /*padding-right: 0;*/
+    }
+    
+    .col-qr {
+        /*background-color: red;*/
+        padding-top: 0em;
+        padding-bottom: 2em;
+    }
+}

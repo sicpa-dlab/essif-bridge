@@ -1,3 +1,3 @@
 export interface StepperProps {
-  handleClick: () => void
+  handleClick: (result?: any) => void
 }

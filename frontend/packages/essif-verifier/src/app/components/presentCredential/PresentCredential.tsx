@@ -1,10 +1,10 @@
 import React from 'react'
 
-import didcom from '../../../assets/images/edison-wallet-didcom-03.svg';
-import chapi from '../../../assets/images/edison-wallet-chapi-04.svg';
+import { StepperProps } from '../../shared/models/stepperProps.interface'
+import { CustomTile, ConnInvitation } from '../'
+import didcom from '../../../assets/images/edison-wallet-didcom-03.svg'
+import chapi from '../../../assets/images/edison-wallet-chapi-04.svg'
 import './PresentCredential.scss'
-import { CustomTile } from '..';
-import { StepperProps } from '../../shared/models/stepperProps.interface';
 
 const PresentCredential: React.FC<StepperProps> = ({ handleClick }) => {
   const headerTitle: string = "We need to verify your digital European Health Insurance Card to make sure you receive treatment at the right costs.";
@@ -22,7 +22,7 @@ const PresentCredential: React.FC<StepperProps> = ({ handleClick }) => {
       <p>{description}</p>
       <div className="present-credential-tile" >
         <CustomTile header={header} content={content} logo={logo} handleClick={handleClick} />
-        <CustomTile header='Mobile Wallet' content='My wallet is an application on my smartphone.' logo={didcom} isExpendable disabled />
+        <ConnInvitation header="Mobile Wallet" content="My wallet is an application on my smartphone." logo={didcom}/>
       </div>
     </div>
   )

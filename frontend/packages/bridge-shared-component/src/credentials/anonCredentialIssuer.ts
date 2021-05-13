@@ -1,4 +1,4 @@
-import { CredentialIssuer } from "./"
+import { CredentialIssuer } from "./credentialIssuer"
 import { ResultAsync, errAsync, okAsync } from "neverthrow"
 import { CredentialsIssuanceApi } from "bridge-api-client"
 

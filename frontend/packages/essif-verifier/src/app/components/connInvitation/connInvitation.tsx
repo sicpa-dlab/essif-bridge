@@ -1,16 +1,15 @@
 import React, { useState, MouseEvent } from 'react'
-import { Loading, InlineLoading, InlineLoadingStatus } from 'carbon-components-react'
-import { ExpandableTile, TileAboveTheFoldContent, TileBelowTheFoldContent } from 'carbon-components-react'
-import { ConnectionsApi } from 'bridge-shared-components'
+import { Loading, InlineLoading, InlineLoadingStatus,ExpandableTile, TileAboveTheFoldContent, TileBelowTheFoldContent } from 'carbon-components-react'
+import { ConnectionsApi, AnonCredentialVerifier } from 'bridge-shared-components'
 import StompClient from 'react-stomp-client'
 import QRCode from 'qrcode.react'
 import './connInvitation.scss'
 
-interface Props { 
+interface ConnInvitationProps {
     header: string,
     content: string,
     logo: string,
-    onConnectionInvitation?: (connectionId: string) => void
+    onProofResult?: (verified: boolean) => void
 }
 
 interface FlowIndicator {
@@ -18,12 +17,15 @@ interface FlowIndicator {
     status: InlineLoadingStatus
 }
 
-export const ConnInvitation: React.FC<Props> = (props: Props) => {
+export const ConnInvitation: React.FC<ConnInvitationProps> = (props: ConnInvitationProps) => {
 
     enum DidComFlow {
         Idle = 1,
         Invited,
-        Connected
+        Connected,
+        ProofSent,
+        ProofResultValid,
+        ProofResultInValid
     }
 
     const [didCommState, setDidCommState] = useState({
@@ -31,7 +33,7 @@ export const ConnInvitation: React.FC<Props> = (props: Props) => {
         connectionId: null,
         qrCode: null
     });
-    
+
     const expanded = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
@@ -41,7 +43,7 @@ export const ConnInvitation: React.FC<Props> = (props: Props) => {
             basePath: process.env.REACT_APP_BRIDGE_API_URL
         })
 
-        connApi.connectionsPost({}).then( (result) => {
+        connApi.connectionsPost({}).then((result) => {
             setDidCommState((prevState) => ({
                 ...prevState,
                 didComFlow: DidComFlow.Invited,
@@ -54,7 +56,16 @@ export const ConnInvitation: React.FC<Props> = (props: Props) => {
     }
 
     const currentTopic = (): string => {
-        const topic = `topic/connections/${didCommState.connectionId}`
+        var baseTopic = ''
+        switch (didCommState.didComFlow) {
+          case DidComFlow.Invited:
+            baseTopic = `connections`
+            break
+          case DidComFlow.ProofSent:
+            baseTopic = `proof`
+            break
+        }
+        const topic = `topic/${baseTopic}/${didCommState.connectionId}`
         console.log(`Subscribing to: ${topic}`)
         return topic
     }
@@ -66,18 +77,26 @@ export const ConnInvitation: React.FC<Props> = (props: Props) => {
 
         const invitation = didCommState.didComFlow === DidComFlow.Invited && connState === "response"
 
-        if(!invitation) return;
-
         const currentConnectionId = didCommState.connectionId || ""
+
+        if (invitation) {
+            sendProofRequest(currentConnectionId)
+            return;
+        }
+
+        const verification = didCommState.didComFlow === DidComFlow.ProofSent && connState === "verified"
+        if (!verification) return
+
+        const validProof = verification && content.verified === "true"
 
         setDidCommState((prevState) => ({
             ...prevState,
             connectionId: null, /* unsub to websockets */
-            didComFlow: DidComFlow.Connected
+            didComFlow: validProof == false ? DidComFlow.ProofResultInValid : DidComFlow.ProofResultValid
         }))
 
-        props.onConnectionInvitation?.(currentConnectionId)
-        
+        props.onProofResult?.(validProof);
+
     }
 
     const flowMessage = () => {
@@ -88,13 +107,39 @@ export const ConnInvitation: React.FC<Props> = (props: Props) => {
             case DidComFlow.Invited:
                 loadingMessage.message = "Waiting for connection"
                 break
-                case DidComFlow.Connected:
-                    loadingMessage.message = "Connected"
+            case DidComFlow.Connected:
+                loadingMessage.message = "Connected"
+                break
+            case DidComFlow.ProofSent:
+                loadingMessage.message = "Verifying credential"
+                break
+            case DidComFlow.ProofResultValid:
+                loadingMessage.message = "Valid credential"
+                loadingMessage.status = "finished"
+                break
+            case DidComFlow.ProofResultInValid:
+                loadingMessage.message = "Invalid credential"
+                loadingMessage.status = "error"
                 break
             default:
         }
 
         return <InlineLoading className={`inline-loading inline-loading-active`} description={loadingMessage.message} status={loadingMessage.status} />
+    }
+
+
+    const sendProofRequest = (connectionId: string) => {
+        
+        const verifier = new AnonCredentialVerifier()
+        verifier.sendProof(
+            connectionId,
+            2 // template id to verify EHIC
+        ).then(() => {
+            setDidCommState((prevState) => ({
+                ...prevState,
+                didComFlow: DidComFlow.ProofSent
+            }))
+        })
     }
 
     return (
@@ -120,8 +165,8 @@ export const ConnInvitation: React.FC<Props> = (props: Props) => {
                             </div>
                             <div className="bx--col col-qr">
                                 <div className="outside qrcontainer">
-                                    { didCommState.qrCode
-                                        ? <QRCode renderAs="svg" size={400} value={didCommState.qrCode || ""} style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', maxHeight: '100%', height: 'auto', width: 'auto' }}/>
+                                    {didCommState.qrCode
+                                        ? <QRCode renderAs="svg" size={400} value={didCommState.qrCode || ""} style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', maxHeight: '100%', height: 'auto', width: 'auto' }} />
                                         : <Loading description="Loading" withOverlay={true} small />
                                     }
                                 </div>
