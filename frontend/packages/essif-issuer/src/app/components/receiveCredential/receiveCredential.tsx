@@ -1,15 +1,15 @@
-import React from 'react';
-
-import { Launch16, Restart16 } from '@carbon/icons-react';
-import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components-react';
-
-import eidasLogo02 from '../../../assets/images/eidas-logo-02.png';
-import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg';
-import { StepperProps } from '../../shared/models/stepperProps.interface';
-import { sampleCredential, sampleAnonCredential } from '../chapi-example/sample-credential';
-import credentials from './credential.json';
-import './receiveCredential.scss';
-import { CredentialTransport, CredentialIssuer, ChapiCredentialIssuer, AnonCredentialIsssuer } from '../../shared/models';
+import React from 'react'
+import { Launch16, Restart16 } from '@carbon/icons-react'
+import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components-react'
+import { CredentialTransport, ChapiCredentialIssuer } from '../../shared/models'
+import { CredentialIssuer, AnonCredentialIsssuer } from 'bridge-shared-components'
+import { sampleCredential, sampleAnonCredential } from '../chapi-example/sample-credential'
+import eidasLogo02 from '../../../assets/images/eidas-logo-02.png'
+import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg'
+import { StepperProps } from '../../shared/models/stepperProps.interface'
+import credentials from './credential.json'
+import StompClient from 'react-stomp-client'
+import './receiveCredential.scss'
 
 class GetInput extends React.Component {
   render() {
@@ -155,7 +155,30 @@ export default class ReceiveCredential extends React.Component<ReceiveCredential
     const issue = this.credentialIssuer.issue(this.getCredential())
     const result = await issue
     this.error = result.isErr()
+
+    if(this.props.credentialTransport === CredentialTransport.DIDCOMM) {
+      return
+    }
+    
     result.isOk() && result.value === true ? this.props.handleClick() : this.setState({ loading: false })
+  }
+
+  currentTopic = (): string => {
+    const topic = `topic/credential/${this.props.connectionId}`
+    console.log(`Subscribing to: ${topic}`)
+    return topic
+  }
+
+  handleMessage = (stompMessage: any) => {
+    const content = JSON.parse(stompMessage.body)
+    console.log(content)
+    const connState = content.state
+
+    const issued = connState === "credential_issued"
+
+    if(issued) {
+      this.props.handleClick()
+    }
   }
 
   render() {
@@ -165,6 +188,11 @@ export default class ReceiveCredential extends React.Component<ReceiveCredential
         <h2 className="receive-credential-title">{this.title}</h2>
         <p>{this.description}</p>
         <ExpandablePanel error={this.error} loading={this.state.loading} handleClick={async () => { await this.issueCredential() }} />
+
+        { this.props.connectionId &&
+            <StompClient endpoint={`${process.env.REACT_APP_WEBSOCKET_URL}`} topic={this.currentTopic()} onMessage={this.handleMessage}><div></div></StompClient>
+        }
+
       </div>
     )
   }

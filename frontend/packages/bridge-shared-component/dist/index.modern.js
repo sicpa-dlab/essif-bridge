@@ -1,6 +1,8 @@
 import { loadOnce } from 'credential-handler-polyfill';
 import axios from 'axios';
-import { ok, err } from 'neverthrow';
+import { ok, err, errAsync, ResultAsync, okAsync } from 'neverthrow';
+import { CredentialsIssuanceApi, VerificationsApi } from 'bridge-api-client';
+export { ConnectionsApi } from 'bridge-api-client';
 
 var WalletChapi = function WalletChapi(bridgeClient) {
   var _this = this,
@@ -152,5 +154,54 @@ var SicpaBridgeClient = function SicpaBridgeClient(baseurl) {
   });
 };
 
-export { SicpaBridgeClient, WalletChapi };
+var AnonCredentialIsssuer = function AnonCredentialIsssuer() {
+  this.issue = function (credential) {
+    var anonCredential = credential;
+    if (anonCredential == null) return errAsync(Error("invalid credential"));
+    var credApi = new CredentialsIssuanceApi({
+      basePath: process.env.REACT_APP_BRIDGE_API_URL
+    });
+    console.log(anonCredential);
+    var credIssu = credApi.issuanceCredentialPost({
+      connectionId: anonCredential.connectionId,
+      schemaId: anonCredential.schemaId,
+      credentialDefinitionId: anonCredential.credentialDefinitionId,
+      attributes: anonCredential.attributes
+    });
+    var result = ResultAsync.fromPromise(credIssu, function () {
+      return new Error("Could not issue credential");
+    });
+    return result.andThen(function (issueReponse) {
+      if (issueReponse.status === 200) {
+        return okAsync(true);
+      }
+
+      return errAsync(new Error("Could not issue credential"));
+    });
+  };
+};
+
+var AnonCredentialVerifier = function AnonCredentialVerifier() {
+  this.sendProof = function (connectionId, verificationTemplateId) {
+    var verApi = new VerificationsApi({
+      basePath: process.env.REACT_APP_BRIDGE_API_URL
+    });
+    var verIssu = verApi.verificationsPost({
+      connectionId: connectionId,
+      verificationTemplateId: verificationTemplateId
+    });
+    var result = ResultAsync.fromPromise(verIssu, function () {
+      return new Error("Could not send verification");
+    });
+    return result.andThen(function (issueReponse) {
+      if (issueReponse.status === 200) {
+        return okAsync(true);
+      }
+
+      return errAsync(new Error("Could not send verification"));
+    });
+  };
+};
+
+export { AnonCredentialIsssuer, AnonCredentialVerifier, SicpaBridgeClient, WalletChapi };
 //# sourceMappingURL=index.modern.js.map

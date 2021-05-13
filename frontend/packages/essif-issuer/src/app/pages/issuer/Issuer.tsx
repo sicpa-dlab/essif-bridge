@@ -1,12 +1,9 @@
 import React from "react";
-
-import logo from '../../../assets/images/essif-logo-lead-spain.svg';
-import subLogo from '../../../assets/images/essif-logo-issuer-colour.svg';
-import "./Issuer.scss";
-import { ProgressIndicatorStep, CredentialTransport } from '../../shared/models';
 import { ReceiveCrendential, Header, Steps, VerifyCredential, LogIn, ChooseWallet } from '../../components';
-import StompClient from "react-stomp-client"
-
+import { ProgressIndicatorStep, CredentialTransport } from '../../shared/models';
+import subLogo from '../../../assets/images/essif-logo-issuer-colour.svg';
+import logo from '../../../assets/images/essif-logo-lead-spain.svg';
+import "./Issuer.scss";
 
 interface IssuerState {
   currentIndex: number,
@@ -58,7 +55,6 @@ export default class Issuer extends React.Component<{}, IssuerState> {
   }
 
   handleChildClick = () => {
-    if(this.state.currentIndex > 1 && this.state.credentialTransport === CredentialTransport.DIDCOMM) return;
     this.nextStep()
   }
 
@@ -67,32 +63,7 @@ export default class Issuer extends React.Component<{}, IssuerState> {
       connectionId: connectionId,
       credentialTransport: CredentialTransport.DIDCOMM
     })
-  }
-
-  currentTopic = (): string => {
-    var baseTopic = ''
-    switch (this.state.currentIndex) {
-      case 1:
-        baseTopic = `connections`
-        break
-      case 2:
-        baseTopic = `credential`
-        break
-    }
-
-    console.log(`Subscribing to: ${baseTopic}/${this.state.connectionId}`)
-    return `topic/${baseTopic}/${this.state.connectionId}`
-  }
-
-  handleMessage = (stompMessage: any) => {
-    console.log(JSON.parse(stompMessage.body))
-    const connState = JSON.parse(stompMessage.body)?.state
-    const invitation = this.state.currentIndex === 1 && connState === "response"
-    const issued = this.state.currentIndex === 2 && connState === "credential_issued"
-
-    if(invitation || issued) {
-      this.nextStep()
-    }
+    this.nextStep()
   }
 
   render() {
@@ -101,9 +72,6 @@ export default class Issuer extends React.Component<{}, IssuerState> {
         <Header title={this.title} page={this.page} logo={logo} subLogo={subLogo} description="Ministry of Social Security & Inclusion"></Header>
         <div className="issuer-step"><Steps steps={this.steps} currentIndex={this.state.currentIndex} /></div>
         <div className="issuer-content">{this.getStepContent()}</div>
-        { this.state.connectionId &&
-          <StompClient endpoint={`${process.env.REACT_APP_WEBSOCKET_URL}`} topic={this.currentTopic()} onMessage={this.handleMessage}><div></div></StompClient>
-        }
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { CredentialIssuer } from "./credentialIssuer"
+import { CredentialIssuer } from "bridge-shared-components"
 import { WalletChapi, SicpaBridgeClient } from "bridge-shared-components"
 import { ResultAsync, errAsync } from "neverthrow"
 import * as chapiQueries from "../../components/chapi-example/WalletQueries"
