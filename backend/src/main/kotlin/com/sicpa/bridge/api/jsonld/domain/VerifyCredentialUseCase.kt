@@ -9,13 +9,11 @@ import com.sicpa.bridge.api.jsonld.domain.model.VerificationResult
 import com.sicpa.bridge.api.toSingleProof
 import com.sicpa.bridge.core.BaseUseCase
 import com.sicpa.bridge.eidas.EidasBridgeRepository
-import com.sicpa.bridge.resolver.DidDocResolverRepository
 import org.springframework.stereotype.Service
 
 @Service
 class VerifyCredentialUseCase(
     val jsonldRepository: JsonldRepository,
-    val didDocResolverRepository: DidDocResolverRepository,
     val eidasBridgeRepository: EidasBridgeRepository
 ) : BaseUseCase<VerificationResult, Any>() {
 
@@ -27,12 +25,8 @@ class VerifyCredentialUseCase(
         val proof = (params as Map<String, Any>).getLinkedDataProof()
             ?: throw ApiException.NotFoundException("Could not find proof")
 
-        val verKey = didDocResolverRepository.getVerKey(proof)
-            ?: throw ApiException.NotFoundException("Could not find verkey")
-
         val verifyRequest = jsonldRepository.verifyCredential(
-            credential = params.toSingleProof(proof),
-            verKey = verKey
+            credential = params.toSingleProof(proof)
         )
         val results = arrayListOf<Pair<Boolean, String>>()
         results.add(Pair(verifyRequest.valid, "proof"))

@@ -27,7 +27,7 @@ class SignCredentialUseCase(
             credential = params,
             options = LinkedDataProofOptions(
                 proofPurpose = "assertionMethod",
-                verificationMethod = acaPyDid.publicDid
+                verificationMethod = acaPyDid.publicDid + "#key-1"
             )
         )
 
