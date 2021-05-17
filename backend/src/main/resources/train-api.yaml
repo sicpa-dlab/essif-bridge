@@ -1,0 +1,96 @@
+swagger: '2.0'
+info:
+  description: |
+    This is a sample TRAIN_ATV server.
+  version: 1.0.0
+  title: TRAIN_ATV_API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+tags:
+  - name: TRAIN_ATV
+    description: Train Verification API
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+
+# schemes:
+# - http
+paths:
+
+  /atvtrain/api/v1/ssi/:
+    post:
+      tags:
+        - TRAIN_ATV
+      summary: Verification result based on issuer & trust scheme pointers
+      description: Returns a Verification result from TRAIN_ATV
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: Issuer
+          description: Issuer details of the credential. Example DID URI
+          required: true
+          type: string
+        - in: query
+          name: Trust_Scheme_Pointer
+          description: Pointer to the trust schemes (DNS Host Name)
+          type: string
+          required: true
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TRAIN_ATV_Result'
+        400:
+          description: Invalid Issuer_name or URI supplied
+        404:
+          description: Train_ATV not found
+
+definitions:
+  TRAIN_ATV_Result:
+    type: object
+    properties:
+      Verification Result:
+        type: boolean
+        description: Result of API
+
+      Result Description:
+        type: array
+        xml:
+          name: photoUrl
+          wrapped: true
+        items:
+          type: object
+          properties:
+            ReceivedTrustSchemePointer:
+              type: string
+            FindingCorrespondingTrustSchemeInitiated:
+              type: boolean
+            FoundCorrespondingTrustScheme:
+              type: string
+            TrustListDiscoveryInitiated:
+              type: boolean
+            TrustListFoundAndLoaded:
+              type: string
+            FoundIssuer:
+              type: string
+            VerifyIssuer:
+              type: boolean
+            VerificationSuccessful:
+              type: boolean
+    xml:
+      name: TRAIN_ATV Result
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /train8/atv/1.0.0
+schemes:
+  - https
+  - http

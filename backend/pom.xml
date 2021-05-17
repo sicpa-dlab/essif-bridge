@@ -149,6 +149,18 @@
 		SEE BUG https://github.com/OpenAPITools/openapi-generator/issues/5690
 		-->
 		<dependency>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.client</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.common</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
 			<version>${swagger-core-version}</version>
@@ -242,6 +254,26 @@
 							<modelPackage>${project.groupId}.eidasclient.model</modelPackage>
 							<apiPackage>${project.groupId}.eidasclient.api</apiPackage>
 							<invokerPackage>${project.groupId}.eidasclient.invoker</invokerPackage>
+
+							<configOptions>
+								<sourceFolder>${generated-sources-java-path}</sourceFolder>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>train</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/train-api.yaml</inputSpec>
+							<generatorName>java</generatorName>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateApiDocumentation>false</generateApiDocumentation>
+
+							<modelPackage>${project.groupId}.trainclient.model</modelPackage>
+							<apiPackage>${project.groupId}.trainclient.api</apiPackage>
+							<invokerPackage>${project.groupId}.trainclient.invoker</invokerPackage>
 
 							<configOptions>
 								<sourceFolder>${generated-sources-java-path}</sourceFolder>
