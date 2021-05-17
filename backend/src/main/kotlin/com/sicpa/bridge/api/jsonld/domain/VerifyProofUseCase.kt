@@ -5,13 +5,11 @@ import com.sicpa.bridge.api.ApiException
 import com.sicpa.bridge.api.getLinkedDataProof
 import com.sicpa.bridge.api.jsonld.data.JsonldRepository
 import com.sicpa.bridge.core.BaseUseCase
-import com.sicpa.bridge.resolver.DidDocResolverRepository
 import org.springframework.stereotype.Service
 
 @Service
 class VerifyProofUseCase(
     val jsonldRepository: JsonldRepository,
-    val didDocResolverRepository: DidDocResolverRepository
 ) : BaseUseCase<Boolean, Any>() {
 
     val gson: Gson by lazy { Gson() }
@@ -22,12 +20,8 @@ class VerifyProofUseCase(
         val proof = (params as Map<String, Any>).getLinkedDataProof()
             ?: throw ApiException.NotFoundException("Could not find proof")
 
-        val verKey = didDocResolverRepository.getVerKey(proof)
-            ?: throw ApiException.NotFoundException("Could not find verkey")
-
         val verifyRequest = jsonldRepository.verifyProof(
-            presentation = params,
-            verKey = verKey
+            presentation = params
         )
 
         return verifyRequest.valid

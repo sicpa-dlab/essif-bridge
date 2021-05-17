@@ -21,7 +21,7 @@ class JsonldRepository {
         return  JsonldApi().jsonldSignPost(signRequest)
     }
 
-    fun verifyCredential(credential: Any, verKey: String) : VerifyResponse {
+    fun verifyCredential(credential: Any, verKey: String? = null) : VerifyResponse {
 
         val req = VerifyRequest().apply {
             doc = credential
@@ -31,7 +31,7 @@ class JsonldRepository {
         return JsonldApi().jsonldVerifyPost(req)
     }
 
-    fun verifyProof(presentation: Any, verKey: String) : VerifyResponse {
+    fun verifyProof(presentation: Any, verKey: String? = null) : VerifyResponse {
 
         val req = VerifyRequest().apply {
             doc = presentation
