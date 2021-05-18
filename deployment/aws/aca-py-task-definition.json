@@ -81,7 +81,9 @@
         "--auto-respond-presentation-proposal",
         "--auto-respond-presentation-request",
         "--auto-store-credential",
-        "--auto-verify-presentation"
+        "--auto-verify-presentation",
+        "--plugin",
+        "http_uniresolver"
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
