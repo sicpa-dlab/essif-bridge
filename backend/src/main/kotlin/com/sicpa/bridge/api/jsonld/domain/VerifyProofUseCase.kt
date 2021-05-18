@@ -17,8 +17,8 @@ class VerifyProofUseCase(
     override suspend fun run(params: Any): Boolean {
 
         @Suppress("UNCHECKED_CAST")
-        val proof = (params as Map<String, Any>).getLinkedDataProof()
-            ?: throw ApiException.NotFoundException("Could not find proof")
+        val paramsMap = params as Map<String, Any>
+        paramsMap.getLinkedDataProof() ?: throw ApiException.NotFoundException("Could not find proof")
 
         val verifyRequest = jsonldRepository.verifyProof(
             presentation = params
