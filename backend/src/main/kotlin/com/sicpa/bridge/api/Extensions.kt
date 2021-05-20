@@ -7,8 +7,6 @@ import com.sicpa.bridge.api.jsonld.domain.model.MultipleProof
 import com.sicpa.bridge.api.jsonld.domain.model.SingleProof
 
 
-
-
 inline fun <reified T> String.toModel(): T? {
     val gson = Gson()
     return gson.fromJson(this, T::class.java) as T

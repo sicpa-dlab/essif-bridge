@@ -1,10 +1,10 @@
-package com.sicpa.bridge.resolver
+package com.sicpa.bridge.train
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
-@ConfigurationProperties("universal-resolver")
-data class ResolverClientConfigProperties(
+@ConfigurationProperties("train")
+data class TrainClientConfigProperties(
     val url: String
 )
