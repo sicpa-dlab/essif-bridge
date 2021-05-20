@@ -26,7 +26,11 @@ export const sampleCredential =  {
     "familyName": "Muster",
     "givenName": "Maria",
     "birthDate": "1958-07-17"
-  }
+  },
+  "termsOfUse": [{
+    "type": "https://train.trust-scheme.de/info",
+    "trustScheme": ["ehic.europe.lightest.nlnetlabs.nl"]
+  }]
 }
 
 export const sampleAnonCredential = (connectionId: String) => {

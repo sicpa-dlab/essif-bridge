@@ -2,7 +2,7 @@ package com.sicpa.bridge
 
 import com.sicpa.bridge.config.AcaPyClientConfigProperties
 import com.sicpa.bridge.eidas.EidasBridgeConfigProperties
-import com.sicpa.bridge.resolver.ResolverClientConfigProperties
+import com.sicpa.bridge.train.TrainClientConfigProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
@@ -10,7 +10,7 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 @EnableConfigurationProperties(
 	AcaPyClientConfigProperties::class,
-	ResolverClientConfigProperties::class,
+	TrainClientConfigProperties::class,
 	EidasBridgeConfigProperties::class
 )
 class BridgeApplication

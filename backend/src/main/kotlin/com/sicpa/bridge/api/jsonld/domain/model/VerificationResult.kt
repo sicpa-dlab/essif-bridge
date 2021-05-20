@@ -20,5 +20,7 @@ data class VerificationResult(
         description = "Errors",
         example = "[]"
     )
-    val errors: MutableList<String>
+    val errors: MutableList<String>,
+
+    var info: Any? = null
 )
