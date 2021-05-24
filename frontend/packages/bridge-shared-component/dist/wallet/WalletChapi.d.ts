@@ -6,5 +6,5 @@ export declare class WalletChapi {
     configure: () => Promise<void>;
     connectToWallet: (didAuthQuery: any) => Promise<any>;
     issueCredential: (presentation: any, credential: any) => Promise<boolean>;
-    verifyCredential: (credentialQuery: any) => Promise<string[]>;
+    verifyCredential: (credentialQuery: any) => Promise<any>;
 }
