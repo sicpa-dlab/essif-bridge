@@ -2,7 +2,8 @@ export const sampleCredential =  {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
     "https://essif-lab.pages.grnet.gr/interoperability/eidas-generic-use-case/contexts/ehic-v1.jsonld",
-    "https://essif-lab.pages.grnet.gr/interoperability/eidas-generic-use-case/contexts/cades-signature.jsonld"
+    "https://essif-lab.pages.grnet.gr/interoperability/eidas-generic-use-case/contexts/cades-signature.jsonld",
+    "https://essif-lab.pages.grnet.gr/interoperability/eidas-generic-use-case/contexts/train-trustScheme.jsonld"
   ],
   "id": "https://ec.europa.eu/credentials/83627465",
   "type": [
