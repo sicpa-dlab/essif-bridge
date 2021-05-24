@@ -82,7 +82,7 @@ export class WalletChapi {
     return result?.type === "web" || false
   }
 
-  verifyCredential = async (credentialQuery: any): Promise<string[]> => {
+  verifyCredential = async (credentialQuery: any): Promise<any> => {
     const presentation = await navigator.credentials.get(credentialQuery)
 
     if (presentation == null) return []
@@ -101,6 +101,6 @@ export class WalletChapi {
 
     console.log(verification.isOk() ? verification.value : verification.error)
 
-    return verification.isOk() ? verification.value.checks : []
+    return verification.isOk() ? verification.value : []
   }
 }

@@ -1,1 +1,1 @@
-export { default as VerifyEHIC } from "./VerifyEHIC";
+export { default as VerifyEHIC } from './VerifyEHIC'

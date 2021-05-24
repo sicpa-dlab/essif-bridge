@@ -1,26 +1,23 @@
-import React from 'react';
+import React from 'react'
 
-import { Header, PresentCredential, Steps } from '../../components';
-import { VerifyEHIC } from '../../components/verifyEHIC';
-import { ProgressIndicatorStep } from "../../shared/models";
-import { SicpaBridgeClient, WalletChapi } from 'bridge-shared-components';
+import { Header, PresentCredential, Steps } from '../../components'
+import { VerifyEHIC } from '../../components/verifyEHIC'
+import { ProgressIndicatorStep, ChapiResult } from "../../shared/models"
+import { SicpaBridgeClient, WalletChapi } from 'bridge-shared-components'
 import * as chapiQueries from '../../components/chapi-example/WalletQueries'
-import { InlineLoadingProps } from 'carbon-components-react';
-import logo from '../../../assets/images/essif-logo-lead-france.svg';
-import subLogo from '../../../assets/images/essif-logo-verifier2-white.svg';
-import "./verifier.scss";
+import logo from '../../../assets/images/essif-logo-lead-france.svg'
+import subLogo from '../../../assets/images/essif-logo-verifier2-white.svg'
+import "./verifier.scss"
 
 interface VerifyState {
-  currentIndex: number;
-  chapiResult: string;
-  credentialState: InlineLoadingProps['status'];
+  currentIndex: number
+  chapiResult: ChapiResult
 }
 
 export default class Verifier extends React.Component<{}, VerifyState> {
   organisation = "Neutopia Health Service";
   page = "verifier";
   title = "Verify an EHIC";
-  verificationResult: Array<string>;
 
   steps: Array<ProgressIndicatorStep> = [
     { id: 1, label: "Present Credential" },
@@ -28,10 +25,9 @@ export default class Verifier extends React.Component<{}, VerifyState> {
   ]
   constructor(props: {}, private walletChapi: WalletChapi) {
     super(props);
-    this.state = { currentIndex: 0, chapiResult: "Ready", credentialState: 'active' };
+    this.state = { currentIndex: 0, chapiResult: { checks: [], errors: [] } };
     const bridgeClient = new SicpaBridgeClient();
     this.walletChapi = new WalletChapi(bridgeClient);
-    this.verificationResult = [];
     this.nextStep = this.nextStep.bind(this);
   }
 
@@ -44,8 +40,12 @@ export default class Verifier extends React.Component<{}, VerifyState> {
    */
   verifyChapiCredential = () => {
     this.walletChapi.verifyCredential(chapiQueries.credentialQuery()).then((response) => {
-      this.verificationResult = response;
-      response.includes('proof') ? this.setState({ credentialState: 'finished' }) : this.setState({ credentialState: 'error' })
+      const chapiResult = response as ChapiResult
+      if(chapiResult.checks) {
+        this.setState( { chapiResult: response })
+      } else {
+        this.setState( { chapiResult: { checks: [], errors: ['proof'] } })
+      }
     }).catch(() => { /* errors handle */ })
   }
 
@@ -54,14 +54,14 @@ export default class Verifier extends React.Component<{}, VerifyState> {
       case 0:
         return <PresentCredential handleClick={this.nextStep} />
       case 1:
-        return <VerifyEHIC result={this.verificationResult} credentialState={this.state.credentialState} />
+        return <VerifyEHIC result={this.state.chapiResult} />
       default:
         return null;
     }
   }
 
   nextStep = () => {
-    this.setState({ currentIndex: this.state.currentIndex + 1, chapiResult: "verifying credential" })
+    this.setState({ currentIndex: this.state.currentIndex + 1 })
     this.verifyChapiCredential();
   }
 

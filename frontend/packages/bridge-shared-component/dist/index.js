@@ -73,7 +73,7 @@ var WalletChapi = function WalletChapi(bridgeClient) {
         console.log("extracted Credential:", JSON.stringify(credential, null, 2));
         return Promise.resolve(_this4.bridgeClient.verifyCredential(credential)).then(function (verification) {
           console.log(verification.isOk() ? verification.value : verification.error);
-          return verification.isOk() ? verification.value.checks : [];
+          return verification.isOk() ? verification.value : [];
         });
       });
     } catch (e) {
