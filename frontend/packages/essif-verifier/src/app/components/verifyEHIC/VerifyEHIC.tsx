@@ -36,7 +36,7 @@ const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
 
     if(!props.result.checks.includes('train')) return
 
-    const anchor = <div>TRAIN <a target="_blank" href={props.result.info?.trustListUrl}>{props.result.info?.trustList}</a></div>
+    const anchor = <div>Health Insurance Provider acreditted <a target="_blank" href={props.result.info?.trustListUrl}>{props.result.info?.trustList}</a></div>
 
     return <InlineLoading className={`inline-loading inline-loading-finished`} description={anchor} status="finished" />
     
