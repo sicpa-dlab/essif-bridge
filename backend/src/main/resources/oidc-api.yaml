@@ -1,0 +1,110 @@
+openapi: 3.0.1
+servers:
+  - url: 'http://localhost:3000/api'
+    description: ''
+    variables: {}
+info:
+  version: 1.0.0
+  title: eSSIF-OIDC
+  description: ''
+  termsOfService: ''
+  contact: {}
+  license:
+    name: ''
+tags:
+  - name: Oidc Service
+paths:
+  /sendCredential:
+    post:
+      summary: sendCredential
+      operationId: sendCredential
+      tags:
+        - Oidc Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: {}
+            example: {}
+  '/auth/didAuthResponse/{clientId}':
+    post:
+      summary: didAuthResponse
+      operationId: didAuthResponse
+      tags:
+        - Oidc Service
+      parameters:
+        - $ref: '#/components/parameters/clientId'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DidAuthResponseParam'
+
+  '/auth/didAuthRequest/{clientId}/{credentialId}':
+    get:
+      summary: didAuthRequest
+      operationId: didAuthRequest
+      tags:
+        - Oidc Service
+      parameters:
+        - $ref: '#/components/parameters/clientId'
+        - $ref: '#/components/parameters/credentialId'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: vidchain://
+components:
+  schemas:
+    DidAuthResponseParam:
+      type: object
+      properties:
+        id_token:
+          type: string
+        state:
+          type: string
+        login_challenge:
+          type: string
+      example: |-
+        {
+          "id_token": "base64 id token",
+          "state": "fa0b99fac1e696ca3c3f8cf0",
+          "login_challenge": ""
+        }
+  parameters:
+    clientId:
+      name: clientId
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: clientId
+    credentialId:
+      name: credentialId
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: credentialId

@@ -280,6 +280,26 @@
 							</configOptions>
 						</configuration>
 					</execution>
+					<execution>
+						<id>oidc</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/oidc-api.yaml</inputSpec>
+							<generatorName>java</generatorName>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateApiDocumentation>false</generateApiDocumentation>
+
+							<modelPackage>${project.groupId}.oidcclient.model</modelPackage>
+							<apiPackage>${project.groupId}.oidcclient.api</apiPackage>
+							<invokerPackage>${project.groupId}.oidcclient.invoker</invokerPackage>
+
+							<configOptions>
+								<sourceFolder>${generated-sources-java-path}</sourceFolder>
+							</configOptions>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
