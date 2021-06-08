@@ -34,7 +34,7 @@ aca-py-client:
   url: http://essif.adaptivespace.io:8080
 
 oicd-client:
-  url: http://localhost:3000/api
+  url: http://essif.adaptivespace.io:3000/api
 
 train:
   url: http://atvtrain3-env.eba-gewjbrmq.eu-central-1.elasticbeanstalk.com
