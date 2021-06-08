@@ -24,6 +24,10 @@
           "value": "http://acapy.local:8080"
         },
         {
+          "name": "OIDCCLIENT_URL",
+          "value": "http://oidc-siop-backend-api.local:3000/api"
+        },
+        {
           "name": "UNIVERSALRESOLVER_URL",
           "value": "http://3.23.52.79:8080/1.0/identifiers/"
         },
