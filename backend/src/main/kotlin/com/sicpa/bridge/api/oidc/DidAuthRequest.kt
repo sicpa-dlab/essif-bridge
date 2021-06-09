@@ -25,7 +25,7 @@ class DidAuthRequest(
     @PostMapping(
         produces = ["application/json"]
     )
-    suspend fun connectionsPost(
+    suspend fun didAuthRequest(
         @RequestBody
         authRequestParam: AuthRequestParam
     ): AuthRequestResponse {

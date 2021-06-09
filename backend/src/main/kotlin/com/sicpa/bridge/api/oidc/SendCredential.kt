@@ -4,8 +4,8 @@ import com.sicpa.bridge.api.oidc.domain.SendCredentialUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -23,10 +23,10 @@ class SendCredential(
     @PostMapping(
         produces = ["application/json"]
     )
-    suspend fun connectionsPost(
-        @PathVariable("clientId")
-        clientId: String
+    suspend fun sendCredential(
+        @RequestBody
+        credential: Any
     ): Any {
-        return sendCredentialUseCase.invoke(true)
+        return sendCredentialUseCase.invoke(credential)
     }
 }
