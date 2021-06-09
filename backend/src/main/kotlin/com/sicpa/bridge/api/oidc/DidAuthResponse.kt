@@ -36,7 +36,7 @@ class DidAuthResponse(
         produces = ["application/json"],
         consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE]
     )
-    suspend fun connectionsPost(
+    suspend fun didAuthResponse(
         @ModelAttribute
         authResponse: AuthResponseCallback,
         @PathVariable("clientId")
