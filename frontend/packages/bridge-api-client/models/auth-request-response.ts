@@ -11,12 +11,16 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-export * from './apis/connections-api';
-export * from './apis/credential-definitions-api';
-export * from './apis/credentials-issuance-api';
-export * from './apis/jsonldcredentials-api';
-export * from './apis/jsonldverification-api';
-export * from './apis/open-idconnect-connect-api';
-export * from './apis/schemas-api';
-export * from './apis/verifications-api';
-
+/**
+ * 
+ * @export
+ * @interface AuthRequestResponse
+ */
+export interface AuthRequestResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthRequestResponse
+     */
+    url: any;
+}

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Launch16, Restart16 } from '@carbon/icons-react'
 import { Button, InlineLoading, TextInput, TooltipIcon } from 'carbon-components-react'
-import { CredentialTransport, ChapiCredentialIssuer } from '../../shared/models'
-import { CredentialIssuer, AnonCredentialIsssuer } from 'bridge-shared-components'
+import { CredentialTransport, ChapiCredentialIssuer, OIDCData } from '../../shared/models'
+import { CredentialIssuer, AnonCredentialIsssuer, OidcCredentialIsssuer } from 'bridge-shared-components'
 import { sampleCredential, sampleAnonCredential } from '../chapi-example/sample-credential'
 import eidasLogo02 from '../../../assets/images/eidas-logo-02.png'
 import eidasLogo04 from '../../../assets/images/eidas-logo-04.svg'
@@ -11,7 +11,13 @@ import credentials from './credential.json'
 import StompClient from 'react-stomp-client'
 import './receiveCredential.scss'
 
-class GetInput extends React.Component {
+interface FormState {
+}
+interface FormProps {
+  credential: { [key: string]: string }
+}
+
+class GetInput extends Component<FormProps, FormState> {
   render() {
     return (
       Object.entries(credentials).map(([key, value]) => {
@@ -45,8 +51,9 @@ class GetInput extends React.Component {
 }
 
 interface Props extends StepperProps {
-  loading: boolean;
-  error: boolean;
+  loading: boolean
+  error: boolean
+  credentialData?: any
 }
 
 const ExpandablePanel: React.FC<Props> = (props: Props) => {
@@ -72,6 +79,20 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
     )
   }
 
+  const GetCredential = () => {
+
+    if(props.credentialTransport === CredentialTransport.OIDCSIOP) {
+      const credData = props.credentialData as OIDCData
+      if(credData) {
+        credentials['Family name'] = credData.lastName || credentials['Family name']
+        credentials['Given name'] = credData.name || credentials['Given name']
+        credentials.Birthdate = "-"
+      }
+    }
+
+    return credentials
+  }
+
   return (
     <>
       <div className="receive-credential-tile">
@@ -90,7 +111,7 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
           </div>
         </div>
         <div className="receive-credential-flex">
-          <GetInput />
+          <GetInput credential={GetCredential()} />
         </div>
         <div className="receive-credential-tile-form bx--col-lg-6 ">
           <ReceiveButton />
@@ -105,7 +126,8 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
 }
 
 interface ReceiveCredentialProps extends StepperProps {
-  connectionId?: string
+  connectionId?: string,
+  credentialData?: any
 }
 
 export default class ReceiveCredential extends React.Component<ReceiveCredentialProps> {
@@ -137,14 +159,32 @@ export default class ReceiveCredential extends React.Component<ReceiveCredential
         return new ChapiCredentialIssuer()
       case CredentialTransport.DIDCOMM:
         return new AnonCredentialIsssuer()
+      case CredentialTransport.OIDCSIOP:
+        return new OidcCredentialIsssuer()
       default:
         return new ChapiCredentialIssuer()
     }
   }
 
   private getCredential = () => {
+
     if(this.props.credentialTransport === CredentialTransport.DIDCOMM) {
       return sampleAnonCredential(this.props.connectionId || "")
+    }
+
+    if(this.props.credentialTransport === CredentialTransport.OIDCSIOP) {
+      const oidcData = this.props.credentialData as OIDCData
+
+      sampleCredential.credentialSubject.id = oidcData.id
+      if(oidcData.name) {
+        sampleCredential.credentialSubject.givenName = oidcData.name
+      }
+
+      if(oidcData.lastName) {
+        sampleCredential.credentialSubject.familyName = oidcData.lastName
+      }
+
+      sampleCredential.credentialSubject.birthDate = ""
     }
 
     return sampleCredential
@@ -154,6 +194,7 @@ export default class ReceiveCredential extends React.Component<ReceiveCredential
     this.setState({ loading: true })
     const issue = this.credentialIssuer.issue(this.getCredential())
     const result = await issue
+
     this.error = result.isErr()
 
     if(this.props.credentialTransport === CredentialTransport.DIDCOMM) {
@@ -187,7 +228,7 @@ export default class ReceiveCredential extends React.Component<ReceiveCredential
         <h3>{this.headerTitle}</h3>
         <h2 className="receive-credential-title">{this.title}</h2>
         <p>{this.description}</p>
-        <ExpandablePanel error={this.error} loading={this.state.loading} handleClick={async () => { await this.issueCredential() }} />
+        <ExpandablePanel credentialTransport={this.props.credentialTransport} credentialData={this.props.credentialData} error={this.error} loading={this.state.loading} handleClick={async () => { await this.issueCredential() }} />
 
         { this.props.connectionId &&
             <StompClient endpoint={`${process.env.REACT_APP_WEBSOCKET_URL}`} topic={this.currentTopic()} onMessage={this.handleMessage}><div></div></StompClient>
