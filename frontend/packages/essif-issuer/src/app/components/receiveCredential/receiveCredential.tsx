@@ -83,7 +83,7 @@ const ExpandablePanel: React.FC<Props> = (props: Props) => {
 
     if(props.credentialTransport === CredentialTransport.OIDCSIOP) {
       const credData = props.credentialData as OIDCData
-      if(credData) {
+      if(credData?.id) {
         credentials['Family name'] = credData.lastName || credentials['Family name']
         credentials['Given name'] = credData.name || credentials['Given name']
         credentials.Birthdate = "-"

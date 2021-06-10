@@ -57,8 +57,10 @@ export default class Issuer extends React.Component<{}, IssuerState> {
     }
   }
 
-  handleChildClick = (data?: OIDCData) => {
-    if(data != null) {
+  handleChildClick = (data?: any) => {
+
+    const oidcData = data as OIDCData
+    if(oidcData?.id) {
       this.setState({
         credentialTransport: CredentialTransport.OIDCSIOP,
         credentialData: data
