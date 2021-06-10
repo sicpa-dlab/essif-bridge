@@ -14,7 +14,19 @@
 /**
  * 
  * @export
- * @interface Body
+ * @interface AuthRequestParam
  */
-export interface Body {
+export interface AuthRequestParam {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthRequestParam
+     */
+    clientId: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthRequestParam
+     */
+    credentialId: any;
 }

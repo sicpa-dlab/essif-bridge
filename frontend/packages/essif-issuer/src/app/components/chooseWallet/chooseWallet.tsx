@@ -3,7 +3,7 @@ import React from 'react';
 import chapi from '../../../assets/images/edison-wallet-chapi-04.svg';
 import didcom from '../../../assets/images/edison-wallet-didcom-03.svg';
 import { StepperProps } from '../../shared/models/stepperProps.interface';
-import { CustomTile, ConnInvitation } from '..';
+import { CustomTile, ConnInvitation, OidcAuthentication } from '..';
 import './chooseWallet.scss';
 
 interface StepperState {
@@ -37,6 +37,7 @@ export default class ChooseWallet extends React.Component<StepperProps,StepperSt
         <div className="connect-wallet-tile" >
           <CustomTile header="Browser Wallet" content="My wallet is a plugin in my browser." logo={chapi} handleClick={this.props.handleClick} />
           <ConnInvitation header="Mobile Wallet" content="My wallet is an application on my smartphone." onConnectionInvitation={this.props.onConnectionInvitation} logo={didcom}/>
+          <OidcAuthentication handleClick={this.props.handleClick} />
         </div>
       </div>
     )

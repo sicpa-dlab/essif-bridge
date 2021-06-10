@@ -1,6 +1,6 @@
 import React from "react";
 import { ReceiveCrendential, Header, Steps, VerifyCredential, LogIn, ChooseWallet } from '../../components';
-import { ProgressIndicatorStep, CredentialTransport } from '../../shared/models';
+import { ProgressIndicatorStep, CredentialTransport, OIDCData } from '../../shared/models';
 import subLogo from '../../../assets/images/essif-logo-issuer-colour.svg';
 import logo from '../../../assets/images/essif-logo-lead-spain.svg';
 import "./Issuer.scss";
@@ -9,7 +9,8 @@ interface IssuerState {
   currentIndex: number,
   walletType?: number,
   connectionId?: string,
-  credentialTransport?: CredentialTransport
+  credentialTransport?: CredentialTransport,
+  credentialData?: any
 }
 
 export default class Issuer extends React.Component<{}, IssuerState> {
@@ -26,7 +27,9 @@ export default class Issuer extends React.Component<{}, IssuerState> {
 
   constructor(props: {}) {
     super(props);
-    this.state = { currentIndex: 1 };
+    this.state = { 
+      currentIndex: 1
+    };
   }
 
   transport = (): CredentialTransport => {
@@ -40,7 +43,7 @@ export default class Issuer extends React.Component<{}, IssuerState> {
       case 1:
         return <ChooseWallet onConnectionInvitation={this.onConnectionInvitation} handleClick={this.handleChildClick} />
       case 2:
-        return <ReceiveCrendential connectionId={this.state.connectionId} credentialTransport={ this.transport() } handleClick={this.handleChildClick} />
+        return <ReceiveCrendential connectionId={this.state.connectionId} credentialTransport={ this.transport() } credentialData={ this.state.credentialData } handleClick={this.handleChildClick} />
       case 3:
         return <VerifyCredential />
       default:
@@ -54,7 +57,13 @@ export default class Issuer extends React.Component<{}, IssuerState> {
     }
   }
 
-  handleChildClick = () => {
+  handleChildClick = (data?: OIDCData) => {
+    if(data != null) {
+      this.setState({
+        credentialTransport: CredentialTransport.OIDCSIOP,
+        credentialData: data
+      })
+    }
     this.nextStep()
   }
 

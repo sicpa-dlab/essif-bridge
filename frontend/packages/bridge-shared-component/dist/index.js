@@ -204,14 +204,42 @@ var AnonCredentialVerifier = function AnonCredentialVerifier() {
   };
 };
 
+var OidcCredentialIsssuer = function OidcCredentialIsssuer() {
+  this.issue = function (credential) {
+    if (credential == null) return neverthrow.errAsync(Error("invalid credential"));
+    var credApi = new bridgeApiClient.OpenIDConnectConnectApi({
+      basePath: process.env.REACT_APP_BRIDGE_API_URL
+    });
+    console.log(credential);
+    var credIssu = credApi.sendCredential(credential);
+    var result = neverthrow.ResultAsync.fromPromise(credIssu, function () {
+      return new Error("Could not issue credential");
+    });
+    return result.andThen(function (issueReponse) {
+      if (issueReponse.status === 200) {
+        return neverthrow.okAsync(true);
+      }
+
+      return neverthrow.errAsync(new Error("Could not issue credential"));
+    });
+  };
+};
+
 Object.defineProperty(exports, 'ConnectionsApi', {
   enumerable: true,
   get: function () {
     return bridgeApiClient.ConnectionsApi;
   }
 });
+Object.defineProperty(exports, 'OpenIDConnectConnectApi', {
+  enumerable: true,
+  get: function () {
+    return bridgeApiClient.OpenIDConnectConnectApi;
+  }
+});
 exports.AnonCredentialIsssuer = AnonCredentialIsssuer;
 exports.AnonCredentialVerifier = AnonCredentialVerifier;
+exports.OidcCredentialIsssuer = OidcCredentialIsssuer;
 exports.SicpaBridgeClient = SicpaBridgeClient;
 exports.WalletChapi = WalletChapi;
 //# sourceMappingURL=index.js.map

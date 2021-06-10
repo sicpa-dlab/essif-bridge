@@ -1,4 +1,6 @@
-export * from './body';
+export * from './auth-request-param';
+export * from './auth-request-response';
+export * from './auth-response-callback';
 export * from './connection-invitation-content';
 export * from './connection-invitation-create';
 export * from './connection-invitation-creation-result';
@@ -8,6 +10,7 @@ export * from './credential-create';
 export * from './credential-definition-create';
 export * from './credential-definition-summary';
 export * from './credential-issuance';
+export * from './credentials-verify-body';
 export * from './linked-data-proof';
 export * from './requested-attribute';
 export * from './requested-predicate';

@@ -16,7 +16,7 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { Body } from '../models';
+import { CredentialsVerifyBody } from '../models';
 import { VerifiablePresentation } from '../models';
 import { VerificationResult } from '../models';
 /**
@@ -69,11 +69,11 @@ export const JSONLDVerificationApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
-         * @param {Body} body 
+         * @param {CredentialsVerifyBody} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verityCredential1: async (body: Body, options: any = {}): Promise<RequestArgs> => {
+        verityCredential1: async (body: CredentialsVerifyBody, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling verityCredential1.');
@@ -133,11 +133,11 @@ export const JSONLDVerificationApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {Body} body 
+         * @param {CredentialsVerifyBody} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async verityCredential1(body: Body, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerificationResult>> {
+        async verityCredential1(body: CredentialsVerifyBody, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerificationResult>> {
             const localVarAxiosArgs = await JSONLDVerificationApiAxiosParamCreator(configuration).verityCredential1(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -164,11 +164,11 @@ export const JSONLDVerificationApiFactory = function (configuration?: Configurat
         },
         /**
          * 
-         * @param {Body} body 
+         * @param {CredentialsVerifyBody} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verityCredential1(body: Body, options?: any): AxiosPromise<VerificationResult> {
+        verityCredential1(body: CredentialsVerifyBody, options?: any): AxiosPromise<VerificationResult> {
             return JSONLDVerificationApiFp(configuration).verityCredential1(body, options).then((request) => request(axios, basePath));
         },
     };
@@ -193,12 +193,12 @@ export class JSONLDVerificationApi extends BaseAPI {
     }
     /**
      * 
-     * @param {Body} body 
+     * @param {CredentialsVerifyBody} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JSONLDVerificationApi
      */
-    public verityCredential1(body: Body, options?: any) {
+    public verityCredential1(body: CredentialsVerifyBody, options?: any) {
         return JSONLDVerificationApiFp(this.configuration).verityCredential1(body, options).then((request) => request(this.axios, this.basePath));
     }
 }

@@ -41,6 +41,10 @@ export default class VerifyCredential extends React.Component<{}> {
     this.description = `You can use your digital European Health Insurance Card at the following services:`
   }
 
+  componentDidMount() {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' })
+  }
+
   render() {
     return (
       <div className="verify-crendential bx--col-lg-7 bx--col-md-5  bx--col-sm-3">

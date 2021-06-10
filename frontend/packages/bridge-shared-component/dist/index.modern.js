@@ -1,8 +1,8 @@
 import { loadOnce } from 'credential-handler-polyfill';
 import axios from 'axios';
 import { ok, err, errAsync, ResultAsync, okAsync } from 'neverthrow';
-import { CredentialsIssuanceApi, VerificationsApi } from 'bridge-api-client';
-export { ConnectionsApi } from 'bridge-api-client';
+import { CredentialsIssuanceApi, VerificationsApi, OpenIDConnectConnectApi } from 'bridge-api-client';
+export { ConnectionsApi, OpenIDConnectConnectApi } from 'bridge-api-client';
 
 var WalletChapi = function WalletChapi(bridgeClient) {
   var _this = this,
@@ -203,5 +203,26 @@ var AnonCredentialVerifier = function AnonCredentialVerifier() {
   };
 };
 
-export { AnonCredentialIsssuer, AnonCredentialVerifier, SicpaBridgeClient, WalletChapi };
+var OidcCredentialIsssuer = function OidcCredentialIsssuer() {
+  this.issue = function (credential) {
+    if (credential == null) return errAsync(Error("invalid credential"));
+    var credApi = new OpenIDConnectConnectApi({
+      basePath: process.env.REACT_APP_BRIDGE_API_URL
+    });
+    console.log(credential);
+    var credIssu = credApi.sendCredential(credential);
+    var result = ResultAsync.fromPromise(credIssu, function () {
+      return new Error("Could not issue credential");
+    });
+    return result.andThen(function (issueReponse) {
+      if (issueReponse.status === 200) {
+        return okAsync(true);
+      }
+
+      return errAsync(new Error("Could not issue credential"));
+    });
+  };
+};
+
+export { AnonCredentialIsssuer, AnonCredentialVerifier, OidcCredentialIsssuer, SicpaBridgeClient, WalletChapi };
 //# sourceMappingURL=index.modern.js.map

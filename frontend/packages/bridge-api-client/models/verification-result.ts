@@ -35,4 +35,10 @@ export interface VerificationResult {
      * @memberof VerificationResult
      */
     errors: any;
+    /**
+     * 
+     * @type {any}
+     * @memberof VerificationResult
+     */
+    info?: any;
 }
