@@ -72,6 +72,15 @@ function getJwtCredentialSubject(token: string): any {
   }
 }
 
+function getJwtCredential(token: string): any {
+  try {
+    const jwyDecoded = decodeJWT(token);
+    return jwyDecoded.vp.verifiableCredential[0];
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function getNonce(urlDecoded: string): string {
   const params: AuthenticationQR = querystring.parse(
     urlDecoded,
@@ -91,6 +100,7 @@ export {
   extractVCfromPresentation,
   getEnterpriseDID,
   getJwtCredentialSubject,
+  getJwtCredential,
   getNonce,
   getJwtNonce,
 };
