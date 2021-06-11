@@ -6,7 +6,7 @@ import {
   generateJwtRequest,
   verifyDidAuthResponse,
 } from '../utils/DidAuthRequest';
-import { getNonce, getJwtNonce, getJwtCredentialSubject } from '../utils/Util';
+import { getNonce, getJwtNonce, getJwtCredentialSubject, getJwtCredential} from '../utils/Util';
 
 @Injectable()
 export class AuthService {
@@ -60,18 +60,23 @@ export class AuthService {
     if (!nonce) {
       throw new BadRequestException('Error retriving the nonce of the token');
     }
-    const validationResponse = await verifyDidAuthResponse(
-      siopResponseJwt,
-      socketId,
-    );
+    
+    // const validationResponse = await verifyDidAuthResponse(
+    //   siopResponseJwt,
+    //   socketId,
+    // );
 
-    if (!validationResponse.signatureValidation)
-      throw new BadRequestException(
-        'Error verifying the DID Auth Token signature.',
-      );
+    // if (!validationResponse.signatureValidation)
+    //   throw new BadRequestException(
+    //     'Error verifying the DID Auth Token signature.',
+    //   );
 
-    const credentialSubject = getJwtCredentialSubject(siopResponseJwt.id_token);
+    const credential = getJwtCredential(siopResponseJwt.id_token);
 
-    return credentialSubject;
+    return credential;
+
+    //const credentialSubject = getJwtCredentialSubject(siopResponseJwt.id_token);
+
+    //return credentialSubject;
   }
 }
