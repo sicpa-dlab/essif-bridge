@@ -1,4 +1,4 @@
-import { CredentialTransport } from './index'
+import { CredentialTransport } from 'bridge-shared-components'
 export interface StepperProps {
   handleClick: (data?: OIDCData | null) => void,
   onConnectionInvitation?: (connectionId: string) => void,

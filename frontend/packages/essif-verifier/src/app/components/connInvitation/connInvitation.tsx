@@ -1,6 +1,7 @@
 import React, { useState, MouseEvent } from 'react'
 import { Loading, InlineLoading, InlineLoadingStatus,ExpandableTile, TileAboveTheFoldContent, TileBelowTheFoldContent } from 'carbon-components-react'
-import { ConnectionsApi, AnonCredentialVerifier } from 'bridge-shared-components'
+import { ConnectionsApi, AnonCredentialVerifier, CredentialTransport } from 'bridge-shared-components'
+import { StepResult } from '../../shared/models/stepperProps.interface'
 import StompClient from 'react-stomp-client'
 import QRCode from 'qrcode.react'
 import './connInvitation.scss'
@@ -9,7 +10,7 @@ interface ConnInvitationProps {
     header: string,
     content: string,
     logo: string,
-    onProofResult?: (verified: boolean) => void
+    onProofResult?: (result: StepResult) => void
 }
 
 interface FlowIndicator {
@@ -92,10 +93,15 @@ export const ConnInvitation: React.FC<ConnInvitationProps> = (props: ConnInvitat
         setDidCommState((prevState) => ({
             ...prevState,
             connectionId: null, /* unsub to websockets */
-            didComFlow: validProof == false ? DidComFlow.ProofResultInValid : DidComFlow.ProofResultValid
+            didComFlow: validProof === false ? DidComFlow.ProofResultInValid : DidComFlow.ProofResultValid
         }))
 
-        props.onProofResult?.(validProof);
+        const result: StepResult = {
+            transport: CredentialTransport.DIDCOMM,
+            valid: validProof
+        }
+
+        props.onProofResult?.(result);
 
     }
 

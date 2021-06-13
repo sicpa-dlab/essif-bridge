@@ -1,6 +1,7 @@
 import React from "react";
 import { ReceiveCrendential, Header, Steps, VerifyCredential, LogIn, ChooseWallet } from '../../components';
-import { ProgressIndicatorStep, CredentialTransport, OIDCData } from '../../shared/models';
+import { ProgressIndicatorStep, OIDCData } from '../../shared/models';
+import { CredentialTransport } from 'bridge-shared-components'
 import subLogo from '../../../assets/images/essif-logo-issuer-colour.svg';
 import logo from '../../../assets/images/essif-logo-lead-spain.svg';
 import "./Issuer.scss";
