@@ -1,10 +1,12 @@
 import React from 'react'
 import { ClickableTile, InlineLoading, InlineLoadingStatus } from 'carbon-components-react';
-import { ChapiResult } from '../../shared/models'
+import { StepResult } from '../../shared/models/stepperProps.interface';
+import { VerificationResult } from '../../shared/models/verificationResult'
 import './VerifyEHIC.scss'
 
 interface VerifyEHICProps {
-  result: ChapiResult
+  verificationResult?: VerificationResult
+  result: StepResult
 }
 
 const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
@@ -17,10 +19,10 @@ const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
     let status: InlineLoadingStatus = 'active'
     let msg = 'Verifying Credential'
 
-    if(props.result.checks.includes('proof')) {
+    if(props.verificationResult?.checks.includes('proof')) {
       status = 'finished'
       msg = 'Credential Verified'
-    } else if(props.result.errors.includes('proof')) {
+    } else if(props.verificationResult?.errors.includes('proof')) {
       status = 'error'
       msg = 'Credential Verified'
     }
@@ -29,14 +31,14 @@ const VerifyEHIC: React.FC<VerifyEHICProps> = (props: VerifyEHICProps) => {
   }
 
   const eidasVerification = () => {
-    if(props.result.checks.includes('eidas')) return <InlineLoading className={`inline-loading inline-loading-finished`} description="Credential eIDAS compliance" status="finished" />
+    if(props.verificationResult?.checks.includes('eidas')) return <InlineLoading className={`inline-loading inline-loading-finished`} description="Credential eIDAS compliance" status="finished" />
   }
 
   const trainVerification = () => {
 
-    if(!props.result.checks.includes('train')) return
+    if(!props.verificationResult?.checks.includes('train')) return
 
-    const anchor = <div>Health Insurance Provider acreditted <a target="_blank" href={props.result.info?.trustListUrl}>{props.result.info?.trustList}</a></div>
+    const anchor = <div>Health Insurance Provider acreditted <a target="_blank" rel="noreferrer" href={props.verificationResult?.info?.trustListUrl}>{props.verificationResult?.info?.trustList}</a></div>
 
     return <InlineLoading className={`inline-loading inline-loading-finished`} description={anchor} status="finished" />
     

@@ -1,7 +1,9 @@
+import React from 'react'
 import { Launch16 } from '@carbon/icons-react'
 import { ClickableTile, ExpandableTile, TileAboveTheFoldContent } from 'carbon-components-react'
-import React from 'react'
+import { StepResult } from '../../shared/models/stepperProps.interface'
 import './customTile.scss'
+import { CredentialTransport } from 'bridge-shared-components'
 
 interface Props {
   header: string;
@@ -10,7 +12,7 @@ interface Props {
   isExpendable?: boolean;
   disabled?: boolean;
   href?: string;
-  handleClick?: () => void
+  handleClick?: (result: StepResult) => void
 }
 
 export default class CustomTile extends React.Component<Props> {
@@ -22,9 +24,17 @@ export default class CustomTile extends React.Component<Props> {
 }
 
 export const Tile: React.FC<Props> = (props: Props) => {
+
+  const chapiFlowSelected = () => {
+    const result: StepResult = {
+      transport: CredentialTransport.CHAPI
+    }
+    props.handleClick?.(result)
+  }
+
   if (!props.isExpendable) {
     return (
-      <ClickableTile className="bx-tile custom-tile" light onClickCapture={props.handleClick} href={props.href}>
+      <ClickableTile className="bx-tile custom-tile" light onClickCapture={chapiFlowSelected} href={props.href}>
         <div className="custom-tile-header"> {props.header} </div>
         <div className="custom-tile-content"> {props.content} </div>
         <div className="custom-tile-footer" >

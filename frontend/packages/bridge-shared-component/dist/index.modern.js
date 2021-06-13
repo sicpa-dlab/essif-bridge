@@ -224,5 +224,30 @@ var OidcCredentialIsssuer = function OidcCredentialIsssuer() {
   };
 };
 
-export { AnonCredentialIsssuer, AnonCredentialVerifier, OidcCredentialIsssuer, SicpaBridgeClient, WalletChapi };
+var JsonLdCredentialVerifier = function JsonLdCredentialVerifier(bridgeClient) {
+  var _this = this;
+
+  this.verifyCredential = function (credential) {
+    try {
+      return Promise.resolve(_this.bridgeClient.verifyCredential(credential)).then(function (verification) {
+        console.log(verification.isOk() ? verification.value : verification.error);
+        return verification.isOk() ? verification.value : [];
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+
+  this.bridgeClient = bridgeClient;
+};
+
+var CredentialTransport;
+
+(function (CredentialTransport) {
+  CredentialTransport[CredentialTransport["CHAPI"] = 0] = "CHAPI";
+  CredentialTransport[CredentialTransport["DIDCOMM"] = 1] = "DIDCOMM";
+  CredentialTransport[CredentialTransport["OIDCSIOP"] = 2] = "OIDCSIOP";
+})(CredentialTransport || (CredentialTransport = {}));
+
+export { AnonCredentialIsssuer, AnonCredentialVerifier, CredentialTransport, JsonLdCredentialVerifier, OidcCredentialIsssuer, SicpaBridgeClient, WalletChapi };
 //# sourceMappingURL=index.modern.js.map

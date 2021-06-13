@@ -5,6 +5,7 @@ import { CustomTile, ConnInvitation } from '../'
 import didcom from '../../../assets/images/edison-wallet-didcom-03.svg'
 import chapi from '../../../assets/images/edison-wallet-chapi-04.svg'
 import './PresentCredential.scss'
+import { OidcAuthentication } from '../oidcAuthentication'
 
 const PresentCredential: React.FC<StepperProps> = ({ handleClick }) => {
   const headerTitle: string = "We need to verify your digital European Health Insurance Card to make sure you receive treatment at the right costs.";
@@ -22,7 +23,8 @@ const PresentCredential: React.FC<StepperProps> = ({ handleClick }) => {
       <p>{description}</p>
       <div className="present-credential-tile" >
         <CustomTile header={header} content={content} logo={logo} handleClick={handleClick} />
-        <ConnInvitation header="Mobile Wallet" content="My wallet is an application on my smartphone." logo={didcom}/>
+        <ConnInvitation header="Mobile Wallet" content="My wallet is an application on my smartphone." logo={didcom} onProofResult={handleClick}/>
+        <OidcAuthentication handleClick={handleClick} />
       </div>
     </div>
   )

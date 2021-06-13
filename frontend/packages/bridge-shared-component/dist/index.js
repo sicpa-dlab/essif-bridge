@@ -225,6 +225,29 @@ var OidcCredentialIsssuer = function OidcCredentialIsssuer() {
   };
 };
 
+var JsonLdCredentialVerifier = function JsonLdCredentialVerifier(bridgeClient) {
+  var _this = this;
+
+  this.verifyCredential = function (credential) {
+    try {
+      return Promise.resolve(_this.bridgeClient.verifyCredential(credential)).then(function (verification) {
+        console.log(verification.isOk() ? verification.value : verification.error);
+        return verification.isOk() ? verification.value : [];
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+
+  this.bridgeClient = bridgeClient;
+};
+
+(function (CredentialTransport) {
+  CredentialTransport[CredentialTransport["CHAPI"] = 0] = "CHAPI";
+  CredentialTransport[CredentialTransport["DIDCOMM"] = 1] = "DIDCOMM";
+  CredentialTransport[CredentialTransport["OIDCSIOP"] = 2] = "OIDCSIOP";
+})(exports.CredentialTransport || (exports.CredentialTransport = {}));
+
 Object.defineProperty(exports, 'ConnectionsApi', {
   enumerable: true,
   get: function () {
@@ -239,6 +262,7 @@ Object.defineProperty(exports, 'OpenIDConnectConnectApi', {
 });
 exports.AnonCredentialIsssuer = AnonCredentialIsssuer;
 exports.AnonCredentialVerifier = AnonCredentialVerifier;
+exports.JsonLdCredentialVerifier = JsonLdCredentialVerifier;
 exports.OidcCredentialIsssuer = OidcCredentialIsssuer;
 exports.SicpaBridgeClient = SicpaBridgeClient;
 exports.WalletChapi = WalletChapi;

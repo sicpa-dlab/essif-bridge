@@ -1,2 +1,2 @@
 export * from './progressIndicatorStep'
-export * from './chapiResult'
+export * from './verificationResult'
