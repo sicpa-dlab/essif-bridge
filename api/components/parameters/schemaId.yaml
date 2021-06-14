@@ -1,9 +1,0 @@
-name: schemaId
-in: path
-description: A schema ID.
-required: true
-schema:
-  pattern: >-
-    ^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$
-  type: string
-example: 0

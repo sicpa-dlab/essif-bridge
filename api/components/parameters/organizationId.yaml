@@ -1,7 +1,0 @@
-name: organizationId
-in: path
-description: 'An organization ID.'
-required: true
-example: '{organizationId}'
-schema:
-  type: integer

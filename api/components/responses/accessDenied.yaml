@@ -1,6 +1,0 @@
-# 403
-description: User has no permissions to requested item or operation
-content:
-  application/json:
-    schema:
-      $ref: "../schemas/error.yaml"
