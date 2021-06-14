@@ -1,4 +1,0 @@
-AccessDenied:
-  $ref: "./responses/accessDenied.yaml"
-Default:
-  $ref: "./responses/default.yaml"
