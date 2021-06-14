@@ -45,7 +45,7 @@ export const OidcAuthentication = (props: Props) => {
         oidcApi.didAuthRequest(
             {
                 "clientId": oidcState.clientId,
-                "credentialId": "EuropeanHealthInsuranceHolder"
+                "credentialId": "EuropeanHealthInsuranceCard"
             }
         ).then((result) => {
             setOidcState((prevState) => ({
