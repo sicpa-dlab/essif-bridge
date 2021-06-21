@@ -1,3 +1,73 @@
-BRIDGE
+Sicpa Bridge
 ======
 
+This repo contains codebase of the [Sicpa Bridge project](https://gitlab.grnet.gr/essif-lab/infrastructure/sicpa/bridge_project_summary).
+Demo is available @ [Essif Adaptivespace site](https://essif.adaptivespace.io/)
+
+
+### Content of the repo
+
+```
+├── ..
+├── README.md               # this file
+├── backend                 # Spring Boot application - Bridge API
+├── deployment              # Deployment to AWS ECS via Github Actions
+├── docs					# Doc assets
+├── frontend                # Issuer and Verifier frontend app
+├── oidc-siop-backend       # OIDC-SIOP backend API
+└── web
+├── ..
+```
+
+### Solutionn Diagram
+
+![eSSIF-Bridge](docs/eSSIF-Bridge.jpg)
+
+
+### Dependencies
+
+- [SSI eIDAS Bridge](https://gitlab.grnet.gr/essif-lab/infrastructure/validated-id/seb_project_summary)
+
+- [TRAIN](https://gitlab.grnet.gr/essif-lab/infrastructure/fraunhofer/train_project_summary)
+
+- [Hyperledger Aries Cloud Agent - Python](https://github.com/hyperledger/aries-cloudagent-python) with Sicpa´s [Plugin for HTTP Universal Resolver bindings](https://github.com/sicpa-dlab/acapy-resolver-universal). Image also available on Docker Hub [rdlabbridge/aries-cloudagent:tagname](https://hub.docker.com/repository/docker/rdlabbridge/aries-cloudagent)
+
+- [CHAPI WALLET](https://wallet.essif.adaptivespace.io/)
+
+
+### Configuration
+
+#### Frontend
+
+All [Frontend](frontend/README.md) apps can be configured via ```.env``` file.
+```
+# Websocket url
+REACT_APP_WEBSOCKET_URL=wss://essif.adaptivespace.io/api/bridge-websocket
+# Bridge API url
+REACT_APP_BRIDGE_API_URL=https://essif.adaptivespace.io/api
+```
+
+#### Backend via spring bot application.yaml
+```
+# Aries Cloud Agent Admin API
+aca-py-client:
+  url: http://essif.adaptivespace.io:8080
+
+# OIDC-SIOP API
+oicd-client:
+  url: http://essif.adaptivespace.io:3000/api
+
+# TRAIN API
+train:
+  url: http://atvtrain3-env.eba-gewjbrmq.eu-central-1.elasticbeanstalk.com
+  #url: https://essif.trust-scheme.de/atvtrain
+
+# EIDAS Bridge API
+eidas-bridge:
+  url: https://api.vidchain.net
+  certificatePassword: 1234
+```
+
+#### CHAPI Issuance Flow
+
+![Sicpa Bridge chapi Issuance](docs/Sicpa-Bridge-chapi-Issuance.jpg)
