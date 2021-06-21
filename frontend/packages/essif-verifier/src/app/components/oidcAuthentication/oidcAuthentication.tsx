@@ -102,7 +102,7 @@ export const OidcAuthentication = (props: Props) => {
 
         switch (oidcState.oidcFlow) {
             case OidcFlow.Idle:
-                loadingMessage.message = "Waiting for connection"
+                loadingMessage.message = "Waiting for response"
                 break
             case OidcFlow.Validating:
                 loadingMessage.message = "Verifying credential"
