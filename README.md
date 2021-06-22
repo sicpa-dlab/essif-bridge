@@ -13,10 +13,9 @@ A live demo of the European Health Insurance Card (EHIC) use-case powered by **S
 ├── README.md               # this file
 ├── backend                 # Spring Boot application - Bridge API
 ├── deployment              # Deployment to AWS ECS via Github Actions
-├── docs					# Doc assets
+├── docs                    # Doc assets
 ├── frontend                # Issuer and Verifier frontend app
 ├── oidc-siop-backend       # OIDC-SIOP backend API
-└── web
 ├── ..
 ```
 
@@ -27,9 +26,14 @@ A live demo of the European Health Insurance Card (EHIC) use-case powered by **S
 
 ### Building blocks
 
+* [Hyperledger Aries Cloud Agent - Python](https://github.com/hyperledger/aries-cloudagent-python) configure with Sicpa´s [Plugin for HTTP Universal Resolver bindings](https://github.com/sicpa-dlab/acapy-resolver-universal). The image is also available on Docker Hub [rdlabbridge/aries-cloudagent:tagname](https://hub.docker.com/repository/docker/rdlabbridge/aries-cloudagent). [Dockerfile](deployment/aca-py-universal-resolver/Dockerfile) available in deployment folder.
+* [SICPA browser-based wallet](https://wallet.essif.adaptivespace.io/)
+
+
+### Interoperability dependencies
+
 * [SSI eIDAS Bridge](https://gitlab.grnet.gr/essif-lab/infrastructure/validated-id/seb_project_summary)
 * [TRAIN](https://gitlab.grnet.gr/essif-lab/infrastructure/fraunhofer/train_project_summary)
-* [Hyperledger Aries Cloud Agent - Python](https://github.com/hyperledger/aries-cloudagent-python) configure with Sicpa´s [Plugin for HTTP Universal Resolver bindings](https://github.com/sicpa-dlab/acapy-resolver-universal). The image is also available on Docker Hub [rdlabbridge/aries-cloudagent:tagname](https://hub.docker.com/repository/docker/rdlabbridge/aries-cloudagent)
 
 ### Configuration
 
@@ -63,7 +67,3 @@ eidas-bridge:
   url: https://api.vidchain.net
   certificatePassword: 1234
 ```
-
-#### CHAPI Issuance Flow
-
-![Sicpa Bridge chapi Issuance](docs/Sicpa-Bridge-chapi-Issuance.jpg)
