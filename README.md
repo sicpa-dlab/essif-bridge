@@ -2,7 +2,8 @@ Sicpa Bridge
 ======
 
 This repo contains codebase of the [Sicpa Bridge project](https://gitlab.grnet.gr/essif-lab/infrastructure/sicpa/bridge_project_summary).
-Demo is available @ [Essif Adaptivespace site](https://essif.adaptivespace.io/)
+
+A live demo (European Health Insurance Card (EHIC) use-case)  powered by **SICPA bridge** is available at [Sicpa Bridge EHIC demo.](https://essif.adaptivespace.io/)
 
 
 ### Content of the repo
@@ -24,15 +25,23 @@ Demo is available @ [Essif Adaptivespace site](https://essif.adaptivespace.io/)
 ![eSSIF-Bridge](docs/eSSIF-Bridge.jpg)
 
 
-### Dependencies
+### Building blocks
 
-- [SSI eIDAS Bridge](https://gitlab.grnet.gr/essif-lab/infrastructure/validated-id/seb_project_summary)
+* [SSI eIDAS Bridge](https://gitlab.grnet.gr/essif-lab/infrastructure/validated-id/seb_project_summary)
+* [TRAIN](https://gitlab.grnet.gr/essif-lab/infrastructure/fraunhofer/train_project_summary)
+* [Hyperledger Aries Cloud Agent - Python](https://github.com/hyperledger/aries-cloudagent-python) configure with Sicpa´s [Plugin for HTTP Universal Resolver bindings](https://github.com/sicpa-dlab/acapy-resolver-universal). The image is also available on Docker Hub [rdlabbridge/aries-cloudagent:tagname](https://hub.docker.com/repository/docker/rdlabbridge/aries-cloudagent)
+*  [Acapy-resolver-universal]([https://](https://github.com/sicpa-dlab/acapy-resolver-universal)) . This provides an ACA-Py DID Resolver interface to a Universal Resolver instance over HTTP. 
+*  [Acapy-resolver-didcomm]([https://](https://github.com/sicpa-dlab/acapy-resolver-didcomm)) This plugin provides an ACA-Py DID Resolver interface to a Universal Resolver instance over DIDComm messaging.
 
-- [TRAIN](https://gitlab.grnet.gr/essif-lab/infrastructure/fraunhofer/train_project_summary)
 
-- [Hyperledger Aries Cloud Agent - Python](https://github.com/hyperledger/aries-cloudagent-python) with Sicpa´s [Plugin for HTTP Universal Resolver bindings](https://github.com/sicpa-dlab/acapy-resolver-universal). Image also available on Docker Hub [rdlabbridge/aries-cloudagent:tagname](https://hub.docker.com/repository/docker/rdlabbridge/aries-cloudagent)
 
-- [CHAPI WALLET](https://wallet.essif.adaptivespace.io/)
+### Wallets
+
+SICPA bridge issuance and verification services are interoperable with multiple wallets. 
+
+* [SICPA browser-based wallet](https://wallet.essif.adaptivespace.io/)
+* [Esatus, aries-based wallet](https://play.google.com/store/apps/details?id=com.esatus.wallet&hl=en&gl=US)
+* [ValidatedID, OIDC-SIOP wallet](https://drive.google.com/file/d/1n4TeHESTTS0oIn9Mxs1Rhtmp7Hwb3Y7M/view?usp=sharing)
 
 
 ### Configuration
