@@ -37,10 +37,17 @@ export default class Home extends React.Component {
   render() {
     return (
       <>
-        <Header title="Adaptative Space" page='home' logo={sicpa}></Header>
+        <Header title="ESSIF Bridge Live Demo" page='home' logo={sicpa}></Header>
         <div className="home">
           <div className="home-content">
-            <h2 className="home-title">Launchpad for the ESSIF Bridge project.</h2>
+            <div className="bx--col-lg-6 bx--col-md-6 bx bx--no-gutter">
+              <h3 className="home-title">Demo launchpad for the ESSIF Bridge project, following a European Health Insurance Card (EHIC) use case, powered by SICPA Bridge.</h3>
+            </div>
+            <div className="bx--col-lg-6 bx--col-md-6 bx bx--no-gutter">
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
             <div className="bx--col-lg-6 bx--no-gutter" style={{ display: 'flex', flexFlow: 'row wrap' }}>
               <Tile header="Issuer" content="Ministry of Social Security & Inclusion." logo={issuerLogo} url="https://issuer.essif.adaptivespace.io" />
               <Tile header="Verifier" content="Paris Regional Medical Centre." logo={verifierLogo} url="https://verifier.essif.adaptivespace.io" />

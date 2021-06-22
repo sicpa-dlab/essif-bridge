@@ -10,6 +10,11 @@ $size-48px: calculateRem(48px);
 
   &-organisation {
     padding-left: $size-54px;
+    padding-right: $size-54px;
+    
+    .bx--row img {
+      position: absolute;
+    }
   }
 
   &-title {
@@ -29,6 +34,6 @@ $size-48px: calculateRem(48px);
 
   &-home {
     background-size: cover;
-    background-image: url('../../../assets/images/adaptivespace_08_Undertone-03.jpg');
+    background-color: #0043ff;
   }
 }

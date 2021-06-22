@@ -1,6 +1,7 @@
 import React from "react";
 
 import europFlag from '../../../assets/images/Flag_of_Europe.svg';
+import ngiEssifLogo from  '../../../assets/images/ngi-essif.png'
 
 
 import "./header.scss";
@@ -37,8 +38,9 @@ export default class Header extends React.Component<Props> {
         :
         <div className="header header-home">
           <div className="header-organisation">
-            <div className="bx--row" style={{ paddingTop: '42px', paddingBottom: '60px' }}>
-              <img src={this.props.logo} style={{ height: '40px', width: '45px', marginRight: '16px' }} alt={`logo ${this.props.page}`} />
+            <div className="bx--row" style={{ paddingTop: '42px', paddingBottom: '60px', position: 'relative' }}>
+              <img src={this.props.logo} style={{ height: '40px', width: '45px', marginRight: '16px', left: '0' }} alt={`logo ${this.props.page}`} />
+              <img src={ngiEssifLogo} style={{ height: '40px', marginRight: '16px', right: '0' }} alt={`logo ${this.props.page}`} />
             </div>
           </div>
           <div className="header-title">
