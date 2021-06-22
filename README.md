@@ -3,7 +3,7 @@ Sicpa Bridge
 
 This repo contains codebase of [Sicpa Bridge project](https://gitlab.grnet.gr/essif-lab/infrastructure/sicpa/bridge_project_summary).
 
-A live demo (European Health Insurance Card (EHIC) use-case)  powered by **SICPA bridge** is available at [Sicpa Bridge EHIC demo.](https://essif.adaptivespace.io/)
+A live demo of the European Health Insurance Card (EHIC) use-case powered by **SICPA bridge** is available at [Sicpa Bridge EHIC demo.](https://essif.adaptivespace.io/)
 
 
 ### Content of the repo
