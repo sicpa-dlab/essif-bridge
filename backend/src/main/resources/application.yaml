@@ -37,8 +37,8 @@ oicd-client:
   url: http://essif.adaptivespace.io:3000/api
 
 train:
-  url: http://atvtrain3-env.eba-gewjbrmq.eu-central-1.elasticbeanstalk.com
-  #url: https://essif.trust-scheme.de/atvtrain
+  url: https://essif.trust-scheme.de/atvtrain
+  # url: http://atvtrain3-env.eba-gewjbrmq.eu-central-1.elasticbeanstalk.com
 
 eidas-bridge:
   url: https://api.vidchain.net
