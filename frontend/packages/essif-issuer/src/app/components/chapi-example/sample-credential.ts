@@ -30,7 +30,7 @@ export const sampleCredential =  {
   },
   "termsOfUse": [{
     "type": "https://train.trust-scheme.de/info",
-    "trustScheme": ["ehic.europe.lightest.nlnetlabs.nl"]
+    "trustScheme": ["ehic.europe.train.trust-scheme.de"]
   }]
 }
 
